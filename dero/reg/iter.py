@@ -39,7 +39,7 @@ def reg_for_each_xvar_set(df, yvar, xvars_list, **reg_kwargs):
 
 
 def reg_for_each_xvar_set_and_produce_summary(df, yvar, xvars_list, robust=True,
-                                              cluster=False, stderr=False, float_format='%0.1f'):
+                                              cluster=False, stderr=False, fe=None, float_format='%0.1f'):
     """
     Convenience function to run regressions for every set of xvars passed
     and present them in a summary format. Returns a tuple of (reg_list, summary) where reg_list
@@ -55,10 +55,12 @@ def reg_for_each_xvar_set_and_produce_summary(df, yvar, xvars_list, robust=True,
     cluster: False or str, set to a column name to calculate standard errors within clusters
              given by unique values of given column name
     stderr: bool, set to True to keep rows for standard errors below coefficient estimates
+    fe:    If fe is passed, should either pass a string to use fe in all models, or a list of strings or
+    None of same length as num models
 
     Note: only specify at most one of robust and cluster.
     """
-    reg_list = reg_for_each_xvar_set(df, yvar, xvars_list, robust=robust, cluster=cluster)
+    reg_list = reg_for_each_xvar_set(df, yvar, xvars_list, robust=robust, cluster=cluster, fe=fe)
     summ = produce_summary(reg_list, stderr=stderr, float_format=float_format)
     return reg_list, summ
 
