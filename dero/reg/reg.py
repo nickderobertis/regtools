@@ -1,7 +1,7 @@
 from statsmodels import api as sm
 
 
-def reg(df, yvar, xvars, robust=True, cluster=False):
+def reg(df, yvar, xvars, robust=True, cluster=False, cons=True):
     """
     Returns a fitted regression. Takes df, produces a regression df with no missing among needed
     variables, and fits a regression model. If robust is specified, uses heteroskedasticity-
@@ -19,8 +19,9 @@ def reg(df, yvar, xvars, robust=True, cluster=False):
     robust: bool, set to True to use heterskedasticity-robust standard errors
     cluster: False or str, set to a column name to calculate standard errors within clusters
              given by unique values of given column name
+    cons: bool, set to False to not include a constant in the regression
     """
-    regdf, y, X = _get_reg_df_y_x(df, yvar, xvars, cluster)
+    regdf, y, X = _get_reg_df_y_x(df, yvar, xvars, cluster, cons)
 
     mod = sm.OLS(y, X)
 
@@ -40,9 +41,9 @@ def _estimate_handling_robust_and_cluster(regdf, model, robust, cluster):
 
     return model.fit()
 
-def _get_reg_df_y_x(df, yvar, xvars, cluster):
+def _get_reg_df_y_x(df, yvar, xvars, cluster, cons):
     regdf = _drop_missings_df(df, yvar, xvars, cluster)
-    y, X = _y_X_from_df(regdf, yvar, xvars)
+    y, X = _y_X_from_df(regdf, yvar, xvars, cons)
 
     return regdf, y, X
 
@@ -53,9 +54,11 @@ def _drop_missings_df(df, yvar, xvars, cluster):
 
     return df.dropna(subset=drop_set)
 
-def _y_X_from_df(regdf, yvar, xvars):
+def _y_X_from_df(regdf, yvar, xvars, cons):
     y = regdf[yvar]
     X = regdf.loc[:, xvars]
-    X = sm.add_constant(X)
+
+    if cons:
+        X = sm.add_constant(X)
 
     return y, X
