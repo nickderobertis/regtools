@@ -20,25 +20,42 @@ def reg(df, yvar, xvars, robust=True, cluster=False):
     cluster: False or str, set to a column name to calculate standard errors within clusters
              given by unique values of given column name
     """
-    drop_set = [yvar] + xvars
-    if cluster:
-        drop_set += [cluster]
-
-    regdf = df.dropna(subset=drop_set)
-    y = regdf[yvar]
-    X = regdf.loc[:, xvars]
-    X = sm.add_constant(X)
+    regdf, y, X = _get_reg_df_y_x(df, yvar, xvars, cluster)
 
     mod = sm.OLS(y, X)
 
-    assert not (robust and cluster) #need to pick one of robust or cluster
+    return _estimate_handling_robust_and_cluster(regdf, mod, robust, cluster)
+
+
+def _estimate_handling_robust_and_cluster(regdf, model, robust, cluster):
+    assert not (robust and cluster)  # need to pick one of robust or cluster
 
     if robust:
-        return mod.fit(cov_type='HC1')
+        return model.fit(cov_type='HC1')
 
     if cluster:
         groups = regdf[cluster].unique().tolist()
         group_ints = regdf[cluster].apply(lambda x: groups.index(x))
-        return mod.fit(cov_type='cluster', cov_kwds={'groups': group_ints})
+        return model.fit(cov_type='cluster', cov_kwds={'groups': group_ints})
 
-    return mod.fit()
+    return model.fit()
+
+def _get_reg_df_y_x(df, yvar, xvars, cluster):
+    regdf = _drop_missings_df(df, yvar, xvars, cluster)
+    y, X = _y_X_from_df(regdf, yvar, xvars)
+
+    return regdf, y, X
+
+def _drop_missings_df(df, yvar, xvars, cluster):
+    drop_set = [yvar] + xvars
+    if cluster:
+        drop_set += [cluster]
+
+    return df.dropna(subset=drop_set)
+
+def _y_X_from_df(regdf, yvar, xvars):
+    y = regdf[yvar]
+    X = regdf.loc[:, xvars]
+    X = sm.add_constant(X)
+
+    return y, X
