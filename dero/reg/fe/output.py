@@ -52,6 +52,12 @@ def _standardize_fixed_effects_dict(summ_df, fixed_effect_dict):
 
 
 def _add_fixed_effects_row(summ_df, bool_list, fixed_effect_name='Industry'):
-    fixed_effects_row = pd.DataFrame([str(bool_) for bool_ in bool_list], columns=[fixed_effect_name + ' Fixed Effects']).T
+    fixed_effects_row = pd.DataFrame([_get_yes_no(bool_) for bool_ in bool_list], columns=[fixed_effect_name + ' Fixed Effects']).T
     fixed_effects_row.columns = summ_df.columns
     return pd.concat([summ_df, fixed_effects_row], axis=0)
+
+def _get_yes_no(bool_):
+    if bool_:
+        return 'Yes'
+    else:
+        return 'No'

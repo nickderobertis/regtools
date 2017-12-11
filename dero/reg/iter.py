@@ -39,7 +39,8 @@ def reg_for_each_xvar_set(df, yvar, xvars_list, **reg_kwargs):
 
 
 def reg_for_each_xvar_set_and_produce_summary(df, yvar, xvars_list, robust=True,
-                                              cluster=False, stderr=False, fe=None, float_format='%0.1f'):
+                                              cluster=False, stderr=False, fe=None, float_format='%0.2f',
+                                              regressor_order=[]):
     """
     Convenience function to run regressions for every set of xvars passed
     and present them in a summary format. Returns a tuple of (reg_list, summary) where reg_list
@@ -61,7 +62,7 @@ def reg_for_each_xvar_set_and_produce_summary(df, yvar, xvars_list, robust=True,
     Note: only specify at most one of robust and cluster.
     """
     reg_list = reg_for_each_xvar_set(df, yvar, xvars_list, robust=robust, cluster=cluster, fe=fe)
-    summ = produce_summary(reg_list, stderr=stderr, float_format=float_format)
+    summ = produce_summary(reg_list, stderr=stderr, float_format=float_format, regressor_order=regressor_order)
     return reg_list, summ
 
 
