@@ -1,9 +1,10 @@
 from statsmodels import api as sm
 
-from .tools import _to_list_if_str
+from .tools import _to_list_if_str, _to_list_if_tuple
 from .fe import fixed_effects_reg_df_and_cols_dict, extract_all_dummy_cols_from_dummy_cols_dict
+from .interact import create_interaction_variables, delete_interaction_variables, _collect_variables_from_interaction_tuples
 
-def reg(df, yvar, xvars, robust=True, cluster=False, cons=True, fe=None):
+def reg(df, yvar, xvars, robust=True, cluster=False, cons=True, fe=None, interaction_tuples=None):
     """
     Returns a fitted regression. Takes df, produces a regression df with no missing among needed
     variables, and fits a regression model. If robust is specified, uses heteroskedasticity-
@@ -24,13 +25,15 @@ def reg(df, yvar, xvars, robust=True, cluster=False, cons=True, fe=None):
     cons: bool, set to False to not include a constant in the regression
     fe: None or str or list of strs. If a str or list of strs is passed, uses these categorical
     variables to construct dummies for fixed effects.
+    interaction_tuples: tuple or list of tuples of column names to interact and include as xvars
 
     Returns:
     If fe=None, returns statsmodels regression result
     if fe is not None, returns a tuple of (statsmodels regression result, dummy_cols_dict)
     """
     fe = _set_fe(fe)
-    regdf, y, X, dummy_cols_dict = _get_reg_df_y_x(df, yvar, xvars, cluster, cons, fe)
+    interaction_tuples = _set_interaction_tuples(interaction_tuples)
+    regdf, y, X, dummy_cols_dict = _get_reg_df_y_x(df, yvar, xvars, cluster, cons, fe, interaction_tuples)
 
     mod = sm.OLS(y, X)
 
@@ -56,9 +59,10 @@ def _estimate_handling_robust_and_cluster(regdf, model, robust, cluster):
 
     return model.fit()
 
-def _get_reg_df_y_x(df, yvar, xvars, cluster, cons, fe):
-    regdf = _drop_missings_df(df, yvar, xvars, cluster, fe)
-    y, X, dummy_cols_dict = _y_X_from_df(regdf, yvar, xvars, cons, fe)
+def _get_reg_df_y_x(df, yvar, xvars, cluster, cons, fe, interaction_tuples):
+    all_xvars = _collect_all_variables_from_xvars_and_interaction_tuples(xvars, interaction_tuples)
+    regdf = _drop_missings_df(df, yvar, all_xvars, cluster, fe)
+    y, X, dummy_cols_dict = _y_X_from_df(regdf, yvar, xvars, cons, fe, interaction_tuples)
 
     return regdf, y, X, dummy_cols_dict
 
@@ -71,7 +75,7 @@ def _drop_missings_df(df, yvar, xvars, cluster, fe):
 
     return df.dropna(subset=drop_set)
 
-def _y_X_from_df(regdf, yvar, xvars, cons, fe):
+def _y_X_from_df(regdf, yvar, xvars, cons, fe, interaction_tuples):
 
     if fe is not None:
         regdf, dummy_cols_dict = fixed_effects_reg_df_and_cols_dict(regdf, fe)
@@ -79,6 +83,10 @@ def _y_X_from_df(regdf, yvar, xvars, cons, fe):
     else:
         dummy_cols_dict = None
         model_xvars = xvars
+
+    if interaction_tuples:
+        interaction_vars = create_interaction_variables(regdf, interaction_tuples)
+        model_xvars += interaction_vars
 
     y = regdf[yvar]
     X = regdf.loc[:, model_xvars]
@@ -93,3 +101,13 @@ def _set_fe(fe):
         return None
     else:
         return _to_list_if_str(fe)
+
+def _set_interaction_tuples(interaction_tuples):
+    if interaction_tuples is None:
+        return []
+    else:
+        return _to_list_if_tuple(interaction_tuples)
+
+def _collect_all_variables_from_xvars_and_interaction_tuples(xvars, interaction_tuples):
+    interaction_vars = _collect_variables_from_interaction_tuples(interaction_tuples)
+    return list(set(xvars + interaction_vars))

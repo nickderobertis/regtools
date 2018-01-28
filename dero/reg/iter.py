@@ -29,13 +29,8 @@ def reg_for_each_xvar_set(df, yvar, xvars_list, reg_type='reg', **reg_kwargs):
     If fe is passed, should either pass a string to use fe in all models, or a list of strings or
     None of same length as num models
     """
-    if 'fe' in reg_kwargs:
-        fe = reg_kwargs.pop('fe')
-    else:
-        fe = None
-
-    fe = _set_fe(fe, len(xvars_list))
-    return [any_reg(reg_type, df, yvar, x, fe=fe[i], **reg_kwargs) for i, x in enumerate(xvars_list)]
+    fe, interaction_tuples = _pop_and_convert_kwargs_which_are_repeated_across_models(reg_kwargs, len(xvars_list))
+    return [any_reg(reg_type, df, yvar, x, fe=fe[i], interaction_tuples=interaction_tuples[i], **reg_kwargs) for i, x in enumerate(xvars_list)]
 
 
 def reg_for_each_xvar_set_and_produce_summary(df, yvar, xvars_list, robust=True,
@@ -96,23 +91,46 @@ def reg_for_each_combo_select_and_produce_summary(df, yvar, xvars, robust=True, 
     summ = produce_summary(outlist, stderr=stderr, float_format=float_format)
     return outlist, summ
 
+def _pop_and_convert_kwargs_which_are_repeated_across_models(reg_kwargs, num_models):
+    if 'fe' in reg_kwargs:
+        fe = reg_kwargs.pop('fe')
+    else:
+        fe = None
+
+    if 'interaction_tuples' in reg_kwargs:
+        interaction_tuples = reg_kwargs.pop('interaction_tuples')
+    else:
+        interaction_tuples = []
+
+    fe = _set_fe(fe, num_models)
+    interaction_tuples = _set_interaction_tuples(interaction_tuples, num_models)
+
+    return fe, interaction_tuples
+
+
 def _set_fe(fe, num_models):
+    return _set_for_multiple_models(fe, num_models, param_name='fixed effects')
+
+def _set_interaction_tuples(interaction_tuples, num_models):
+    return _set_for_multiple_models(interaction_tuples, num_models, param_name='interaction tuples')
+
+def _set_for_multiple_models(param, num_models, param_name='fixed effects'):
     # Here we are being passed a list of strings or None matching the size of models.
     # This is the correct format so just output
-    if (isinstance(fe, list)) and (len(fe) == num_models):
-        out_fe = fe
+    if (isinstance(param, list)) and (len(param) == num_models):
+        out_param = param
 
     # Here we are being passed a single item or a list with a single item
     # Need to expand to cover all models
     else:
-        if (not isinstance(fe, list)):
-            fe = [fe]
-        if len(fe) > 1:
+        if (not isinstance(param, list)):
+            param = [param]
+        if len(param) > 1:
             raise ValueError(
-                f'Incorrect shape of items for fixed effects passed. Got {len(fe)} items, was expecting {num_models}')
-        out_fe = [fe[0]] * num_models
+                f'Incorrect shape of items for {param_name} passed. Got {len(param)} items, was expecting {num_models}')
+        out_param = [param[0]] * num_models
 
     # Final input checks
-    assert isinstance(out_fe, list)
+    assert isinstance(out_param, list)
 
-    return out_fe
+    return out_param
