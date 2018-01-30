@@ -12,7 +12,7 @@ def produce_summary(reg_sets, stderr=False, float_format='%0.1f', regressor_orde
     reg_list, dummy_col_dicts = _extract_result_list_and_dummy_dicts(reg_sets)
 
     info_dict = {'N': lambda x: "{0:d}".format(int(x.nobs)),
-                                  'R2': lambda x: "{:.2f}".format(x.rsquared),
+                                  # 'R2': lambda x: "{:.2f}".format(x.rsquared),
                                   'Adj-R2': lambda x: "{:.2f}".format(x.rsquared_adj)}
 
     summ = summary_col(reg_list, stars=True, float_format=float_format,
@@ -26,6 +26,9 @@ def produce_summary(reg_sets, stderr=False, float_format='%0.1f', regressor_orde
 
     if not stderr:
         summ.tables[0].drop('', axis=0, inplace=True)  # drops the rows containing standard errors
+
+    # Change const to Intercept in output
+    summ.tables[0].index = [col if col != 'const' else 'Intercept' for col in summ.tables[0].index]
 
     return summ
 
