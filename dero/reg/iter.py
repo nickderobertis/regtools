@@ -1,6 +1,6 @@
 import itertools
 
-from .chooser import any_reg
+from .chooser import any_reg, _is_diff_reg_str
 from .summarize import produce_summary
 from .select import select_models
 
@@ -35,7 +35,6 @@ def reg_for_each_xvar_set(df, yvar, xvars_list, reg_type='reg', **reg_kwargs):
 
 def reg_for_each_xvar_set_and_produce_summary(df, yvar, xvars_list, robust=True,
                                               cluster=False, stderr=False, fe=None, float_format='%0.2f',
-                                              reg_type='reg',
                                               regressor_order=[], **other_reg_kwargs):
     """
     Convenience function to run regressions for every set of xvars passed
@@ -57,14 +56,16 @@ def reg_for_each_xvar_set_and_produce_summary(df, yvar, xvars_list, robust=True,
 
     Note: only specify at most one of robust and cluster.
     """
-    reg_list = reg_for_each_xvar_set(df, yvar, xvars_list, reg_type=reg_type, robust=robust, cluster=cluster, fe=fe, **other_reg_kwargs)
+    reg_list = reg_for_each_xvar_set(df, yvar, xvars_list, robust=robust, cluster=cluster, fe=fe, **other_reg_kwargs)
+    regressor_order = _set_regressor_order(regressor_order, other_reg_kwargs)
     summ = produce_summary(reg_list, stderr=stderr, float_format=float_format, regressor_order=regressor_order)
     return reg_list, summ
 
 
 def reg_for_each_combo_select_and_produce_summary(df, yvar, xvars, robust=True, cluster=False,
                                                   keepnum=5, stderr=False, float_format='%0.1f',
-                                                  reg_type='reg', **other_reg_kwargs):
+                                                  regressor_order=[],
+                                                  **other_reg_kwargs):
     """
     Convenience function to run regressions for every combination of xvars, select the best models,
     and present them in a summary format. Returns a tuple of (reg_list, summary) where reg_list
@@ -86,9 +87,10 @@ def reg_for_each_combo_select_and_produce_summary(df, yvar, xvars, robust=True, 
     Note: only specify at most one of robust and cluster.
 
     """
-    reg_list = reg_for_each_combo(df, yvar, xvars, reg_type=reg_type, robust=robust, cluster=cluster, **other_reg_kwargs)
+    reg_list = reg_for_each_combo(df, yvar, xvars, robust=robust, cluster=cluster, **other_reg_kwargs)
+    regressor_order = _set_regressor_order(regressor_order, other_reg_kwargs)
     outlist = select_models(reg_list, keepnum, xvars)
-    summ = produce_summary(outlist, stderr=stderr, float_format=float_format)
+    summ = produce_summary(outlist, stderr=stderr, float_format=float_format, regressor_order=regressor_order)
     return outlist, summ
 
 def _pop_and_convert_kwargs_which_are_repeated_across_models(reg_kwargs, num_models):
@@ -134,3 +136,22 @@ def _set_for_multiple_models(param, num_models, param_name='fixed effects'):
     assert isinstance(out_param, list)
 
     return out_param
+
+def _set_regressor_order(regressor_order, reg_kwargs):
+    # No processing needed if not difference regression
+    if ('reg_type' not in reg_kwargs) or (not _is_diff_reg_str(reg_kwargs['reg_type'])):
+        return regressor_order
+
+    if 'diff_cols' in reg_kwargs:
+        cols = reg_kwargs['diff_cols']
+    else:
+        cols = 'all'
+
+    return _convert_regressor_order_for_diff(regressor_order, cols)
+
+
+def _convert_regressor_order_for_diff(regressor_order, cols='all'):
+    if cols == 'all':
+        cols = regressor_order.copy()
+
+    return [col + ' Change' if col in cols else col for col in regressor_order]

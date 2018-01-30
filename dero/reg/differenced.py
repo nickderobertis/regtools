@@ -7,9 +7,14 @@ def diff_reg(df, yvar, xvars, id_col, date_col, difference_lag=1, diff_cols=None
         diff_cols = [yvar] + xvars
 
     create_differenced_variables(df, diff_cols, id_col=id_col, date_col=date_col, difference_lag=difference_lag)
-    yvar, xvars = _convert_variable_names(yvar, xvars, diff_cols)
 
-    result = reg(df, yvar, xvars, **reg_kwargs)
+    # Convert names in lists of variables being passed to reg
+    reg_yvar, reg_xvars = _convert_variable_names(yvar, xvars, diff_cols)
+    this_reg_kwargs = reg_kwargs.copy()
+    if 'interaction_tuples' in reg_kwargs:
+        this_reg_kwargs['interaction_tuples'] = _convert_interaction_tuples(reg_kwargs['interaction_tuples'], diff_cols)
+
+    result = reg(df, reg_yvar, reg_xvars, **this_reg_kwargs)
 
     differenced_names = [col + ' Change' for col in diff_cols]
     df.drop(differenced_names, axis=1, inplace=True)
@@ -50,3 +55,10 @@ def _convert_variable_names(yvar, xvars, diff_cols):
             out_xvars.append(xvar)
 
     return yvar, out_xvars
+
+def _convert_interaction_tuples(interaction_tuples, diff_cols):
+    out_tuples = []
+    for tup in interaction_tuples:
+        out_tuples.append(tuple([var + ' Change' if var in diff_cols else var for var in tup]))
+
+    return out_tuples
