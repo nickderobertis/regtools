@@ -82,7 +82,7 @@ def _y_X_from_df(regdf, yvar, xvars, cons, fe, interaction_tuples):
         model_xvars = xvars + extract_all_dummy_cols_from_dummy_cols_dict(dummy_cols_dict)
     else:
         dummy_cols_dict = None
-        model_xvars = xvars
+        model_xvars = xvars.copy()
 
     if interaction_tuples:
         interaction_vars = create_interaction_variables(regdf, interaction_tuples)
