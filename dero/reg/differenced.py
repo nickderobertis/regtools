@@ -1,4 +1,5 @@
 from .reg import reg
+from ..ext_pandas.filldata import add_missing_group_rows, drop_missing_group_rows
 
 def diff_reg(df, yvar, xvars, id_col, date_col, difference_lag=1, diff_cols=None, **reg_kwargs):
 
@@ -6,13 +7,16 @@ def diff_reg(df, yvar, xvars, id_col, date_col, difference_lag=1, diff_cols=None
         # All by default
         diff_cols = [yvar] + xvars
 
-    create_differenced_variables(df, diff_cols, id_col=id_col, date_col=date_col, difference_lag=difference_lag)
+    df = create_differenced_variables(df, diff_cols, id_col=id_col, date_col=date_col, difference_lag=difference_lag)
 
     # Convert names in lists of variables being passed to reg
     reg_yvar, reg_xvars = _convert_variable_names(yvar, xvars, diff_cols)
     this_reg_kwargs = reg_kwargs.copy()
     if 'interaction_tuples' in reg_kwargs:
         this_reg_kwargs['interaction_tuples'] = _convert_interaction_tuples(reg_kwargs['interaction_tuples'], diff_cols)
+    if 'lag_variables' in reg_kwargs:
+        this_reg_kwargs['lag_variables'] = _convert_list_of_variables_to_difference_names(reg_kwargs['lag_variables'], diff_cols)
+
 
     result = reg(df, reg_yvar, reg_xvars, **this_reg_kwargs)
 
@@ -25,12 +29,17 @@ def diff_reg(df, yvar, xvars, id_col, date_col, difference_lag=1, diff_cols=None
 
 def create_differenced_variables(df, diff_cols, id_col='TICKER', date_col='Date', difference_lag=1):
     """
-    Note: inplace
+    Note: partially inplace
     """
     df.sort_values([id_col, date_col], inplace=True)
+    df = add_missing_group_rows(df, [id_col, date_col])
 
     for col in diff_cols:
         _create_differenced_variable(df, col, id_col=id_col, difference_lag=difference_lag)
+
+    df = drop_missing_group_rows(df, [id_col, date_col])
+
+    return df
 
 
 def _create_differenced_variable(df, col, id_col='TICKER', difference_lag=1, keep_lag=False):
@@ -47,14 +56,18 @@ def _convert_variable_names(yvar, xvars, diff_cols):
     if yvar in diff_cols:
         yvar = yvar + ' Change'
 
-    out_xvars = []
-    for xvar in xvars:
-        if xvar in diff_cols:
-            out_xvars.append(xvar + ' Change')
-        else:
-            out_xvars.append(xvar)
+    out_xvars = _convert_list_of_variables_to_difference_names(xvars, diff_cols)
 
     return yvar, out_xvars
+
+def _convert_list_of_variables_to_difference_names(varlist, diff_cols):
+    out_vars = []
+    for var in varlist:
+        if var in diff_cols:
+            out_vars.append(var + ' Change')
+        else:
+            out_vars.append(var)
+    return out_vars
 
 def _convert_interaction_tuples(interaction_tuples, diff_cols):
     out_tuples = []
