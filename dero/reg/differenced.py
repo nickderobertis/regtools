@@ -1,5 +1,6 @@
 from .reg import reg
 from ..ext_pandas.filldata import add_missing_group_rows, drop_missing_group_rows
+from .lag import _is_special_lag_keyword
 
 def diff_reg(df, yvar, xvars, id_col, date_col, difference_lag=1, diff_cols=None, **reg_kwargs):
 
@@ -61,6 +62,11 @@ def _convert_variable_names(yvar, xvars, diff_cols):
     return yvar, out_xvars
 
 def _convert_list_of_variables_to_difference_names(varlist, diff_cols):
+
+    # if 'all' or 'xvars' is passed, no conversion needed
+    if _is_special_lag_keyword(varlist):
+        return varlist
+
     out_vars = []
     for var in varlist:
         if var in diff_cols:

@@ -1,4 +1,4 @@
-from ..ext_pandas.filldata import add_missing_group_rows, drop_missing_group_rows
+from ..ext_pandas.filldata import add_missing_group_rows, drop_missing_group_rows, _to_list_if_str
 
 def create_lagged_variables(df, lag_cols, id_col='TICKER', date_col='Date', num_lags=1):
     """
@@ -49,3 +49,27 @@ def _convert_interaction_tuples(interaction_tuples, lag_cols, num_lags=1):
             ])
         )
     return out_tuples
+
+def _set_lag_variables(lag_variables, yvar, xvars):
+    # Already passing a collection of columns, return
+    if isinstance(lag_variables, (list, tuple)):
+        return lag_variables
+
+    assert isinstance(lag_variables, str)
+
+    #Single str can either be a single column, 'all', or 'xvars'
+    if lag_variables == 'xvars':
+        lag_variables = xvars.copy()
+    elif lag_variables == 'all':
+        lag_variables = [yvar] + xvars
+    else: #single column passed
+        return _to_list_if_str(lag_variables)
+
+    return lag_variables
+
+def _is_special_lag_keyword(lag_variables):
+    if isinstance(lag_variables, (list, tuple)):
+        return False #list of columns
+
+    special_keywords = ('xvars', 'all')
+    return lag_variables in special_keywords
