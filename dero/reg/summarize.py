@@ -1,4 +1,4 @@
-from statsmodels.iolib.summary2 import summary_col
+from .ext_statsmodels import summary_col
 import pandas as pd
 
 from .fe import add_fixed_effects_rows
