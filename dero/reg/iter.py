@@ -63,6 +63,24 @@ def reg_for_each_xvar_set_and_produce_summary(df, yvar, xvars_list, robust=True,
                            regressor_order=regressor_order, suppress_other_regressors=suppress_other_regressors)
     return reg_list, summ
 
+def reg_for_each_yvar_and_produce_summary(df, yvars, xvars, main_ivs, reg_type='reg',
+                                          stderr=False, float_format='%0.2f',
+                                          **reg_kwargs):
+    reg_list = reg_for_each_yvar(df, yvars, xvars, reg_type=reg_type, **reg_kwargs)
+    regressor_order = _set_regressor_order(main_ivs, reg_kwargs)
+    summ = produce_summary(reg_list, stderr=stderr, float_format=float_format,
+                           regressor_order=regressor_order, suppress_other_regressors=True)
+
+    # Transposed is a better layout since all controls are suppressed and there may be many models
+    summ.tables[0] = summ.tables[0].T
+
+    return reg_list, summ
+
+
+
+def reg_for_each_yvar(df, yvars, xvars, reg_type='reg', **reg_kwargs):
+    return [any_reg(reg_type, df, yvar, xvars, **reg_kwargs) for yvar in yvars]
+
 
 def reg_for_each_combo_select_and_produce_summary(df, yvar, xvars, robust=True, cluster=False,
                                                   keepnum=5, stderr=False, float_format='%0.1f',
