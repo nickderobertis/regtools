@@ -4,10 +4,31 @@ import pandas as pd
 from .fe import add_fixed_effects_rows
 from .fe.tools import extract_all_dummy_cols_from_dummy_cols_dict_list, \
     extract_all_fe_names_from_dummy_cols_dict_list
+from .controls import suppress_controls_in_summary_df
 
 
 
-def produce_summary(reg_sets, stderr=False, float_format='%0.1f', regressor_order=[]):
+def produce_summary(reg_sets, stderr=False, float_format='%0.1f', regressor_order=[],
+                    suppress_other_regressors=False):
+    """
+
+    :param reg_sets:
+    :type reg_sets:
+    :param stderr:
+    :type stderr:
+    :param float_format:
+    :type float_format:
+    :param regressor_order:
+    :type regressor_order:
+    :param suppress_other_regressors: True for when using regressor_order to suppress coefficients
+        that are not in regressor_order into "Controls: Yes". False to keep coefficients
+    :type suppress_other_regressors: bool
+    :return:
+    :rtype:
+    """
+
+    _check_produce_summary_inputs(regressor_order, suppress_other_regressors)
+
     # If not fixed effects, dummy_col_dicts will be None
     reg_list, dummy_col_dicts = _extract_result_list_and_dummy_dicts(reg_sets)
 
@@ -23,6 +44,10 @@ def produce_summary(reg_sets, stderr=False, float_format='%0.1f', regressor_orde
     if dummy_col_dicts: #if fixed effects
         split_rows = [var for var in info_dict]
         _remove_fe_cols_replace_with_fixed_effect_yes_no_lines(summ, dummy_col_dicts, split_rows)
+
+    # Handle dropping of unimportant coefficients and replacing with Controls: Yes or No
+    if suppress_other_regressors:
+        summ.tables[0] = suppress_controls_in_summary_df(summ.tables[0], regressor_order, dummy_col_dicts, info_dict)
 
     if not stderr:
         summ.tables[0].drop('', axis=0, inplace=True)  # drops the rows containing standard errors
@@ -124,3 +149,7 @@ def _get_var_df_and_non_var_df(df, split_rows=['N', 'R2', 'Adj-R2']):
     """
     other_data_mask = df.index.isin(split_rows)
     return df.loc[~other_data_mask], df.loc[other_data_mask]
+
+def _check_produce_summary_inputs(regressor_order, supress_other_regressors):
+    if (regressor_order == []) & (supress_other_regressors):
+        raise ValueError('must pass regressors to regressor_order to suppress other regressors')
