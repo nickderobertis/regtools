@@ -1,8 +1,12 @@
+import warnings
+
 from .reg import reg
 from .differenced import diff_reg
 
 
 def any_reg(reg_type, *reg_args, **reg_kwargs):
+
+    reg_args, reg_kwargs = _validate_inputs(*reg_args, **reg_kwargs)
 
     reg_type = reg_type.lower()
 
@@ -26,3 +30,15 @@ def _is_diff_reg_str(reg_str):
 
 def _is_normal_reg_str(reg_str):
     return reg_str in ('reg', 'normal', 'ols') or reg_str == None
+
+def _validate_inputs(*args, **kwargs):
+    yvar = args[1]
+    xvars = args[2]
+
+    if yvar in xvars:
+        warnings.warn(f'{yvar} is both Y variable and passed in X variables. Removing from X for this model.', UserWarning)
+        new_xvars = xvars.copy()
+        new_xvars.remove(yvar)
+        args = args[:2] + (new_xvars,) + args[3:]
+
+    return args, kwargs
