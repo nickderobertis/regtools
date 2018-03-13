@@ -1,6 +1,7 @@
 from .reg import reg
 from ..ext_pandas.filldata import add_missing_group_rows, drop_missing_group_rows
-from .lag import _is_special_lag_keyword
+from dero.reg.lag.create import _is_special_lag_keyword
+
 
 def diff_reg(df, yvar, xvars, id_col, date_col, difference_lag=1, diff_cols=None, **reg_kwargs):
 

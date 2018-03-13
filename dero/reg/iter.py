@@ -1,8 +1,10 @@
 import itertools
 
-from .chooser import any_reg, _is_diff_reg_str
-from .summarize import produce_summary
+from dero.reg.order import _set_regressor_order
+from .chooser import any_reg
 from .select import select_models
+from .summarize import produce_summary
+from .lag import remove_lag_names_from_reg_results
 
 
 def reg_for_each_combo(df, yvar, xvars, reg_type='reg', **reg_kwargs):
@@ -82,6 +84,7 @@ def reg_for_each_yvar(df, yvars, xvars, reg_type='reg', **reg_kwargs):
     return [any_reg(reg_type, df, yvar, xvars, **reg_kwargs) for yvar in yvars]
 
 
+
 def reg_for_each_combo_select_and_produce_summary(df, yvar, xvars, robust=True, cluster=False,
                                                   keepnum=5, stderr=False, float_format='%0.1f',
                                                   regressor_order=[],
@@ -112,6 +115,35 @@ def reg_for_each_combo_select_and_produce_summary(df, yvar, xvars, robust=True, 
     outlist = select_models(reg_list, keepnum, xvars)
     summ = produce_summary(outlist, stderr=stderr, float_format=float_format, regressor_order=regressor_order)
     return outlist, summ
+
+def reg_for_each_lag_and_produce_summary(df, yvar, xvars, main_ivs, lag_tuple=(1,2,3,4), consolidate_lags=True,
+                                         reg_type='reg',
+                                          stderr=False, float_format='%0.2f',
+                                         suppress_other_regressors=False,
+                                          **reg_kwargs):
+    reg_list = reg_for_each_lag(df, yvar, xvars, lag_tuple=lag_tuple, reg_type=reg_type, **reg_kwargs)
+
+    # If we are consolidating lag coefficients, remove the lag names from the coefficient names
+    if consolidate_lags:
+        reg_list = remove_lag_names_from_reg_results(reg_list, lag_tuple)
+    else:
+        # Not consolidating lag coefficients. Therefore regressor order needs to be modified to include
+        # renamed lag coefficients.
+        # Add to kwargs so regressor order can be set properly
+        reg_kwargs.update({'lag_tuple': lag_tuple})
+
+    regressor_order = _set_regressor_order(main_ivs, reg_kwargs)
+
+    model_names = [f'({lag})' for lag in lag_tuple]
+
+    summ = produce_summary(reg_list, stderr=stderr, float_format=float_format,
+                           regressor_order=regressor_order, suppress_other_regressors=suppress_other_regressors,
+                           model_names=model_names)
+
+    return reg_list, summ
+
+def reg_for_each_lag(df, yvar, xvars, lag_tuple=(1,2,3,4), reg_type='reg', **reg_kwargs):
+    return [any_reg(reg_type, df, yvar, xvars, num_lags=lag, **reg_kwargs) for lag in lag_tuple]
 
 def _pop_and_convert_kwargs_which_are_repeated_across_models(reg_kwargs, num_models):
     if 'fe' in reg_kwargs:
@@ -156,22 +188,3 @@ def _set_for_multiple_models(param, num_models, param_name='fixed effects'):
     assert isinstance(out_param, list)
 
     return out_param
-
-def _set_regressor_order(regressor_order, reg_kwargs):
-    # No processing needed if not difference regression
-    if ('reg_type' not in reg_kwargs) or (not _is_diff_reg_str(reg_kwargs['reg_type'])):
-        return regressor_order
-
-    if 'diff_cols' in reg_kwargs:
-        cols = reg_kwargs['diff_cols']
-    else:
-        cols = 'all'
-
-    return _convert_regressor_order_for_diff(regressor_order, cols)
-
-
-def _convert_regressor_order_for_diff(regressor_order, cols='all'):
-    if cols == 'all':
-        cols = regressor_order.copy()
-
-    return [col + ' Change' if col in cols else col for col in regressor_order]

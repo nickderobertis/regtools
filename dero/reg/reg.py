@@ -3,7 +3,9 @@ from statsmodels import api as sm
 from .tools import _to_list_if_str, _to_list_if_tuple
 from .fe import fixed_effects_reg_df_and_cols_dict, extract_all_dummy_cols_from_dummy_cols_dict
 from .interact import create_interaction_variables, delete_interaction_variables, _collect_variables_from_interaction_tuples
-from .lag import create_lagged_variables, _convert_interaction_tuples, _convert_variable_names, _set_lag_variables
+from dero.reg.lag import create_lagged_variables, _convert_variable_names, _convert_interaction_tuples, \
+    _set_lag_variables
+
 
 def reg(df, yvar, xvars, robust=True, cluster=False, cons=True, fe=None, interaction_tuples=None,
         num_lags=0, lag_variables='xvars', lag_period_var='Date', lag_id_var='TICKER'):

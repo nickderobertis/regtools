@@ -9,7 +9,7 @@ from .controls import suppress_controls_in_summary_df
 
 
 def produce_summary(reg_sets, stderr=False, float_format='%0.1f', regressor_order=[],
-                    suppress_other_regressors=False):
+                    suppress_other_regressors=False, model_names=None):
     """
 
     :param reg_sets:
@@ -23,11 +23,13 @@ def produce_summary(reg_sets, stderr=False, float_format='%0.1f', regressor_orde
     :param suppress_other_regressors: True for when using regressor_order to suppress coefficients
         that are not in regressor_order into "Controls: Yes". False to keep coefficients
     :type suppress_other_regressors: bool
+    :param model_names: If a collection is passed, will be used as column names in summary table.
+    :type model_names: None, list, tuple
     :return:
     :rtype:
     """
 
-    _check_produce_summary_inputs(regressor_order, suppress_other_regressors)
+    _check_produce_summary_inputs(regressor_order, suppress_other_regressors, model_names, len(reg_sets))
 
     # If not fixed effects, dummy_col_dicts will be None
     reg_list, dummy_col_dicts = _extract_result_list_and_dummy_dicts(reg_sets)
@@ -47,13 +49,17 @@ def produce_summary(reg_sets, stderr=False, float_format='%0.1f', regressor_orde
 
     # Handle dropping of unimportant coefficients and replacing with Controls: Yes or No
     if suppress_other_regressors:
-        summ.tables[0] = suppress_controls_in_summary_df(summ.tables[0], regressor_order, dummy_col_dicts, info_dict)
+        summ.tables[0] = suppress_controls_in_summary_df(summ.tables[0], regressor_order, dummy_col_dicts,
+                                                         info_dict)
 
     if not stderr:
         summ.tables[0].drop('', axis=0, inplace=True)  # drops the rows containing standard errors
 
     # Change const to Intercept in output
     summ.tables[0].index = [col if col != 'const' else 'Intercept' for col in summ.tables[0].index]
+
+    if model_names:
+        summ.tables[0].columns = model_names
 
     return summ
 
@@ -150,6 +156,9 @@ def _get_var_df_and_non_var_df(df, split_rows=['N', 'R2', 'Adj-R2']):
     other_data_mask = df.index.isin(split_rows)
     return df.loc[~other_data_mask], df.loc[other_data_mask]
 
-def _check_produce_summary_inputs(regressor_order, supress_other_regressors):
+def _check_produce_summary_inputs(regressor_order, supress_other_regressors, model_names, num_models):
     if (regressor_order == []) & (supress_other_regressors):
         raise ValueError('must pass regressors to regressor_order to suppress other regressors')
+
+    if model_names and (len(model_names) != num_models):
+        raise ValueError(f'must pass model_names of equal length to num models. Have {len(model_names)} names and {num_models} models.')

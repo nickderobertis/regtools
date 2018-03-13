@@ -1,4 +1,6 @@
-from ..ext_pandas.filldata import add_missing_group_rows, drop_missing_group_rows, _to_list_if_str
+from dero.ext_pandas import _to_list_if_str
+from dero.ext_pandas.filldata import add_missing_group_rows, drop_missing_group_rows
+
 
 def create_lagged_variables(df, lag_cols, id_col='TICKER', date_col='Date', num_lags=1):
     """
@@ -14,6 +16,7 @@ def create_lagged_variables(df, lag_cols, id_col='TICKER', date_col='Date', num_
 
     return df
 
+
 def _create_lagged_variable(df, col, id_col='TICKER', num_lags=1):
     """
     Note: inplace
@@ -21,8 +24,10 @@ def _create_lagged_variable(df, col, id_col='TICKER', num_lags=1):
     new_name = varname_to_lagged_varname(col, num_lags=num_lags)
     df[new_name] = df.groupby(id_col)[col].shift(num_lags)
 
+
 def varname_to_lagged_varname(varname, num_lags=1):
     return varname + f'_{{t - {num_lags}}}'
+
 
 def _convert_variable_names(yvar, xvars, lag_cols, num_lags=1):
     if yvar in lag_cols:
@@ -37,6 +42,7 @@ def _convert_variable_names(yvar, xvars, lag_cols, num_lags=1):
 
     return yvar, out_xvars
 
+
 def _convert_interaction_tuples(interaction_tuples, lag_cols, num_lags=1):
     out_tuples = []
     for tup in interaction_tuples:
@@ -49,6 +55,7 @@ def _convert_interaction_tuples(interaction_tuples, lag_cols, num_lags=1):
             ])
         )
     return out_tuples
+
 
 def _set_lag_variables(lag_variables, yvar, xvars):
     # Already passing a collection of columns, return
@@ -66,6 +73,7 @@ def _set_lag_variables(lag_variables, yvar, xvars):
         return _to_list_if_str(lag_variables)
 
     return lag_variables
+
 
 def _is_special_lag_keyword(lag_variables):
     if isinstance(lag_variables, (list, tuple)):
