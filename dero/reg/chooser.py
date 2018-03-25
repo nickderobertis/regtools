@@ -2,6 +2,7 @@ import warnings
 
 from .reg import reg
 from .differenced import diff_reg
+from .quantile import quantile_reg
 
 
 def any_reg(reg_type, *reg_args, **reg_kwargs):
@@ -23,6 +24,9 @@ def any_reg(reg_type, *reg_args, **reg_kwargs):
     if _is_normal_reg_str(reg_type):
         return reg(*reg_args, **reg_kwargs)
 
+    if _is_quantile_reg_str(reg_type):
+        return quantile_reg(*reg_args, **reg_kwargs)
+
     raise ValueError(f'Must pass valid reg type. Got {reg_type}')
 
 def _is_diff_reg_str(reg_str):
@@ -30,6 +34,9 @@ def _is_diff_reg_str(reg_str):
 
 def _is_normal_reg_str(reg_str):
     return reg_str in ('reg', 'normal', 'ols') or reg_str == None
+
+def _is_quantile_reg_str(reg_str):
+    return reg_str in ('quantile', 'quant', 'q', 'quantile reg', 'quantile_reg', 'quant_reg', 'quantreg', 'qreg', 'quantile regression')
 
 def _validate_inputs(*args, **kwargs):
     yvar = args[1]
