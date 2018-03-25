@@ -41,7 +41,26 @@ def reg(df, yvar, xvars, robust=True, cluster=False, cons=True, fe=None, interac
     If fe=None, returns statsmodels regression result
     if fe is not None, returns a tuple of (statsmodels regression result, dummy_cols_dict)
     """
+    regdf, y, X, dummy_cols_dict, lag_variables = _create_reg_df_y_x_and_dummies(df, yvar, xvars, cluster=cluster,
+                                                                  cons=cons, fe=fe,
+                                                                  interaction_tuples=interaction_tuples, num_lags=num_lags,
+                                                                  lag_variables=lag_variables, lag_period_var=lag_period_var,
+                                                                  lag_id_var=lag_id_var)
 
+    mod = sm.OLS(y, X)
+
+    result = _estimate_handling_robust_and_cluster(regdf, mod, robust, cluster)
+
+    _post_reg_cleanup(df, num_lags, lag_variables)
+
+    # Only return dummy_cols_dict when fe is active
+    if fe is not None:
+        return result, dummy_cols_dict
+    else:
+        return result
+
+def _create_reg_df_y_x_and_dummies(df, yvar, xvars, cluster=False, cons=True, fe=None, interaction_tuples=None,
+                                   num_lags=0, lag_variables='xvars', lag_period_var='Date', lag_id_var='TICKER'):
     # Handle lags
     if num_lags != 0:
         lag_variables = _set_lag_variables(lag_variables, yvar, xvars)
@@ -52,36 +71,26 @@ def reg(df, yvar, xvars, robust=True, cluster=False, cons=True, fe=None, interac
     else:
         reg_yvar, reg_xvars = yvar, xvars
 
-
     fe = _set_fe(fe)
     interaction_tuples = _set_interaction_tuples(interaction_tuples)
     regdf, y, X, dummy_cols_dict = _get_reg_df_y_x(df, reg_yvar, reg_xvars, cluster, cons, fe, interaction_tuples)
+    return regdf, y, X, dummy_cols_dict, lag_variables
 
-    mod = sm.OLS(y, X)
-
-    result = _estimate_handling_robust_and_cluster(regdf, mod, robust, cluster)
-
+def _post_reg_cleanup(df, num_lags, lag_variables):
     # Cleanup lags
     if num_lags != 0:
         df.drop(lag_variables, axis=1, inplace=True)
 
-    # Only return dummy_cols_dict when fe is active
-    if fe is not None:
-        return result, dummy_cols_dict
-    else:
-        return result
-
-
-def _estimate_handling_robust_and_cluster(regdf, model, robust, cluster):
+def _estimate_handling_robust_and_cluster(regdf, model, robust, cluster, **fit_kwargs):
     assert not (robust and cluster)  # need to pick one of robust or cluster
 
     if robust:
-        return model.fit(cov_type='HC1')
+        return model.fit(cov_type='HC1', **fit_kwargs)
 
     if cluster:
         groups = regdf[cluster].unique().tolist()
         group_ints = regdf[cluster].apply(lambda x: groups.index(x))
-        return model.fit(cov_type='cluster', cov_kwds={'groups': group_ints})
+        return model.fit(cov_type='cluster', cov_kwds={'groups': group_ints}, **fit_kwargs)
 
         ##### TODO: implement this code for multiple clustering - need to ensure cluster is list
         # cluster_cols = ['State', 'Date']
