@@ -1,6 +1,10 @@
 from statsmodels import api as sm
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
 
-from dero.reg.reg import _create_reg_df_y_x_and_dummies, _post_reg_cleanup, _estimate_handling_robust_and_cluster
+from dero.reg.reg import _create_reg_df_y_x_and_dummies, _estimate_handling_robust_and_cluster
+from dero.reg.order import _set_regressor_order
 
 def quantile_reg(df, yvar, xvars, q=0.5, robust=True, cluster=False, cons=True, fe=None, interaction_tuples=None,
         num_lags=0, lag_variables='xvars', lag_period_var='Date', lag_id_var='TICKER'):
@@ -52,3 +56,47 @@ def quantile_reg(df, yvar, xvars, q=0.5, robust=True, cluster=False, cons=True, 
     else:
         return result
 
+
+def reg_for_each_quantile_produce_result_df(main_iv, *reg_args, num_quantiles=8, **reg_kwargs):
+    quantiles = _create_quantiles_from_num_quantiles(num_quantiles)
+    results = [(quantile_reg(*reg_args, q=q, **reg_kwargs), q) for q in quantiles]
+    main_iv = _set_regressor_order([main_iv], reg_kwargs)[0]
+    simple_results = [_produce_simplified_result_list(result[0], result[1], main_iv) for result in results]
+    return pd.DataFrame(simple_results, columns=['q', 'a', 'b', 'lb', 'ub'])
+
+
+def _produce_simplified_result_list(res, q, main_iv):
+
+    # Handle possibility of dummy cols dict coming through with result as tuple
+    if isinstance(res, tuple):
+        res = res[0]
+
+    return [q, res.params['const'], res.params[main_iv]] + \
+           res.conf_int().ix[main_iv].tolist()
+
+
+def _create_quantiles_from_num_quantiles(num_quantiles):
+    quant_lower_bound = 1 / (num_quantiles + 1)
+    quant_upper_bound = quant_lower_bound * num_quantiles + quant_lower_bound / 2
+    return np.arange(quant_lower_bound, quant_upper_bound, quant_lower_bound)
+
+
+def quantile_plot_from_quantile_result_df(result_df, yvar, main_iv, outpath=None):
+    p1 = plt.plot(result_df.q, result_df.b, color='black', label='Quantile Regression Slope')
+    p2 = plt.plot(result_df.q, result_df.ub, linestyle='dotted', color='black',
+                  label='95% Confidence Interval Lower Bound')
+    p3 = plt.plot(result_df.q, result_df.lb, linestyle='dotted', color='black',
+                  label='95% Confidence Interval Upper Bound')
+    plt.title(f'Effect of {main_iv} on {yvar}')
+    plt.ylabel(r'Conditional Coefficient')
+    plt.xlabel(f'Quantiles of {yvar}')
+    plt.legend()
+
+    if outpath:
+        plt.savefig(outpath)
+    else:
+        plt.show()
+
+
+def _is_quantile_reg_str(reg_str):
+    return reg_str in ('quantile', 'quant', 'q', 'quantile reg', 'quantile_reg', 'quant_reg', 'quantreg', 'qreg', 'quantile regression')
