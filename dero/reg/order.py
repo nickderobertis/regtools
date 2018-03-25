@@ -1,4 +1,4 @@
-from .chooser import _is_diff_reg_str
+from dero.reg.differenced import _is_diff_reg_str
 from dero.reg.lag.create import varname_to_lagged_varname
 
 

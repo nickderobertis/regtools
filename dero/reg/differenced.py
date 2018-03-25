@@ -82,3 +82,7 @@ def _convert_interaction_tuples(interaction_tuples, diff_cols):
         out_tuples.append(tuple([var + ' Change' if var in diff_cols else var for var in tup]))
 
     return out_tuples
+
+
+def _is_diff_reg_str(reg_str):
+    return reg_str in ('diff', 'difference', 'diff_reg', 'diff reg', 'difference reg', 'difference regression')

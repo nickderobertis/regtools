@@ -152,3 +152,7 @@ def _set_interaction_tuples(interaction_tuples):
 def _collect_all_variables_from_xvars_and_interaction_tuples(xvars, interaction_tuples):
     interaction_vars = _collect_variables_from_interaction_tuples(interaction_tuples)
     return list(set(xvars + interaction_vars))
+
+
+def _is_normal_reg_str(reg_str):
+    return reg_str in ('reg', 'normal', 'ols') or reg_str == None
