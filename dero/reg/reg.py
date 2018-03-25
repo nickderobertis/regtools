@@ -51,8 +51,6 @@ def reg(df, yvar, xvars, robust=True, cluster=False, cons=True, fe=None, interac
 
     result = _estimate_handling_robust_and_cluster(regdf, mod, robust, cluster)
 
-    _post_reg_cleanup(df, num_lags, lag_variables)
-
     # Only return dummy_cols_dict when fe is active
     if fe is not None:
         return result, dummy_cols_dict

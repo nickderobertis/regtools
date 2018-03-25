@@ -46,8 +46,6 @@ def quantile_reg(df, yvar, xvars, q=0.5, robust=True, cluster=False, cons=True, 
 
     result = _estimate_handling_robust_and_cluster(regdf, mod, robust, cluster, q=q)
 
-    _post_reg_cleanup(df, num_lags, lag_variables)
-
     # Only return dummy_cols_dict when fe is active
     if fe is not None:
         return result, dummy_cols_dict
