@@ -75,7 +75,7 @@ def _remove_lag_name_from_reg_result(result, lags=(1,)):
     result = SimplifiedRegressionResult.from_statsmodels_result(result)
 
     # Modify base properties inplace
-    [_remove_lag_names_from_series_index(getattr(result, item), lags=lags) for item in ('params', 'pvalues', 'tvalues')]
+    [_remove_lag_names_from_series_index(getattr(result, item), lags=lags) for item in ('params', 'pvalues', 'tvalues', 'bse')]
 
     # Modify model properties and reassign (functions not inplace)
     result.model.endog_names = _remove_lag_names_from_varname(result.model.endog_names, lags=lags)
