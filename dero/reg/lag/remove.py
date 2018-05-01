@@ -1,34 +1,65 @@
 import pandas as pd
+from functools import partial
+from statsmodels.api import OLS
 
-class SimplifiedRegressionResult:
-    def __init__(self, params, pvalues, nobs, rsquared_adj, tvalues, bse, conf_int, exog_names, endog_names):
-        self.params = params
-        self.pvalues = pvalues
-        self.nobs = nobs
-        self.rsquared_adj = rsquared_adj
-        self.tvalues = tvalues
-        self.bse = bse
-        self.conf_int = conf_int
-        self.model = SimplifiedModel(exog_names, endog_names)
+class SimplifiedBase:
+    def _set_attrs(self, attr_dict):
+        for attr in attr_dict:
+            setattr(self, attr, attr_dict[attr])
+
+class SimplifiedRegressionResult(SimplifiedBase):
+    direct_attrs = [
+            'params', 'pvalues', 'tvalues', 'nobs', 'rsquared_adj', 'bse', 'conf_int',
+            'normalized_cov_params', 'cov_params_default', 'scale', 'cov_params',
+            't_test'
+    ]
+    model_attrs = ['exog_names', 'endog_names']
+
+
+    def __init__(self, **kwargs):
+        _validate_attrs(kwargs, self.direct_attrs + self.model_attrs)
+        model_kwargs = SimplifiedRegressionResult.pop_model_attrs(kwargs)
+        self._set_attrs(kwargs)
+        self.model = SimplifiedModel(**model_kwargs)
 
     @classmethod
     def from_statsmodels_result(cls, result):
 
         # Get direct attributes
-        pull_attrs = ['params', 'pvalues', 'tvalues', 'nobs', 'rsquared_adj', 'bse', 'conf_int']
-        result_dict = _extract_attrs_into_dict(result, pull_attrs)
+        result_dict = _extract_attrs_into_dict(result, cls.direct_attrs)
 
         # Get attributes of model
-        model_attrs = ['exog_names', 'endog_names']
-        result_dict.update(_extract_attrs_into_dict(result.model, model_attrs))
+        result_dict.update(_extract_attrs_into_dict(result.model, cls.model_attrs))
 
         return cls(**result_dict)
 
-class SimplifiedModel:
+    @classmethod
+    def pop_model_attrs(cls, attr_dict):
+        """
+        Note: pops from attr_dict inplace
+        """
+        outdict = {}
+        for attr in attr_dict:
+            if attr in cls.model_attrs:
+                outdict[attr] = attr_dict[attr]
 
-    def __init__(self, exog_names, endog_names):
-        self.exog_names = exog_names
-        self.endog_names = endog_names
+        # Must pop separately as cannot change size of iterating dict
+        [attr_dict.pop(attr) for attr in outdict]
+        return outdict
+
+
+class SimplifiedModel(SimplifiedBase):
+
+    def __init__(self, **kwargs):
+        self._set_attrs(kwargs)
+
+class UnsupportedResultAttributeException(Exception):
+    pass
+
+def _validate_attrs(attr_dict, valid_attrs):
+    for attr in attr_dict:
+        if attr not in valid_attrs:
+            raise UnsupportedResultAttributeException(f'Attribute {attr} not supported for SimplifiedRegressionResult')
 
 def _extract_attrs_into_dict(obj, attrs):
     result_dict = {}
@@ -75,13 +106,46 @@ def _remove_lag_name_from_reg_result(result, lags=(1,)):
     result = SimplifiedRegressionResult.from_statsmodels_result(result)
 
     # Modify base properties inplace
-    [_remove_lag_names_from_series_index(getattr(result, item), lags=lags) for item in ('params', 'pvalues', 'tvalues', 'bse')]
+    [
+        _remove_lag_names_from_ambiguous_property(getattr(result, item), lags=lags) for item in (
+            'params', 'pvalues', 'tvalues', 'bse', 'normalized_cov_params'
+        )
+    ]
 
     # Modify model properties and reassign (functions not inplace)
-    result.model.endog_names = _remove_lag_names_from_varname(result.model.endog_names, lags=lags)
-    result.model.exog_names = _remove_lag_names_from_list(result.model.exog_names, lags=lags)
+    for attr in ['endog_names', 'exog_names']:
+        setattr(
+            result.model,
+            attr,
+            _remove_lag_names_from_ambiguous_property(
+                getattr(result.model, attr),
+                lags=lags)
+        )
 
     return result
+
+def _remove_lag_names_from_ambiguous_property(ambiguous, lags=(1,)):
+    """
+    Note: Series and DataFrame operations inplace, str and list operations not inplace
+    """
+    if isinstance(ambiguous, pd.DataFrame):
+        lag_func = partial(_remove_lag_names_from_df_index_and_columns, ambiguous)
+    elif isinstance(ambiguous, pd.Series):
+        lag_func = partial(_remove_lag_names_from_series_index, ambiguous)
+    elif isinstance(ambiguous, str):
+        lag_func = partial(_remove_lag_names_from_varname, ambiguous)
+    elif isinstance(ambiguous, list):
+        lag_func = partial(_remove_lag_names_from_list, ambiguous)
+    else:
+        raise ValueError(f'Must pass DataFrame, Series, str, or list. Got type {type(ambiguous)}')
+
+    return lag_func(lags=lags)
+
+def _remove_lag_names_from_df_index_and_columns(df, lags=(1,)):
+    """
+    Note: inplace
+    """
+    [_remove_one_lag_names_from_df_index_and_columns(df, num_lags=num_lags) for num_lags in lags]
 
 
 def _remove_lag_names_from_series_index(series, lags=(1,)):
@@ -90,6 +154,14 @@ def _remove_lag_names_from_series_index(series, lags=(1,)):
     """
     [_remove_one_lag_names_from_series_index(series, num_lags=num_lags) for num_lags in lags]
 
+
+def _remove_one_lag_names_from_df_index_and_columns(df, num_lags=1):
+    """
+    Note: inplace
+    """
+    rename_dict = {col: lag_varname_to_varname(col, num_lags=num_lags) for col in df.index}
+    df.index = df.index.to_series().replace(rename_dict)
+    df.columns = df.columns.to_series().replace(rename_dict)
 
 def _remove_one_lag_names_from_series_index(series, num_lags=1):
     """

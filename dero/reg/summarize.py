@@ -34,9 +34,17 @@ def produce_summary(reg_sets, stderr=False, float_format='%0.1f', regressor_orde
     # If not fixed effects, dummy_col_dicts will be None
     reg_list, dummy_col_dicts = _extract_result_list_and_dummy_dicts(reg_sets)
 
-    info_dict = {'N': lambda x: "{0:d}".format(int(x.nobs)),
-                                  # 'R2': lambda x: "{:.2f}".format(x.rsquared),
-                                  'Adj-R2': lambda x: "{:.2f}".format(x.rsquared_adj)}
+    info_dict = {'N': lambda x: "{0:d}".format(int(x.nobs))}
+
+    # Grab proper r-squared. For OLS, it's adjusted r-squared, for probit and logit, it's Pseudo r-squared
+    if _result_has_adjusted_r2(reg_list[0]):
+        info_dict.update({
+            'Adj-R2': lambda x: "{:.2f}".format(x.rsquared_adj)
+        })
+    elif _result_has_pseudo_r2(reg_list[0]):
+        info_dict.update({
+            'Pseudo-R2': lambda x: "{:.2f}".format(x.prsquared)
+        })
 
     summ = summary_col(reg_list, stars=True, float_format=float_format,
                        regressor_order=regressor_order,
@@ -162,3 +170,9 @@ def _check_produce_summary_inputs(regressor_order, supress_other_regressors, mod
 
     if model_names and (len(model_names) != num_models):
         raise ValueError(f'must pass model_names of equal length to num models. Have {len(model_names)} names and {num_models} models.')
+
+def _result_has_adjusted_r2(result):
+    return hasattr(result, 'rsquared_adj')
+
+def _result_has_pseudo_r2(result):
+    return hasattr(result, 'prsquared')

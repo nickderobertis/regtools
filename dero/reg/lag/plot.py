@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 
 from dero.reg.interact import _interaction_tuple_to_var_name
 from dero.reg.iter import _set_interaction_tuples
+from dero.reg.hypothesis.lincom import hypothesis_test
 
 # TODO: make module flexible to not having interaction
 
@@ -29,10 +30,8 @@ def interacted_lag_plot_from_lag_result_df(result_df, yvar, main_iv, date_var='Y
     :return:
     """
     p1 = plt.plot(result_df.q, result_df.b, color='black', label='Lag Regression Slope')
-    p2 = plt.plot(result_df.q, result_df.ub, linestyle='dotted', color='black',
-                  label='95% Confidence Interval Lower Bound')
-    p3 = plt.plot(result_df.q, result_df.lb, linestyle='dotted', color='black',
-                  label='95% Confidence Interval Upper Bound')
+    p2 = plt.fill_between(result_df.q, result_df.ub, result_df.lb, color='gray',
+                          label='95% Confidence Interval Bound')
     plt.title(f'Effect of {main_iv} on {yvar} over Time')
     plt.ylabel(r'Lag Coefficient')
     plt.xlabel(f'Number of {date_var}s Lagged')
@@ -74,13 +73,17 @@ def _produce_simplified_result_list_from_one_result(res, lag, main_iv, interacti
     b_interact = res.params[interaction_name]
 
     # 95% confidence interval +/- amount
-    conf_iv = 2 * res.bse[main_iv]
-    conf_interact = 2 * res.bse[interaction_name]
+    # Get standard error of linear combination
+    col_coef_dict = {
+        main_iv: 1,
+        interaction_name: interaction_var_value
+    }
+    hypothesis_result = hypothesis_test(res, col_coef_dict=col_coef_dict)
 
     return [
         lag,
         res.params['const'],
-        b_iv + b_interact * interaction_var_value,
-        b_iv - conf_iv + (b_interact - conf_interact) * interaction_var_value,
-        b_iv + conf_iv + (b_interact + conf_interact) * interaction_var_value,
+        hypothesis_result.effect,
+        hypothesis_result.conf_int()[0][0],  # lower 95% confidence interval
+        hypothesis_result.conf_int()[0][1],  # upper 95% confidence interval
     ]

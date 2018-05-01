@@ -3,12 +3,14 @@ from statsmodels import api as sm
 from .tools import _to_list_if_str, _to_list_if_tuple
 from .fe import fixed_effects_reg_df_and_cols_dict, extract_all_dummy_cols_from_dummy_cols_dict
 from .interact import create_interaction_variables, delete_interaction_variables, _collect_variables_from_interaction_tuples
+from dero.reg.models import get_model_class_by_string, _is_probit_str, _is_logit_str
 from dero.reg.lag import create_lagged_variables, _convert_variable_names, _convert_interaction_tuples, \
     _set_lag_variables
 
 
 def reg(df, yvar, xvars, robust=True, cluster=False, cons=True, fe=None, interaction_tuples=None,
-        num_lags=0, lag_variables='xvars', lag_period_var='Date', lag_id_var='TICKER'):
+        num_lags=0, lag_variables='xvars', lag_period_var='Date', lag_id_var='TICKER',
+        model_type='OLS'):
     """
     Returns a fitted regression. Takes df, produces a regression df with no missing among needed
     variables, and fits a regression model. If robust is specified, uses heteroskedasticity-
@@ -36,6 +38,7 @@ def reg(df, yvar, xvars, robust=True, cluster=False, cons=True, fe=None, interac
                     contains period variable for lagging
     lag_id_var: str, only used if lag_variables is not None. name of column which
                     contains identifier variable for lagging
+    model_type: str, 'OLS', 'probit', or 'logit' for type of model
 
     Returns:
     If fe=None, returns statsmodels regression result
@@ -47,9 +50,18 @@ def reg(df, yvar, xvars, robust=True, cluster=False, cons=True, fe=None, interac
                                                                   lag_variables=lag_variables, lag_period_var=lag_period_var,
                                                                   lag_id_var=lag_id_var)
 
-    mod = sm.OLS(y, X)
+    ModelClass = get_model_class_by_string(model_type)
+    mod = ModelClass(y, X)
 
-    result = _estimate_handling_robust_and_cluster(regdf, mod, robust, cluster)
+    if _is_probit_str(model_type) or _is_logit_str(model_type):
+        fit_kwargs = dict(
+            method='bfgs',
+            maxiter=100
+        )
+    else:
+        fit_kwargs = {}
+
+    result = _estimate_handling_robust_and_cluster(regdf, mod, robust, cluster, **fit_kwargs)
 
     # Only return dummy_cols_dict when fe is active
     if fe is not None:
@@ -98,7 +110,7 @@ def _estimate_handling_robust_and_cluster(regdf, model, robust, cluster, **fit_k
         # result = sm.OLS(df['Return'], df['random']).fit(cov_type='cluster', cov_kwds={'groups': group_ints})
         #####
 
-    return model.fit()
+    return model.fit(**fit_kwargs)
 
 def _get_reg_df_y_x(df, yvar, xvars, cluster, cons, fe, interaction_tuples):
     all_xvars = _collect_all_variables_from_xvars_and_interaction_tuples(xvars, interaction_tuples)
