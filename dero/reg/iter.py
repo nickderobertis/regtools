@@ -154,7 +154,7 @@ def _pop_and_convert_kwargs_which_are_repeated_across_models(reg_kwargs, num_mod
     if 'interaction_tuples' in reg_kwargs:
         interaction_tuples = reg_kwargs.pop('interaction_tuples')
     else:
-        interaction_tuples = []
+        interaction_tuples = [None]
 
     fe = _set_fe(fe, num_models)
     interaction_tuples = _set_interaction_tuples(interaction_tuples, num_models)

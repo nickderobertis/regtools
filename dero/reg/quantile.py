@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from dero.reg.reg import _create_reg_df_y_x_and_dummies, _estimate_handling_robust_and_cluster
+from dero.reg.dataprep import _create_reg_df_y_x_and_dummies, _estimate_handling_robust_and_cluster
 from dero.reg.order import _set_regressor_order
 
 def quantile_reg(df, yvar, xvars, q=0.5, robust=True, cluster=False, cons=True, fe=None, interaction_tuples=None,
