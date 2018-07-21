@@ -2,19 +2,23 @@ from dero.ext_pandas import _to_list_if_str
 from dero.ext_pandas.filldata import add_missing_group_rows, drop_missing_group_rows
 
 
-def create_lagged_variables(df, lag_cols, id_col='TICKER', date_col='Date', num_lags=1):
+def create_lagged_variables(df, lag_cols, id_col='TICKER', date_col='Date', num_lags=1,
+                            fill_method='ffill'):
     """
     Note: partially inplace
     """
     df.sort_values([id_col, date_col], inplace=True)
-    df = add_missing_group_rows(df, [id_col, date_col])
+
+    # Save original byvars, for outputting df of same shape
+    orig_index_df = df[[id_col, date_col]]
+
+    df = add_missing_group_rows(df, [id_col, date_col], fill_method=fill_method)
 
     for col in lag_cols:
         _create_lagged_variable(df, col, id_col=id_col, num_lags=num_lags)
 
-    # If only filled data are id, date, and lagged var, drop obs. Don't want to expand size of df
-    new_cols = [varname_to_lagged_varname(col) for col in lag_cols]
-    df = drop_missing_group_rows(df, [id_col, date_col] + new_cols)
+    # Don't want to expand size of df
+    df = orig_index_df.merge(df, how='left', on=[id_col, date_col])
 
     return df
 

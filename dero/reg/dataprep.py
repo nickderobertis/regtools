@@ -7,7 +7,8 @@ from dero.reg.tools import _to_list_if_str, _to_list_if_tuple
 
 
 def _create_reg_df_y_x_and_dummies(df, yvar, xvars, cluster=False, cons=True, fe=None, interaction_tuples=None,
-                                   num_lags=0, lag_variables='xvars', lag_period_var='Date', lag_id_var='TICKER'):
+                                   num_lags=0, lag_variables='xvars', lag_period_var='Date', lag_id_var='TICKER',
+                                   fill_method='ffill'):
     # Handle lags
     df, reg_yvar, reg_xvars, interaction_tuples, lag_variables = create_lagged_variables_return_yvars_xvars_interaction_tuples(
         df, yvar, xvars,
@@ -15,7 +16,8 @@ def _create_reg_df_y_x_and_dummies(df, yvar, xvars, cluster=False, cons=True, fe
         num_lags=num_lags,
         lag_variables=lag_variables,
         lag_period_var=lag_period_var,
-        lag_id_var=lag_id_var
+        lag_id_var=lag_id_var,
+        fill_method=fill_method
     )
 
     fe = _set_fe(fe)

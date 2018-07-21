@@ -4,7 +4,7 @@ from dero.reg.linmodels.bindings.fit import _estimate_handling_robust_and_cluste
 from dero.reg.linmodels.bindings.result import _convert_linearmodels_result_to_statsmodels_result_format
 
 def linear_reg(df, yvar, xvars, entity_var=None, time_var=None, robust=True, cluster=False, cons=True, fe=None, interaction_tuples=None,
-        num_lags=0, lag_variables='xvars', lag_period_var='Date', lag_id_var='TICKER',
+        num_lags=0, lag_variables='xvars', lag_period_var='Date', lag_id_var='TICKER', lag_fill_method: str='ffill',
         model_type='fama macbeth', **fit_kwargs):
     """
 
@@ -27,6 +27,8 @@ def linear_reg(df, yvar, xvars, entity_var=None, time_var=None, robust=True, clu
                         contains period variable for lagging
         lag_id_var: str, only used if lag_variables is not None. name of column which
                         contains identifier variable for lagging
+        lag_fill_method: str, 'ffill' or 'bfill' for which method to use to fill in missing rows when
+                     creating lag variables. See pandas.DataFrame.fillna for more details
         model_type: str, 'fama macbeth' for type of model
 
     Returns:
@@ -36,10 +38,6 @@ def linear_reg(df, yvar, xvars, entity_var=None, time_var=None, robust=True, clu
     if entity_var is None or time_var is None:
         raise ValueError('must pass both entity_var and time_var')
 
-    ### TEMP
-    # import pdb
-    # pdb.set_trace()
-    ### END TEMP
 
     regdf, y, X, lag_variables = _create_reg_df_y_x_and_lag_vars(
         df, yvar, xvars, entity_var, time_var,
@@ -49,7 +47,8 @@ def linear_reg(df, yvar, xvars, entity_var=None, time_var=None, robust=True, clu
         num_lags=num_lags,
         lag_variables=lag_variables,
         lag_period_var=lag_period_var,
-        lag_id_var=lag_id_var
+        lag_id_var=lag_id_var,
+        fill_method=lag_fill_method
     )
 
     ModelClass = get_model_class_by_string(model_type)

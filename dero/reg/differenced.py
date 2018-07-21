@@ -3,13 +3,15 @@ from ..ext_pandas.filldata import add_missing_group_rows, drop_missing_group_row
 from dero.reg.lag.create import _is_special_lag_keyword
 
 
-def diff_reg(df, yvar, xvars, id_col, date_col, difference_lag=1, diff_cols=None, **reg_kwargs):
+def diff_reg(df, yvar, xvars, id_col, date_col, difference_lag=1, diff_cols=None,
+             diff_fill_method: str='ffill', **reg_kwargs):
 
     if diff_cols == None:
         # All by default
         diff_cols = [yvar] + xvars
 
-    df = create_differenced_variables(df, diff_cols, id_col=id_col, date_col=date_col, difference_lag=difference_lag)
+    df = create_differenced_variables(df, diff_cols, id_col=id_col, date_col=date_col, difference_lag=difference_lag,
+                                      fill_method=diff_fill_method)
 
     # Convert names in lists of variables being passed to reg
     reg_yvar, reg_xvars = _convert_variable_names(yvar, xvars, diff_cols)
@@ -29,17 +31,23 @@ def diff_reg(df, yvar, xvars, id_col, date_col, difference_lag=1, diff_cols=None
 
 
 
-def create_differenced_variables(df, diff_cols, id_col='TICKER', date_col='Date', difference_lag=1):
+def create_differenced_variables(df, diff_cols, id_col='TICKER', date_col='Date', difference_lag=1,
+                                 fill_method='ffill'):
     """
     Note: partially inplace
     """
     df.sort_values([id_col, date_col], inplace=True)
-    df = add_missing_group_rows(df, [id_col, date_col])
+
+    # Save original byvars, for outputting df of same shape
+    orig_index_df = df[[id_col, date_col]]
+
+    # Fill in missing data
+    df = add_missing_group_rows(df, [id_col, date_col], fill_method=fill_method)
 
     for col in diff_cols:
         _create_differenced_variable(df, col, id_col=id_col, difference_lag=difference_lag)
 
-    df = drop_missing_group_rows(df, [id_col, date_col])
+    df = orig_index_df.merge(df, how='left', on=[id_col, date_col])
 
     return df
 

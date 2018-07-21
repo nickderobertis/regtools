@@ -18,7 +18,8 @@ DfYvarXvarsLagvars = Tuple[pd.DataFrame, str, StrOrListOfStrs, StrOrListOfStrs]
 def _create_reg_df_y_x_and_lag_vars(df: pd.DataFrame, yvar: str, xvars: StrOrListOfStrs,
                                     entity_var: str, time_var: str,
                                     cluster=False, cons=True, fe=None, interaction_tuples=None,
-                                   num_lags=0, lag_variables='xvars', lag_period_var='Date', lag_id_var='TICKER'
+                                   num_lags=0, lag_variables='xvars', lag_period_var='Date', lag_id_var='TICKER',
+                                    fill_method: str = 'ffill'
                                     ) -> DfYvarXvarsLagvars:
 
     # TODO: implement FE
@@ -32,7 +33,8 @@ def _create_reg_df_y_x_and_lag_vars(df: pd.DataFrame, yvar: str, xvars: StrOrLis
         num_lags=num_lags,
         lag_variables=lag_variables,
         lag_period_var=lag_period_var,
-        lag_id_var=lag_id_var
+        lag_id_var=lag_id_var,
+        fill_method=fill_method
     )
 
     interaction_tuples = _set_interaction_tuples(interaction_tuples)

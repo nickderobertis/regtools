@@ -4,6 +4,7 @@ from dero.reg.models import get_model_class_by_string, _is_probit_str, _is_logit
 
 def reg(df, yvar, xvars, robust=True, cluster=False, cons=True, fe=None, interaction_tuples=None,
         num_lags=0, lag_variables='xvars', lag_period_var='Date', lag_id_var='TICKER',
+        lag_fill_method: str='ffill',
         model_type='OLS'):
     """
     Returns a fitted regression. Takes df, produces a regression df with no missing among needed
@@ -32,6 +33,8 @@ def reg(df, yvar, xvars, robust=True, cluster=False, cons=True, fe=None, interac
                     contains period variable for lagging
     lag_id_var: str, only used if lag_variables is not None. name of column which
                     contains identifier variable for lagging
+    lag_fill_method: str, 'ffill' or 'bfill' for which method to use to fill in missing rows when
+                     creating lag variables. See pandas.DataFrame.fillna for more details
     model_type: str, 'OLS', 'probit', or 'logit' for type of model
 
     Returns:
@@ -42,7 +45,8 @@ def reg(df, yvar, xvars, robust=True, cluster=False, cons=True, fe=None, interac
                                                                                  cons=cons, fe=fe,
                                                                                  interaction_tuples=interaction_tuples, num_lags=num_lags,
                                                                                  lag_variables=lag_variables, lag_period_var=lag_period_var,
-                                                                                 lag_id_var=lag_id_var)
+                                                                                 lag_id_var=lag_id_var,
+                                                                                 fill_method=lag_fill_method)
 
     ModelClass = get_model_class_by_string(model_type)
     mod = ModelClass(y, X)
