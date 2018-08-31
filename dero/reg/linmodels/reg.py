@@ -39,7 +39,7 @@ def linear_reg(df, yvar, xvars, entity_var=None, time_var=None, robust=True, clu
         raise ValueError('must pass both entity_var and time_var')
 
 
-    regdf, y, X, lag_variables = _create_reg_df_y_x_and_lag_vars(
+    regdf, y, X, lag_variables, dummy_cols_dict = _create_reg_df_y_x_and_lag_vars(
         df, yvar, xvars, entity_var, time_var,
         cluster=cluster,
         cons=cons, fe=fe,
@@ -58,6 +58,6 @@ def linear_reg(df, yvar, xvars, entity_var=None, time_var=None, robust=True, clu
 
     _convert_linearmodels_result_to_statsmodels_result_format(result)
 
-    return result
+    return result, dummy_cols_dict
 
 
