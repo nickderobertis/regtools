@@ -21,7 +21,7 @@ def _create_reg_df_y_x_and_lag_vars(df: pd.DataFrame, yvar: str, xvars: StrOrLis
                                     entity_var: str, time_var: str,
                                     cluster=False, cons=True, fe=None, interaction_tuples=None,
                                    num_lags=0, lag_variables='xvars', lag_period_var='Date', lag_id_var='TICKER',
-                                    fill_method: str = 'ffill'
+                                    fill_method: str = 'ffill', fill_limit: int = None,
                                     ) -> DfYvarXvarsLagvarsDummyDict:
 
     # Handle lags
@@ -32,7 +32,8 @@ def _create_reg_df_y_x_and_lag_vars(df: pd.DataFrame, yvar: str, xvars: StrOrLis
         lag_variables=lag_variables,
         lag_period_var=lag_period_var,
         lag_id_var=lag_id_var,
-        fill_method=fill_method
+        fill_method=fill_method,
+        fill_limit=fill_limit
     )
 
     fe = _set_fe(fe)

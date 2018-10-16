@@ -4,14 +4,14 @@ from dero.reg.lag.create import _is_special_lag_keyword
 
 
 def diff_reg(df, yvar, xvars, id_col, date_col, difference_lag=1, diff_cols=None,
-             diff_fill_method: str='ffill', **reg_kwargs):
+             diff_fill_method: str='ffill', diff_fill_limit: int = None, **reg_kwargs):
 
     if diff_cols == None:
         # All by default
         diff_cols = [yvar] + xvars
 
     df = create_differenced_variables(df, diff_cols, id_col=id_col, date_col=date_col, difference_lag=difference_lag,
-                                      fill_method=diff_fill_method)
+                                      fill_method=diff_fill_method, fill_limit=diff_fill_limit)
 
     # Convert names in lists of variables being passed to reg
     reg_yvar, reg_xvars = _convert_variable_names(yvar, xvars, diff_cols)
@@ -32,7 +32,7 @@ def diff_reg(df, yvar, xvars, id_col, date_col, difference_lag=1, diff_cols=None
 
 
 def create_differenced_variables(df, diff_cols, id_col='TICKER', date_col='Date', difference_lag=1,
-                                 fill_method='ffill'):
+                                 fill_method='ffill', fill_limit: int = None):
     """
     Note: partially inplace
     """
@@ -42,7 +42,7 @@ def create_differenced_variables(df, diff_cols, id_col='TICKER', date_col='Date'
     orig_index_df = df[[id_col, date_col]]
 
     # Fill in missing data
-    df = add_missing_group_rows(df, [id_col, date_col], fill_method=fill_method)
+    df = add_missing_group_rows(df, [id_col], [date_col], fill_method=fill_method, fill_limit=fill_limit)
 
     for col in diff_cols:
         _create_differenced_variable(df, col, id_col=id_col, difference_lag=difference_lag)

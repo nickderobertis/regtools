@@ -5,6 +5,7 @@ from dero.reg.linmodels.bindings.result import _convert_linearmodels_result_to_s
 
 def linear_reg(df, yvar, xvars, entity_var=None, time_var=None, robust=True, cluster=False, cons=True, fe=None, interaction_tuples=None,
         num_lags=0, lag_variables='xvars', lag_period_var='Date', lag_id_var='TICKER', lag_fill_method: str='ffill',
+        lag_fill_limit: int = None,
         model_type='fama macbeth', **fit_kwargs):
     """
 
@@ -29,6 +30,7 @@ def linear_reg(df, yvar, xvars, entity_var=None, time_var=None, robust=True, clu
                         contains identifier variable for lagging
         lag_fill_method: str, 'ffill' or 'bfill' for which method to use to fill in missing rows when
                      creating lag variables. See pandas.DataFrame.fillna for more details
+        lag_fill_limit: int, maximum number of periods to go back or forward for filling
         model_type: str, 'fama macbeth' for type of model
 
     Returns:
@@ -48,7 +50,8 @@ def linear_reg(df, yvar, xvars, entity_var=None, time_var=None, robust=True, clu
         lag_variables=lag_variables,
         lag_period_var=lag_period_var,
         lag_id_var=lag_id_var,
-        fill_method=lag_fill_method
+        fill_method=lag_fill_method,
+        fill_limit=lag_fill_limit
     )
 
     ModelClass = get_model_class_by_string(model_type)

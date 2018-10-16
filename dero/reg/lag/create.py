@@ -3,7 +3,7 @@ from dero.ext_pandas.filldata import add_missing_group_rows, drop_missing_group_
 
 
 def create_lagged_variables(df, lag_cols, id_col='TICKER', date_col='Date', num_lags=1,
-                            fill_method='ffill'):
+                            fill_method='ffill', fill_limit: int=None):
     """
     Note: partially inplace
     """
@@ -12,7 +12,7 @@ def create_lagged_variables(df, lag_cols, id_col='TICKER', date_col='Date', num_
     # Save original byvars, for outputting df of same shape
     orig_index_df = df[[id_col, date_col]]
 
-    df = add_missing_group_rows(df, [id_col, date_col], fill_method=fill_method)
+    df = add_missing_group_rows(df, [id_col], [date_col], fill_method=fill_method, fill_limit=fill_limit)
 
     for col in lag_cols:
         _create_lagged_variable(df, col, id_col=id_col, num_lags=num_lags)

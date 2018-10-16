@@ -8,7 +8,7 @@ from dero.reg.order import _set_regressor_order
 
 def quantile_reg(df, yvar, xvars, q=0.5, robust=True, cluster=False, cons=True, fe=None, interaction_tuples=None,
         num_lags=0, lag_variables='xvars', lag_period_var='Date', lag_id_var='TICKER',
-        lag_fill_method: str = 'ffill'):
+        lag_fill_method: str = 'ffill', lag_fill_limit: int = None):
     """
     Returns a fitted quantile regression. Takes df, produces a regression df with no missing among needed
     variables, and fits a regression model. If robust is specified, uses heteroskedasticity-
@@ -39,6 +39,7 @@ def quantile_reg(df, yvar, xvars, q=0.5, robust=True, cluster=False, cons=True, 
                      creating lag variables. See pandas.DataFrame.fillna for more details
     lag_id_var: str, only used if lag_variables is not None. name of column which
                     contains identifier variable for lagging
+    lag_fill_limit: pandas fill limit
 
     Returns:
     If fe=None, returns statsmodels regression result
@@ -47,7 +48,8 @@ def quantile_reg(df, yvar, xvars, q=0.5, robust=True, cluster=False, cons=True, 
     regdf, y, X, dummy_cols_dict, lag_variables = _create_reg_df_y_x_and_dummies(df, yvar, xvars, cluster=cluster, cons=cons, fe=fe,
                                                                   interaction_tuples=interaction_tuples, num_lags=num_lags,
                                                                   lag_variables=lag_variables, lag_period_var=lag_period_var,
-                                                                  lag_id_var=lag_id_var, fill_method=lag_fill_method)
+                                                                  lag_id_var=lag_id_var, fill_method=lag_fill_method,
+                                                                  fill_limit=lag_fill_limit)
 
     mod = sm.QuantReg(y, X)
 
