@@ -1,6 +1,12 @@
 import numpy as np
 import pandas as pd
 
+from scipy import stats
+
+from statsmodels.iolib.summary2 import summary_params
+from statsmodels.iolib.table import SimpleTable
+from statsmodels.iolib.tableformatting import fmt_params
+
 from statsmodels.iolib.summary2 import lrange, reduce, zip, range, _col_params, \
     _make_unique, _col_info, Summary
 
@@ -104,3 +110,52 @@ def summary_col(results, float_format='%.4f', model_names=[], stars=False,
         smry.add_text('* p<.1, ** p<.05, ***p<.01')
 
     return smry
+
+def update_statsmodel_result_with_new_cov_matrix(result, cov_matrix: pd.DataFrame):
+    """
+    Note: inplace
+
+    Statsmodels results have caching going on. Need to update all the properties
+    which depend on the covariance matrix
+
+    """
+
+
+    result.cov_params = lambda: cov_matrix
+    result.bse = pd.Series(np.sqrt(np.diag(result.cov_params())), index=result.model.exog_names)
+    result.tvalues = result.params / result.bse
+
+    if result.use_t:
+        df_resid = getattr(result, 'df_resid_inference', result.df_resid)
+        result.pvalues = stats.t.sf(np.abs(result.tvalues), df_resid) * 2
+    else:
+        result.pvalues = stats.norm.sf(np.abs(result.tvalues)) * 2
+
+    _update_statsmodel_result_summary_after_cov_matrix_changed(result)
+
+def _update_statsmodel_result_summary_after_cov_matrix_changed(result):
+    """
+    Note: inplace
+    """
+    # Create new param/stderr section of summary
+    new_param_stderr = summary_params(
+        result
+    )
+    new_table = SimpleTable(
+        new_param_stderr.values,
+        headers=list(new_param_stderr.columns),
+        stubs=list(new_param_stderr.index),
+        txt_fmt=fmt_params
+    )
+
+    # Create summary object with param/stderr table replaced
+    summ = result.summary()
+    summ.tables[1] = new_table
+
+    # Assign summary method of result to return this summary object
+    result.summary = lambda: summ
+
+    # Repeat steps for summary2, which only requires df and not SimpleTable
+    summ2 = result.summary2()
+    summ2.tables[1] = new_param_stderr
+    result.summary2 = lambda: summ2

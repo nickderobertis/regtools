@@ -14,7 +14,19 @@ def get_model_class_by_string(model_string):
     elif _is_fama_macbeth_str(model_string):
         return FamaMacBeth
     else:
-        raise ValueError(f'model string does not signify ols, probit, or logit. got {model_string}')
+        raise ValueError(f'model string does not signify ols, probit, logit, or fama macbeth. got {model_string}')
+
+def get_model_name_by_string(model_string: str) -> str:
+    if _is_logit_str(model_string):
+        return 'Logit'
+    elif _is_probit_str(model_string):
+        return 'Probit'
+    elif _is_ols_str(model_string):
+        return 'OLS'
+    elif _is_fama_macbeth_str(model_string):
+        return 'Fama-Macbeth'
+    else:
+        raise ValueError(f'model string does not signify ols, probit, logit, or fama macbeth. got {model_string}')
 
 
 def _is_probit_str(model_string):

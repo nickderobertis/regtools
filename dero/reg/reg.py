@@ -21,8 +21,10 @@ def reg(df, yvar, xvars, robust=True, cluster=False, cons=True, fe=None, interac
 
     Optional inputs:
     robust: bool, set to True to use heterskedasticity-robust standard errors
-    cluster: False or str, set to a column name to calculate standard errors within clusters
-             given by unique values of given column name
+    cluster: False or list of strs, set to a column name to calculate standard errors within clusters
+             given by unique values of given column name. set to multiple column names for multiway
+             clustering following Cameron, Gelbach, and Miller (2011). NOTE: will get exponentially
+             slower as more cluster variables are added
     cons: bool, set to False to not include a constant in the regression
     fe: None or str or list of strs. If a str or list of strs is passed, uses these categorical
     variables to construct dummies for fixed effects.
