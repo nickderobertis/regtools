@@ -8,12 +8,12 @@ from .controls import suppress_controls_in_summary_df
 
 
 
-def produce_summary(reg_sets, stderr=False, float_format='%0.1f', regressor_order=[],
+def produce_summary(reg_list, stderr=False, float_format='%0.1f', regressor_order=[],
                     suppress_other_regressors=False, model_names=None):
     """
 
-    :param reg_sets:
-    :type reg_sets:
+    :param reg_list:
+    :type reg_list:
     :param stderr:
     :type stderr:
     :param float_format:
@@ -29,10 +29,7 @@ def produce_summary(reg_sets, stderr=False, float_format='%0.1f', regressor_orde
     :rtype:
     """
 
-    _check_produce_summary_inputs(regressor_order, suppress_other_regressors, model_names, len(reg_sets))
-
-    # If not fixed effects, dummy_col_dicts will be None
-    reg_list, dummy_col_dicts = _extract_result_list_and_dummy_dicts(reg_sets)
+    _check_produce_summary_inputs(regressor_order, suppress_other_regressors, model_names, len(reg_list))
 
     info_dict = {'N': lambda x: "{0:d}".format(int(x.nobs))}
 
@@ -51,7 +48,8 @@ def produce_summary(reg_sets, stderr=False, float_format='%0.1f', regressor_orde
                        info_dict=info_dict)
 
     # Handle fe - remove individual fe cols and replace with e.g. Industry Fixed Effects No, Yes, Yes
-    if dummy_col_dicts: #if fixed effects
+    dummy_col_dicts = [result.dummy_col_dict for result in reg_list]
+    if any([dummy_col_dict is not None for dummy_col_dict in dummy_col_dicts]): #if fixed effects
         split_rows = [var for var in info_dict]
         _remove_fe_cols_replace_with_fixed_effect_yes_no_lines(summ, dummy_col_dicts, split_rows)
 

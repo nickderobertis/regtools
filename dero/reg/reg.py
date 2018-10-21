@@ -65,8 +65,10 @@ def reg(df, yvar, xvars, robust=True, cluster=False, cons=True, fe=None, interac
 
     # Only return dummy_cols_dict when fe is active
     if fe is not None:
-        return result, dummy_cols_dict
+        result.dummy_cols_dict = dummy_cols_dict
     else:
-        return result
+        result.dummy_cols_dict = None
+
+    return result
 
 
