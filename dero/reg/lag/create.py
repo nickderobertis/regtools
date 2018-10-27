@@ -32,7 +32,7 @@ def _create_lagged_variable(df, col, id_col='TICKER', num_lags=1):
 
 
 def varname_to_lagged_varname(varname, num_lags=1):
-    return varname + f'_{{t - {num_lags}}}'
+    return varname + f'$_{{t - {num_lags}}}$'
 
 
 def _convert_variable_names(yvar, xvars, lag_cols, num_lags=1):

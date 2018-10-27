@@ -184,4 +184,4 @@ def _remove_lag_names_from_varname(varname, lags=(1,)):
     return varname
 
 def lag_varname_to_varname(varname, num_lags=1):
-    return varname.replace(rf'_{{t - {num_lags}}}', '')
+    return varname.replace(rf'$_{{t - {num_lags}}}$', '')
