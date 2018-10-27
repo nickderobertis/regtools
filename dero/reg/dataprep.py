@@ -1,7 +1,8 @@
 from statsmodels import api as sm
 from typing import List, Union
 
-from dero.reg.fe import fixed_effects_reg_df_and_cols_dict, extract_all_dummy_cols_from_dummy_cols_dict
+from dero.reg.fe.dataprep import fixed_effects_reg_df_and_cols_dict
+from dero.reg.fe.tools import extract_all_dummy_cols_from_dummy_cols_dict
 from dero.reg.interact import create_interaction_variables, _collect_variables_from_interaction_tuples
 from dero.reg.lag.main import create_lagged_variables_return_yvars_xvars_interaction_tuples
 from dero.reg.tools import _to_list_if_str, _to_list_if_tuple

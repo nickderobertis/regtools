@@ -1,10 +1,12 @@
-from .ext_statsmodels import summary_col
+from dero.reg.ext_statsmodels import summary_col
 import pandas as pd
 
-from .fe import add_fixed_effects_rows
-from .fe.tools import extract_all_dummy_cols_from_dummy_cols_dict_list, \
+from dero.reg.fe.output import add_fixed_effects_rows
+from dero.reg.fe.tools import extract_all_dummy_cols_from_dummy_cols_dict_list, \
     extract_all_fe_names_from_dummy_cols_dict_list
-from .controls import suppress_controls_in_summary_df
+from dero.reg.controls import suppress_controls_in_summary_df
+from dero.reg.cluster.output import add_cluster_rows
+from dero.reg.summarize.yesno import col_boolean_dict_from_list_of_lists_of_columns
 
 
 
@@ -46,17 +48,20 @@ def produce_summary(reg_list, stderr=False, float_format='%0.1f', regressor_orde
     summ = summary_col(reg_list, stars=True, float_format=float_format,
                        regressor_order=regressor_order,
                        info_dict=info_dict)
+    split_rows = [var for var in info_dict]
 
     # Handle fe - remove individual fe cols and replace with e.g. Industry Fixed Effects No, Yes, Yes
-    dummy_col_dicts = [result.dummy_col_dict for result in reg_list]
+    dummy_col_dicts = [result.dummy_cols_dict for result in reg_list]
     if any([dummy_col_dict is not None for dummy_col_dict in dummy_col_dicts]): #if fixed effects
-        split_rows = [var for var in info_dict]
         _remove_fe_cols_replace_with_fixed_effect_yes_no_lines(summ, dummy_col_dicts, split_rows)
 
     # Handle dropping of unimportant coefficients and replacing with Controls: Yes or No
     if suppress_other_regressors:
         summ.tables[0] = suppress_controls_in_summary_df(summ.tables[0], regressor_order, dummy_col_dicts,
                                                          info_dict)
+
+    # Add Yes and No for each cluster variable
+    _add_cluster_yes_no_lines(summ, reg_list, split_rows)
 
     if not stderr:
         summ.tables[0].drop('', axis=0, inplace=True)  # drops the rows containing standard errors
@@ -68,6 +73,30 @@ def produce_summary(reg_list, stderr=False, float_format='%0.1f', regressor_orde
         summ.tables[0].columns = model_names
 
     return summ
+
+
+def _add_cluster_yes_no_lines(summ, reg_list, split_rows):
+    cluster_list_of_lists = _get_cluster_list_of_lists(reg_list)
+    if not any([cluster is not None for cluster in cluster_list_of_lists]):
+        return
+
+    cluster_col_boolean_dict = col_boolean_dict_from_list_of_lists_of_columns(cluster_list_of_lists)
+    var_df, split_df = _get_var_df_and_non_var_df(summ.tables[0], split_rows=split_rows)
+
+    var_df = add_cluster_rows(var_df, cluster_col_boolean_dict)
+
+    # Recombine with n, R^2, etc. and
+    summ.tables[0] = pd.concat([var_df, split_df], axis=0)
+
+def _get_cluster_list_of_lists(reg_list):
+    cluster_list_of_lists = []
+    for result in reg_list:
+        if hasattr(result, 'cluster_variables'):
+            cluster_list_of_lists.append(result.cluster_variables)
+        else:
+            cluster_list_of_lists.append(None)
+    return cluster_list_of_lists
+
 
 def _remove_fe_cols_replace_with_fixed_effect_yes_no_lines(summ, dummy_col_dicts, split_rows):
     """

@@ -61,6 +61,12 @@ def linear_reg(df, yvar, xvars, entity_var=None, time_var=None, robust=True, clu
 
     _convert_linearmodels_result_to_statsmodels_result_format(result)
 
-    return result, dummy_cols_dict
+    # Only return dummy_cols_dict when fe is active
+    if fe is not None:
+        result.dummy_cols_dict = dummy_cols_dict
+    else:
+        result.dummy_cols_dict = None
+
+    return result
 
 

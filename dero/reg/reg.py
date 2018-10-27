@@ -69,6 +69,11 @@ def reg(df, yvar, xvars, robust=True, cluster=False, cons=True, fe=None, interac
     else:
         result.dummy_cols_dict = None
 
+    if cluster:
+        result.cluster_variables = cluster
+    else:
+        result.cluster_variables = None
+
     return result
 
 
