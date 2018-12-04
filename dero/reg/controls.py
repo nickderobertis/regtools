@@ -53,8 +53,8 @@ def _split_summ_df_into_variables_fixed_effects_info(df, fe, info):
 
 
 def _split_variable_df_into_regressors_and_controls(variables_df, regressors, stderr=True):
-    controls = [row for row in variables_df.index if row not in regressors + ['']]
-    all_variables = regressors + controls
+    all_variables = [row for row in variables_df.index if row != '']
+    controls = [row for row in all_variables if row not in regressors + ['const']]
 
     if stderr:
         # Assign index values of name of regressor to stderr rows, that way both coef and stderr
@@ -65,7 +65,8 @@ def _split_variable_df_into_regressors_and_controls(variables_df, regressors, st
     # Select df of just regressors, with modified index
     regressors_mask = variables_df.index.isin(regressors)
     regressors_df = variables_df[regressors_mask]
-    controls_df = variables_df[~regressors_mask]
+    controls_mask = variables_df.index.isin(controls)
+    controls_df = variables_df[controls_mask]
 
     if stderr:
         # Reset indices so that stderrs have blank indices again
@@ -77,6 +78,14 @@ def _split_variable_df_into_regressors_and_controls(variables_df, regressors, st
 
 
 def _create_controls_row_as_df(controls_df):
+    if controls_df.empty:
+        # No controls for any model
+        no_series = pd.Series(['No'] * len(controls_df.columns))
+        no_series.name = 'Controls'
+        no_df = pd.DataFrame(no_series).T
+        no_df.columns = controls_df.columns
+        return no_df
+
     bool_df = pd.DataFrame(controls_df.apply(lambda x: bool(x.any()), axis=0)).T
     yes_no_df = bool_df.applymap(lambda x: 'Yes' if x else 'No')
     yes_no_df.index = ['Controls']
