@@ -1,34 +1,53 @@
+from typing import Optional
+from functools import partial
+import pandas as pd
 from dero.ext_pandas import _to_list_if_str
 from dero.ext_pandas.filldata import add_missing_group_rows, drop_missing_group_rows
 
 
-def create_lagged_variables(df, lag_cols, id_col='TICKER', date_col='Date', num_lags=1,
+def create_lagged_variables(df, lag_cols, id_col: Optional[str] = None, date_col='Date', num_lags=1,
                             fill_method='ffill', fill_limit: int=None):
     """
     Note: partially inplace
     """
-    df.sort_values([id_col, date_col], inplace=True)
+    # Handle panel data versus not by whether id_col was passed
+    lag_kwargs = dict(num_lags=num_lags)
+    if id_col is not None:
+        lag_kwargs.update(id_col=id_col)
+        lag_func = _create_lagged_variable_panel
+        df.sort_values([id_col, date_col], inplace=True)
 
-    # Save original byvars, for outputting df of same shape
-    orig_index_df = df[[id_col, date_col]]
+        # Save original byvars, for outputting df of same shape
+        orig_index_df = df[[id_col, date_col]]
 
-    df = add_missing_group_rows(df, [id_col], [date_col], fill_method=fill_method, fill_limit=fill_limit)
+        df = add_missing_group_rows(df, [id_col], [date_col], fill_method=fill_method, fill_limit=fill_limit)
+    else:
+        lag_func = _create_lagged_variable
 
     for col in lag_cols:
-        _create_lagged_variable(df, col, id_col=id_col, num_lags=num_lags)
+        lag_func(df, col, **lag_kwargs)
 
-    # Don't want to expand size of df
-    df = orig_index_df.merge(df, how='left', on=[id_col, date_col])
+    if id_col is not None:
+        # Don't want to expand size of df
+        df = orig_index_df.merge(df, how='left', on=[id_col, date_col])
 
     return df
 
 
-def _create_lagged_variable(df, col, id_col='TICKER', num_lags=1):
+def _create_lagged_variable_panel(df, col, id_col='TICKER', num_lags=1):
     """
     Note: inplace
     """
     new_name = varname_to_lagged_varname(col, num_lags=num_lags)
     df[new_name] = df.groupby(id_col)[col].shift(num_lags)
+
+
+def _create_lagged_variable(df: pd.DataFrame, col: str, num_lags: int = 1) -> None:
+    """
+    Note: inplace
+    """
+    new_name = varname_to_lagged_varname(col, num_lags=num_lags)
+    df[new_name] = df[col].shift(num_lags)
 
 
 def varname_to_lagged_varname(varname, num_lags=1):
