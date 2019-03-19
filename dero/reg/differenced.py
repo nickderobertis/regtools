@@ -38,16 +38,18 @@ def create_differenced_variables(df, diff_cols, id_col='TICKER', date_col='Date'
     """
     df.sort_values([id_col, date_col], inplace=True)
 
-    # Save original byvars, for outputting df of same shape
-    orig_index_df = df[[id_col, date_col]]
+    if fill_method is not None:
+        # Save original byvars, for outputting df of same shape
+        orig_index_df = df[[id_col, date_col]]
 
-    # Fill in missing data
-    df = add_missing_group_rows(df, [id_col], [date_col], fill_method=fill_method, fill_limit=fill_limit)
+        # Fill in missing data
+        df = add_missing_group_rows(df, [id_col], [date_col], fill_method=fill_method, fill_limit=fill_limit)
 
     for col in diff_cols:
         _create_differenced_variable(df, col, id_col=id_col, difference_lag=difference_lag)
 
-    df = orig_index_df.merge(df, how='left', on=[id_col, date_col])
+    if fill_method is not None:
+        df = orig_index_df.merge(df, how='left', on=[id_col, date_col])
 
     return df
 
