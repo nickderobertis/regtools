@@ -6,11 +6,12 @@ from dero.reg.fe.tools import extract_all_dummy_cols_from_dummy_cols_dict_list, 
     extract_all_fe_names_from_dummy_cols_dict_list
 from dero.reg.controls import suppress_controls_in_summary_df
 from dero.reg.cluster.output import add_cluster_rows
+from dero.reg.summarize.split import get_var_df_and_non_var_df
 from dero.reg.summarize.yesno import col_boolean_dict_from_list_of_lists_of_columns
+from dero.reg.summarize.tstat import replace_stderr_with_t_stat_in_summary_df
 
 
-
-def produce_summary(reg_list, stderr=False, float_format='%0.1f', regressor_order=[],
+def produce_summary(reg_list, stderr=False, t_stats: bool = False, float_format='%0.1f', regressor_order=[],
                     suppress_other_regressors=False, model_names=None):
     """
 
@@ -31,7 +32,19 @@ def produce_summary(reg_list, stderr=False, float_format='%0.1f', regressor_orde
     :rtype:
     """
 
-    _check_produce_summary_inputs(regressor_order, suppress_other_regressors, model_names, len(reg_list))
+    _check_produce_summary_inputs(
+        regressor_order,
+        suppress_other_regressors,
+        model_names,
+        len(reg_list),
+        stderr,
+        t_stats
+    )
+
+    ### TEMP
+    import pdb
+    pdb.set_trace()
+    ### ENDTEMP
 
     info_dict = {'N': lambda x: "{0:d}".format(int(x.nobs))}
 
@@ -50,6 +63,10 @@ def produce_summary(reg_list, stderr=False, float_format='%0.1f', regressor_orde
                        info_dict=info_dict)
     split_rows = [var for var in info_dict]
 
+    # Convert stderrs to t-stats if necessary
+    if t_stats:
+        summ.tables[0] = replace_stderr_with_t_stat_in_summary_df(summ.tables[0], split_rows)
+
     # Handle fe - remove individual fe cols and replace with e.g. Industry Fixed Effects No, Yes, Yes
     dummy_col_dicts = [result.dummy_cols_dict for result in reg_list]
     if any([dummy_col_dict is not None for dummy_col_dict in dummy_col_dicts]): #if fixed effects
@@ -63,7 +80,7 @@ def produce_summary(reg_list, stderr=False, float_format='%0.1f', regressor_orde
     # Add Yes and No for each cluster variable
     _add_cluster_yes_no_lines(summ, reg_list, split_rows)
 
-    if not stderr:
+    if not stderr and not t_stats:
         summ.tables[0].drop('', axis=0, inplace=True)  # drops the rows containing standard errors
 
     # Change const to Intercept in output
@@ -81,7 +98,7 @@ def _add_cluster_yes_no_lines(summ, reg_list, split_rows):
         return
 
     cluster_col_boolean_dict = col_boolean_dict_from_list_of_lists_of_columns(cluster_list_of_lists)
-    var_df, split_df = _get_var_df_and_non_var_df(summ.tables[0], split_rows=split_rows)
+    var_df, split_df = get_var_df_and_non_var_df(summ.tables[0], split_rows=split_rows)
 
     var_df = add_cluster_rows(var_df, cluster_col_boolean_dict)
 
@@ -103,7 +120,7 @@ def _remove_fe_cols_replace_with_fixed_effect_yes_no_lines(summ, dummy_col_dicts
     Note: inplace
     """
     # split into dataframe of variables and dataframe of N, R^2, etc.
-    var_df, split_df = _get_var_df_and_non_var_df(summ.tables[0], split_rows=split_rows)
+    var_df, split_df = get_var_df_and_non_var_df(summ.tables[0], split_rows=split_rows)
     # get name of all fixed effect variables
     all_cols_to_remove = extract_all_dummy_cols_from_dummy_cols_dict_list(dummy_col_dicts)
     # remove fixed effect coefs and stderrs
@@ -184,19 +201,17 @@ def _drop_variables_from_reg_summary_df(df, dropvars):
 
     return df
 
-def _get_var_df_and_non_var_df(df, split_rows=['N', 'R2', 'Adj-R2']):
-    """
-    Splits rows containing N, R2, Adj-R2 into separate dataframe
-    """
-    other_data_mask = df.index.isin(split_rows)
-    return df.loc[~other_data_mask], df.loc[other_data_mask]
 
-def _check_produce_summary_inputs(regressor_order, supress_other_regressors, model_names, num_models):
+def _check_produce_summary_inputs(regressor_order, supress_other_regressors, model_names, num_models,
+                                  stderr: bool, t_stats: bool):
     if (regressor_order == []) & (supress_other_regressors):
         raise ValueError('must pass regressors to regressor_order to suppress other regressors')
 
     if model_names and (len(model_names) != num_models):
         raise ValueError(f'must pass model_names of equal length to num models. Have {len(model_names)} names and {num_models} models.')
+
+    if stderr and t_stats:
+        raise ValueError(f'cannot pass both stderr and t stats, pick one of the two or neither')
 
 def _result_has_adjusted_r2(result):
     return hasattr(result, 'rsquared_adj')
