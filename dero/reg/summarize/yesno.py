@@ -11,28 +11,37 @@ def col_boolean_dict_from_list_of_lists_of_columns(column_list_list: List[List[s
         ['a'],
         ['b'],
         None,
+        False,
+        [],
         ['a','b']
     ]
 
     into {
-        'a': [True, True, False, False, True],
-        'b': [True, False, True, False, True]
+        'a': [True, True, False, False, False, False, True],
+        'b': [True, False, True, False, False, False, True]
     }
     Returns:
 
     """
     all_columns = []
     for column_list in column_list_list:
-        all_columns.extend(column_list)
+        if column_list:
+            all_columns.extend(column_list)
     all_columns = list(set(all_columns))
 
     col_bool_dict = {col: [] for col in all_columns}
     for column_list in column_list_list:
-        for column in col_bool_dict:
-            if column in column_list:
-                col_bool_dict[column].append(True)
-            else:
+        if not column_list:
+            # None, False, [] for column list. Just add False to all columns
+            for column in col_bool_dict:
                 col_bool_dict[column].append(False)
+        else:
+            # Valid column list
+            for column in col_bool_dict:
+                if column in column_list:
+                    col_bool_dict[column].append(True)
+                else:
+                    col_bool_dict[column].append(False)
 
     return col_bool_dict
 

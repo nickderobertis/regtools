@@ -1,6 +1,5 @@
 from typing import Tuple, Union
 import pandas as pd
-import statsmodels.api as sm
 
 from dero.reg.regtypes import StrOrListOfStrs, InteractionTuples, StrOrBool, StrOrListOfStrsOrNone
 from dero.reg.lag.main import create_lagged_variables_return_yvars_xvars_interaction_tuples
@@ -13,16 +12,16 @@ from dero.reg.dataprep import (
 )
 
 YvarXvars = Tuple[str, StrOrListOfStrs]
-DummyDictOrNone = Union[dict, None]
-DfYvarXvarsDummyDict = Tuple[pd.DataFrame, str, StrOrListOfStrs, DummyDictOrNone]
-DfYvarXvarsLagvarsDummyDict = Tuple[pd.DataFrame, str, StrOrListOfStrs, StrOrListOfStrs, DummyDictOrNone]
+DfYvarXvars = Tuple[pd.DataFrame, str, StrOrListOfStrs]
+DfYvarXvarsLagvars = Tuple[pd.DataFrame, str, StrOrListOfStrs, StrOrListOfStrs]
+
 
 def _create_reg_df_y_x_and_lag_vars(df: pd.DataFrame, yvar: str, xvars: StrOrListOfStrs,
                                     entity_var: str, time_var: str,
                                     cluster=False, cons=True, fe=None, interaction_tuples=None,
                                    num_lags=0, lag_variables='xvars', lag_period_var='Date', lag_id_var='TICKER',
                                     fill_method: str = 'ffill', fill_limit: int = None,
-                                    ) -> DfYvarXvarsLagvarsDummyDict:
+                                    ) -> DfYvarXvarsLagvars:
 
     # Handle lags
     df, reg_yvar, reg_xvars, interaction_tuples, lag_variables = create_lagged_variables_return_yvars_xvars_interaction_tuples(
@@ -38,15 +37,18 @@ def _create_reg_df_y_x_and_lag_vars(df: pd.DataFrame, yvar: str, xvars: StrOrLis
 
     fe = _set_fe(fe)
     interaction_tuples = _set_interaction_tuples(interaction_tuples)
-    regdf, y, X, dummy_cols_dict = _get_reg_df_y_x(df, reg_yvar, reg_xvars, entity_var, time_var, cluster, cons, fe, interaction_tuples)
-    return regdf, y, X, lag_variables, dummy_cols_dict
+    regdf, y, X = _get_reg_df_y_x(df, reg_yvar, reg_xvars, entity_var, time_var, cluster, cons, fe, interaction_tuples)
+    return regdf, y, X, lag_variables
+
 
 def _get_reg_df_y_x(df: pd.DataFrame, yvar: str, xvars: StrOrListOfStrs, entity_var: str, time_var: str,
                     cluster: StrOrBool,
-                    cons: bool, fe: StrOrListOfStrsOrNone, interaction_tuples: InteractionTuples) -> DfYvarXvarsDummyDict:
+                    cons: bool, fe: StrOrListOfStrsOrNone, interaction_tuples: InteractionTuples) -> DfYvarXvars:
     all_xvars = _collect_all_variables_from_xvars_and_interaction_tuples(xvars, interaction_tuples)
     regdf = _drop_missings_df(df, yvar, all_xvars, cluster, fe)
     regdf = regdf.set_index([entity_var, time_var])
-    y, X, dummy_cols_dict = _y_X_from_df(regdf, yvar, xvars, cons, fe, interaction_tuples)
+    # put None for fe as fe will be handled by linearmodels
+    # TODO: had to remove constant
+    y, X, _ = _y_X_from_df(regdf, yvar, xvars, cons, None, interaction_tuples)
 
-    return regdf, y, X, dummy_cols_dict
+    return regdf, y, X

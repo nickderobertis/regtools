@@ -1,7 +1,8 @@
-from dero.reg.models import get_model_class_by_string
+from dero.reg.linmodels.bindings.modelstr import get_model_class_by_string, _is_ols_str
 from dero.reg.linmodels.bindings.input import _create_reg_df_y_x_and_lag_vars
 from dero.reg.linmodels.bindings.fit import _estimate_handling_robust_and_cluster
 from dero.reg.linmodels.bindings.result import _convert_linearmodels_result_to_statsmodels_result_format
+from dero.reg.linmodels.bindings.fe import dummy_cols_dict_from_model, linearmodels_fe_kwarg_dict_from_fe
 
 def linear_reg(df, yvar, xvars, entity_var=None, time_var=None, robust=True, cluster=False, cons=True, fe=None, interaction_tuples=None,
         num_lags=0, lag_variables='xvars', lag_period_var='Date', lag_id_var='TICKER', lag_fill_method: str='ffill',
@@ -41,7 +42,7 @@ def linear_reg(df, yvar, xvars, entity_var=None, time_var=None, robust=True, clu
         raise ValueError('must pass both entity_var and time_var')
 
 
-    regdf, y, X, lag_variables, dummy_cols_dict = _create_reg_df_y_x_and_lag_vars(
+    regdf, y, X, lag_variables = _create_reg_df_y_x_and_lag_vars(
         df, yvar, xvars, entity_var, time_var,
         cluster=cluster,
         cons=cons, fe=fe,
@@ -54,18 +55,19 @@ def linear_reg(df, yvar, xvars, entity_var=None, time_var=None, robust=True, clu
         fill_limit=lag_fill_limit
     )
 
+    fe_kwargs = linearmodels_fe_kwarg_dict_from_fe(fe, regdf)
+
     ModelClass = get_model_class_by_string(model_type)
-    mod = ModelClass(y, X)
+    mod = ModelClass(y, X, **fe_kwargs)
+
+    dummy_cols_dict = dummy_cols_dict_from_model(mod, regdf)
 
     result = _estimate_handling_robust_and_cluster(regdf, mod, robust, cluster, **fit_kwargs)
 
     _convert_linearmodels_result_to_statsmodels_result_format(result)
 
-    # Only return dummy_cols_dict when fe is active
-    if fe is not None:
-        result.dummy_cols_dict = dummy_cols_dict
-    else:
-        result.dummy_cols_dict = None
+    result.dummy_cols_dict = dummy_cols_dict
+    result.cluster_variables = cluster
 
     return result
 

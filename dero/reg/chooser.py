@@ -13,7 +13,7 @@ from dero.reg.lag.create import _set_lag_variables
 
 def any_reg(reg_type, *reg_args, **reg_kwargs):
 
-    reg_args, reg_kwargs = _validate_inputs(*reg_args, **reg_kwargs)
+    reg_args, reg_kwargs = _validate_inputs(reg_type, *reg_args, **reg_kwargs)
 
     reg_type = reg_type.lower()
 
@@ -28,6 +28,13 @@ def any_reg(reg_type, *reg_args, **reg_kwargs):
         return diff_reg(*reg_args, id_col, date_col, diff_cols=diff_cols, **temp_kwargs)
 
     if _is_normal_reg_str(reg_type):
+        if 'fe' in reg_kwargs and reg_kwargs['fe'] is not None:
+            # More efficient to use linear models for fe as can difference data rather than using dummy variables
+            return linear_reg(*reg_args, **reg_kwargs)
+        if 'entity_var' in reg_kwargs:
+            reg_kwargs.pop('entity_var')
+        if 'time_var' in reg_kwargs:
+            reg_kwargs.pop('time_var')
         return reg(*reg_args, **reg_kwargs)
 
     if _is_quantile_reg_str(reg_type):
@@ -39,7 +46,7 @@ def any_reg(reg_type, *reg_args, **reg_kwargs):
     raise ValueError(f'Must pass valid reg type. Got {reg_type}')
 
 
-def _validate_inputs(*args, **kwargs):
+def _validate_inputs(reg_type: str, *args, **kwargs):
     yvar = args[1]
     xvars = args[2]
 
@@ -63,5 +70,7 @@ def _validate_inputs(*args, **kwargs):
         new_xvars = xvars.copy()
         new_xvars.remove(yvar)
         args = args[:2] + (new_xvars,) + args[3:]
+
+    kwargs.update(dict(model_type=reg_type))
 
     return args, kwargs
