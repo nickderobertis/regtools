@@ -36,7 +36,8 @@ def reg_for_each_xvar_set(df, yvar, xvars_list, reg_type='reg', **reg_kwargs):
 
 
 def reg_for_each_xvar_set_and_produce_summary(df, yvar, xvars_list, robust=True,
-                                              cluster=False, stderr=False, fe=None, float_format='%0.2f',
+                                              cluster=False, stderr=False, t_stats: bool = True,
+                                              fe=None, float_format='%0.2f',
                                               suppress_other_regressors=False,
                                               regressor_order=[], **other_reg_kwargs):
     """
@@ -54,23 +55,25 @@ def reg_for_each_xvar_set_and_produce_summary(df, yvar, xvars_list, robust=True,
     cluster: False or str, set to a column name to calculate standard errors within clusters
              given by unique values of given column name
     stderr: bool, set to True to keep rows for standard errors below coefficient estimates
+    t_stats: bool, set to True to keep rows for standard errors below coefficient estimates and convert them to t-stats
     fe:    If fe is passed, should either pass a string to use fe in all models, or a list of strings or
     None of same length as num models
 
     Note: only specify at most one of robust and cluster.
+    Note: don't set both stderr and t_stats to True
     """
     reg_list = reg_for_each_xvar_set(df, yvar, xvars_list, robust=robust, cluster=cluster, fe=fe, **other_reg_kwargs)
     regressor_order = _set_regressor_order(regressor_order, other_reg_kwargs)
-    summ = produce_summary(reg_list, stderr=stderr, float_format=float_format,
+    summ = produce_summary(reg_list, stderr=stderr, t_stats=t_stats, float_format=float_format,
                            regressor_order=regressor_order, suppress_other_regressors=suppress_other_regressors)
     return reg_list, summ
 
 def reg_for_each_yvar_and_produce_summary(df, yvars, xvars, main_ivs, reg_type='reg',
-                                          stderr=False, float_format='%0.2f',
+                                          stderr=False, t_stats: bool = True, float_format='%0.2f',
                                           **reg_kwargs):
     reg_list = reg_for_each_yvar(df, yvars, xvars, reg_type=reg_type, **reg_kwargs)
     regressor_order = _set_regressor_order(main_ivs, reg_kwargs)
-    summ = produce_summary(reg_list, stderr=stderr, float_format=float_format,
+    summ = produce_summary(reg_list, stderr=stderr, t_stats=t_stats, float_format=float_format,
                            regressor_order=regressor_order, suppress_other_regressors=True)
 
     # Transposed is a better layout since all controls are suppressed and there may be many models
@@ -86,7 +89,8 @@ def reg_for_each_yvar(df, yvars, xvars, reg_type='reg', **reg_kwargs):
 
 
 def reg_for_each_combo_select_and_produce_summary(df, yvar, xvars, robust=True, cluster=False,
-                                                  keepnum=5, stderr=False, float_format='%0.1f',
+                                                  keepnum=5, stderr=False, t_stats: bool = True,
+                                                  float_format='%0.1f',
                                                   regressor_order=[],
                                                   **other_reg_kwargs):
     """
@@ -106,19 +110,21 @@ def reg_for_each_combo_select_and_produce_summary(df, yvar, xvars, robust=True, 
     keepnum: int, number to keep for each amount of x variables. The total number of outputted
              regressions will be roughly keepnum * len(xvars)
     stderr: bool, set to True to keep rows for standard errors below coefficient estimates
+    t_stats: bool, set to True to keep rows for standard errors below coefficient estimates and convert them to t-stats
 
     Note: only specify at most one of robust and cluster.
-
+    Note: don't set both stderr and t_stats to True
     """
     reg_list = reg_for_each_combo(df, yvar, xvars, robust=robust, cluster=cluster, **other_reg_kwargs)
     regressor_order = _set_regressor_order(regressor_order, other_reg_kwargs)
     outlist = select_models(reg_list, keepnum, xvars)
-    summ = produce_summary(outlist, stderr=stderr, float_format=float_format, regressor_order=regressor_order)
+    summ = produce_summary(outlist, stderr=stderr, t_stats=t_stats,
+                           float_format=float_format, regressor_order=regressor_order)
     return outlist, summ
 
 def reg_for_each_lag_and_produce_summary(df, yvar, xvars, main_ivs, lag_tuple=(1,2,3,4), consolidate_lags=True,
                                          reg_type='reg',
-                                          stderr=False, float_format='%0.2f',
+                                          stderr=False, t_stats: bool = True, float_format='%0.2f',
                                          suppress_other_regressors=False,
                                           **reg_kwargs):
     reg_list = reg_for_each_lag(df, yvar, xvars, lag_tuple=lag_tuple, reg_type=reg_type, **reg_kwargs)
@@ -136,7 +142,7 @@ def reg_for_each_lag_and_produce_summary(df, yvar, xvars, main_ivs, lag_tuple=(1
 
     model_names = [f'({lag})' for lag in lag_tuple]
 
-    summ = produce_summary(reg_list, stderr=stderr, float_format=float_format,
+    summ = produce_summary(reg_list, stderr=stderr, t_stats=t_stats, float_format=float_format,
                            regressor_order=regressor_order, suppress_other_regressors=suppress_other_regressors,
                            model_names=model_names)
 
