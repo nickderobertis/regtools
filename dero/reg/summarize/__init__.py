@@ -41,11 +41,6 @@ def produce_summary(reg_list, stderr=False, t_stats: bool = False, float_format=
         t_stats
     )
 
-    ### TEMP
-    import pdb
-    pdb.set_trace()
-    ### ENDTEMP
-
     info_dict = {'N': lambda x: "{0:d}".format(int(x.nobs))}
 
     # Grab proper r-squared. For OLS, it's adjusted r-squared, for probit and logit, it's Pseudo r-squared
@@ -65,7 +60,7 @@ def produce_summary(reg_list, stderr=False, t_stats: bool = False, float_format=
 
     # Convert stderrs to t-stats if necessary
     if t_stats:
-        summ.tables[0] = replace_stderr_with_t_stat_in_summary_df(summ.tables[0], split_rows)
+        summ.tables[0] = replace_stderr_with_t_stat_in_summary_df(summ.tables[0], split_rows, reg_list)
 
     # Handle fe - remove individual fe cols and replace with e.g. Industry Fixed Effects No, Yes, Yes
     dummy_col_dicts = [result.dummy_cols_dict for result in reg_list]
