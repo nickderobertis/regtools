@@ -53,7 +53,11 @@ def _convert_regressor_order_for_lags(regressor_order, lag_cols, lags):
     out_cols = []
     for col in regressor_order:
         if col in lag_cols:
-            [out_cols.append(varname_to_lagged_varname(col, num_lags=num_lags)) for num_lags in lags]
+            for num_lags in lags:
+                if num_lags == 0:
+                    out_cols.append(col)
+                else:
+                    out_cols.append(varname_to_lagged_varname(col, num_lags=num_lags))
         else:
             out_cols.append(col)
 
