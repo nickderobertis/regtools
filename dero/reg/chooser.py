@@ -2,7 +2,7 @@ import warnings
 
 from dero.reg.differenced import _is_diff_reg_str
 from dero.reg.quantile import _is_quantile_reg_str
-from dero.reg.dataprep import _is_normal_reg_str
+from dero.reg.models import _is_regular_reg_str, _is_ols_str
 from dero.reg.linmodels.bindings.modelstr import _is_linearmodels_str
 from dero.reg.linmodels.reg import linear_reg
 from .differenced import diff_reg
@@ -27,8 +27,8 @@ def any_reg(reg_type, *reg_args, **reg_kwargs):
         date_col = temp_kwargs.pop('date_col')
         return diff_reg(*reg_args, id_col, date_col, diff_cols=diff_cols, **temp_kwargs)
 
-    if _is_normal_reg_str(reg_type):
-        if 'fe' in reg_kwargs and reg_kwargs['fe'] is not None:
+    if _is_regular_reg_str(reg_type):
+        if _is_ols_str(reg_type) and 'fe' in reg_kwargs and reg_kwargs['fe'] is not None:
             # More efficient to use linear models for fe as can difference data rather than using dummy variables
             return linear_reg(*reg_args, **reg_kwargs)
         if 'entity_var' in reg_kwargs:

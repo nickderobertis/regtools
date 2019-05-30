@@ -35,3 +35,12 @@ def _is_logit_str(model_string):
 def _is_ols_str(model_string):
     return model_string.lower().strip() in ('ols','o','reg','least squares', 'ordinary least squares')
 
+# Note: add model str functions here as they are created. This will feed into _is_linearmodels_str
+model_str_funcs = [
+    _is_ols_str,
+    _is_logit_str,
+    _is_probit_str
+]
+
+def _is_regular_reg_str(model_string: str) -> bool:
+    return any([is_model_str_func(model_string) for is_model_str_func in model_str_funcs])
