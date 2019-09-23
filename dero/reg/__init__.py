@@ -1,3 +1,8 @@
+"""
+High-level tools for running regressions. Handles fixed effects, 2+ way clustering, hypothesis testing,
+lagged variables, differenced variables, interaction effects, iteration tools, and producing summaries for a
+variety of models including OLS, Logit, Probit, Quantile, and Fama-Macbeth.
+"""
 from .iter import (
     reg_for_each_combo,
     reg_for_each_xvar_set,
