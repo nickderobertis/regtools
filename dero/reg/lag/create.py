@@ -3,6 +3,7 @@ from functools import partial
 import pandas as pd
 from dero.ext_pandas import _to_list_if_str
 from dero.ext_pandas.filldata import add_missing_group_rows, drop_missing_group_rows
+from dero.reg.lag.remove import lag_varname_to_varname_and_lag, VariableIsNotLaggedVariableException
 
 
 def create_lagged_variables(df, lag_cols, id_col: Optional[str] = None, date_col='Date', num_lags=1,
@@ -50,7 +51,23 @@ def _create_lagged_variable(df: pd.DataFrame, col: str, num_lags: int = 1) -> No
     df[new_name] = df[col].shift(num_lags)
 
 
-def varname_to_lagged_varname(varname, num_lags=1):
+def varname_to_lagged_varname(varname: str, num_lags: int = 1) -> str:
+    if num_lags == 0:
+        # No lag string necessary
+        return varname
+
+    try:
+        base_var, existing_lags = lag_varname_to_varname_and_lag(varname)
+    except VariableIsNotLaggedVariableException:
+        # Variable is not already lagged, so just add lag portion to str
+        return _varname_to_lagged_varname(varname, num_lags)
+
+    # Variable was lagged originally, need to add an additional number of lags and apply to base name
+    total_lags = existing_lags + num_lags
+    return _varname_to_lagged_varname(base_var, total_lags)
+
+
+def _varname_to_lagged_varname(varname: str, num_lags: int = 1) -> str:
     return varname + f'$_{{t - {num_lags}}}$'
 
 

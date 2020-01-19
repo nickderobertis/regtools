@@ -1,6 +1,11 @@
+from typing import Tuple
+
 import pandas as pd
 from functools import partial
 from statsmodels.api import OLS
+import re
+
+LAG_NAME_PATTERN = re.compile(r'(.+)\$_{t - (\d+)}\$')
 
 class SimplifiedBase:
     def _set_attrs(self, attr_dict):
@@ -185,3 +190,17 @@ def _remove_lag_names_from_varname(varname, lags=(1,)):
 
 def lag_varname_to_varname(varname, num_lags=1):
     return varname.replace(rf'$_{{t - {num_lags}}}$', '')
+
+
+def lag_varname_to_varname_and_lag(varname: str) -> Tuple[str, int]:
+    match = LAG_NAME_PATTERN.match(varname)
+    if match is None:
+        raise VariableIsNotLaggedVariableException(f'could not parse {varname} as a lagged name')
+
+    base_varname = match.group(1)
+    lag_num = int(match.group(2))
+    return base_varname, lag_num
+
+
+class VariableIsNotLaggedVariableException(Exception):
+    pass
