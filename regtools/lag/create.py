@@ -1,6 +1,6 @@
 from typing import Optional
 import pandas as pd
-from pd_utils import _to_list_if_str
+from regtools.tools import _to_list_if_str
 from pd_utils.filldata import add_missing_group_rows
 from regtools.lag.remove import lag_varname_to_varname_and_lag, VariableIsNotLaggedVariableException
 
