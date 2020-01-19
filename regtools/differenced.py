@@ -1,5 +1,5 @@
 from .reg import reg
-from dero.ext_pandas.filldata import add_missing_group_rows
+from pd_utils.filldata import add_missing_group_rows
 from regtools.lag.create import _is_special_lag_keyword
 
 
