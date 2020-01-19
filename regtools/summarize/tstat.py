@@ -1,7 +1,6 @@
 from typing import Sequence
 import pandas as pd
 import numpy as np
-from dero.data.formatters.stderr import convert_to_stderr_format
 from regtools.summarize.split import get_var_df_and_non_var_df
 
 
@@ -51,3 +50,9 @@ def _extract_regressor_t_df_from_reg_list(reg_list, regressor: str, df_columns: 
         index=['']
     )
     return df
+
+
+def convert_to_stderr_format(value: float, num_decimals: int = 2) -> str:
+    if pd.isnull(value):
+        return ''
+    return f'({value:.{num_decimals}f})'
