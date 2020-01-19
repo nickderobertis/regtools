@@ -2,7 +2,7 @@ import numpy as np
 
 def hypothesis_test(result, col_coef_dict):
     """
-    result: statsmodels RegressionResult or dero SimplifiedRegressionResult
+    result: statsmodels RegressionResult or regtools.lag.remove.SimplifiedRegressionResult
     col_coef_dict: dict, keys are names of columns in DataFrame used for regression. Values are
                    coefficients to apply to those columns.
     """
