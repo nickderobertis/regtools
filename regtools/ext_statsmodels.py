@@ -7,7 +7,7 @@ from statsmodels.iolib.summary2 import summary_params
 from statsmodels.iolib.table import SimpleTable
 from statsmodels.iolib.tableformatting import fmt_params
 
-from statsmodels.iolib.summary2 import lrange, reduce, zip, range, _col_params, \
+from statsmodels.iolib.summary2 import lrange, lzip, reduce, _col_params, \
     _make_unique, _col_info, Summary
 
 
