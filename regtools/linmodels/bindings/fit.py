@@ -13,21 +13,22 @@ def _estimate_handling_robust_and_cluster(regdf, model, robust, cluster, **fit_k
         return model.fit(**cluster_fit_kwargs, **fit_kwargs)
 
     if robust:
-        return model.fit(cov_type='robust', **fit_kwargs)
+        return model.fit(cov_type="robust", **fit_kwargs)
 
     return model.fit(**fit_kwargs)
 
 
-def _linearmodels_fit_kwarg_dict_from_cluster(cluster: Optional[Union[Sequence[str], str]], regdf: pd.DataFrame
-                                              ) -> LinearModelsKwargs:
+def _linearmodels_fit_kwarg_dict_from_cluster(
+    cluster: Optional[Union[Sequence[str], str]], regdf: pd.DataFrame
+) -> LinearModelsKwargs:
     cluster = _to_list_if_not(cluster)
     if len(cluster) > 2:
-        raise ValueError('cannot do more than two way clustering in linearmodels backend. use '
-                         f'statsmodels backend for 3+ way clustering. got clusters {cluster}')
+        raise ValueError(
+            "cannot do more than two way clustering in linearmodels backend. use "
+            f"statsmodels backend for 3+ way clustering. got clusters {cluster}"
+        )
 
-    fit_kwargs = dict(
-        cov_type='clustered'
-    )
+    fit_kwargs = dict(cov_type="clustered")
     entity_col, time_col = regdf.index.names
     other_cols = []
     for col in cluster:
@@ -41,5 +42,4 @@ def _linearmodels_fit_kwarg_dict_from_cluster(cluster: Optional[Union[Sequence[s
         fit_kwargs.update(dict(clusters=regdf[other_cols]))
 
     return fit_kwargs
-
 

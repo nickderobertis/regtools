@@ -10,7 +10,9 @@ StrOrNoneList = List[StrOrNone]
 StrOrNoneListList = List[StrOrNoneList]
 
 
-def estimate_model_handling_cluster(regdf: pd.DataFrame, model, cluster: List[str], **fit_kwargs):
+def estimate_model_handling_cluster(
+    regdf: pd.DataFrame, model, cluster: List[str], **fit_kwargs
+):
     """
     Handles multiway clustering through multiple estimations following
     Cameron, Gelbach, and Miller (2011).
@@ -18,10 +20,14 @@ def estimate_model_handling_cluster(regdf: pd.DataFrame, model, cluster: List[st
     cluster_groups = _multiway_cluster_groups(cluster)
 
     if len(cluster_groups) == 0:
-        raise ValueError(f'did not get any cluster groups, yet cluster was called with {cluster}')
+        raise ValueError(
+            f"did not get any cluster groups, yet cluster was called with {cluster}"
+        )
 
     for i, cluster_group in enumerate(cluster_groups):
-        result = _estimate_model_handling_single_cluster(regdf, model, cluster_group, **fit_kwargs)
+        result = _estimate_model_handling_single_cluster(
+            regdf, model, cluster_group, **fit_kwargs
+        )
         cluster_group_cov_matrix = result.cov_params()
         if i == 0:
             cov_matrix = cluster_group_cov_matrix
@@ -39,12 +45,13 @@ def estimate_model_handling_cluster(regdf: pd.DataFrame, model, cluster: List[st
     return result
 
 
-def _estimate_model_handling_single_cluster(regdf: pd.DataFrame, model, cluster: List[str], **fit_kwargs):
-    cluster_ids = _cluster_group_id_series(
-        regdf,
-        cluster
+def _estimate_model_handling_single_cluster(
+    regdf: pd.DataFrame, model, cluster: List[str], **fit_kwargs
+):
+    cluster_ids = _cluster_group_id_series(regdf, cluster)
+    result = model.fit(
+        cov_type="cluster", cov_kwds={"groups": cluster_ids}, **fit_kwargs
     )
-    result = model.fit(cov_type='cluster', cov_kwds={'groups': cluster_ids}, **fit_kwargs)
     return result
 
 
@@ -98,8 +105,10 @@ def _cluster_vars_to_cluster_vector_lists(cluster_vars: List[str]) -> StrOrNoneL
 
 def _cluster_group_id_series(df: pd.DataFrame, cluster_vars: List[str]) -> pd.Series:
     unique_groups = df[cluster_vars].drop_duplicates()
-    unique_groups['_group_id'] = range(0, len(unique_groups))
-    return df[cluster_vars].merge(unique_groups, how='left', on=cluster_vars)['_group_id']
+    unique_groups["_group_id"] = range(0, len(unique_groups))
+    return df[cluster_vars].merge(unique_groups, how="left", on=cluster_vars)[
+        "_group_id"
+    ]
 
 
 def _negative_one_if_even_positive_one_if_odd(num: int) -> int:

@@ -5,6 +5,7 @@ from ..tools import _to_list_if_str
 
 DfListTuple = Tuple[pd.DataFrame, Optional[list]]
 
+
 def fixed_effects_reg_df_and_cols_dict(df, fe_vars):
     fe_vars = _to_list_if_str(fe_vars)
 
@@ -46,6 +47,8 @@ def _get_dummy_calc_df(df: pd.DataFrame, fe_var: str) -> DfListTuple:
         for_calc_df = df  # fe_var is in columns, no extra processing needed before calculating dummies
         index_cols = None
     else:
-        raise ValueError(f'fixed effects variable {fe_var} must be in columns or index.')
+        raise ValueError(
+            f"fixed effects variable {fe_var} must be in columns or index."
+        )
 
     return for_calc_df, index_cols

@@ -3,7 +3,10 @@ from typing import List, Dict
 
 ColBoolDict = Dict[str, List[bool]]
 
-def col_boolean_dict_from_list_of_lists_of_columns(column_list_list: List[List[str]]) -> ColBoolDict:
+
+def col_boolean_dict_from_list_of_lists_of_columns(
+    column_list_list: List[List[str]],
+) -> ColBoolDict:
     """
 
     transforms [
@@ -59,11 +62,12 @@ def _standardize_col_boolean_dict(summ_df, fixed_effect_dict):
             # Here we are being passed a single boolean or a list with single boolean
         # Need to expand to cover all models
         else:
-            if (not isinstance(booleans, list)):
+            if not isinstance(booleans, list):
                 booleans = [booleans]
             if len(booleans) > 1:
                 raise ValueError(
-                    f'Incorrect shape of booleans for {fixed_effect_name} fixed effect passed. Got {len(booleans)} bools, was expecting {num_models}')
+                    f"Incorrect shape of booleans for {fixed_effect_name} fixed effect passed. Got {len(booleans)} bools, was expecting {num_models}"
+                )
             out_booleans = [booleans[0]] * num_models
 
             # Final input checks
@@ -77,14 +81,17 @@ def _standardize_col_boolean_dict(summ_df, fixed_effect_dict):
     return out_dict
 
 
-def _add_yes_no_row(summ_df, bool_list, item_name='Time Fixed Effects'):
-    yes_no_row = pd.DataFrame([_get_yes_no(bool_) for bool_ in bool_list], columns=[item_name]).T
+def _add_yes_no_row(summ_df, bool_list, item_name="Time Fixed Effects"):
+    yes_no_row = pd.DataFrame(
+        [_get_yes_no(bool_) for bool_ in bool_list], columns=[item_name]
+    ).T
     yes_no_row.columns = summ_df.columns
     return pd.concat([summ_df, yes_no_row], axis=0)
 
 
 def _get_yes_no(bool_):
     if bool_:
-        return 'Yes'
+        return "Yes"
     else:
-        return 'No'
+        return "No"
+

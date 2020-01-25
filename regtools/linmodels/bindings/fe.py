@@ -6,14 +6,16 @@ from regtools.regtypes import LinearModelsKwargs, DummyColsDict, StrOrListOfStrs
 from regtools.tools import _to_list_if_not
 
 
-def dummy_cols_dict_from_model(model: PanelOLS, regdf: pd.DataFrame) -> Optional[DummyColsDict]:
+def dummy_cols_dict_from_model(
+    model: PanelOLS, regdf: pd.DataFrame
+) -> Optional[DummyColsDict]:
     dummy_cols_dict = {}
     firm_index, time_index = regdf.index.levels
-    if _has_attr_and_attr_is_truthy(model, 'entity_effects'):
+    if _has_attr_and_attr_is_truthy(model, "entity_effects"):
         dummy_cols_dict[firm_index.name] = firm_index.unique().tolist()
-    if _has_attr_and_attr_is_truthy(model, 'time_effects'):
+    if _has_attr_and_attr_is_truthy(model, "time_effects"):
         dummy_cols_dict[time_index.name] = time_index.unique().tolist()
-    if _has_attr_and_attr_is_truthy(model, '_other_effect_cats'):
+    if _has_attr_and_attr_is_truthy(model, "_other_effect_cats"):
         other_df = model._other_effect_cats.dataframe
         other_dict = {col: other_df[col].unique().tolist() for col in other_df.columns}
         dummy_cols_dict.update(other_dict)
@@ -21,7 +23,9 @@ def dummy_cols_dict_from_model(model: PanelOLS, regdf: pd.DataFrame) -> Optional
     return dummy_cols_dict
 
 
-def linearmodels_fe_kwarg_dict_from_fe(fe: StrOrListOfStrsOrNone, regdf: pd.DataFrame) -> LinearModelsKwargs:
+def linearmodels_fe_kwarg_dict_from_fe(
+    fe: StrOrListOfStrsOrNone, regdf: pd.DataFrame
+) -> LinearModelsKwargs:
     if fe is None:
         return {}
 

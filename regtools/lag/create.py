@@ -2,11 +2,21 @@ from typing import Optional
 import pandas as pd
 from regtools.tools import _to_list_if_str
 from pd_utils.filldata import add_missing_group_rows
-from regtools.lag.remove import lag_varname_to_varname_and_lag, VariableIsNotLaggedVariableException
+from regtools.lag.remove import (
+    lag_varname_to_varname_and_lag,
+    VariableIsNotLaggedVariableException,
+)
 
 
-def create_lagged_variables(df, lag_cols, id_col: Optional[str] = None, date_col='Date', num_lags=1,
-                            fill_method='ffill', fill_limit: int=None):
+def create_lagged_variables(
+    df,
+    lag_cols,
+    id_col: Optional[str] = None,
+    date_col="Date",
+    num_lags=1,
+    fill_method="ffill",
+    fill_limit: int = None,
+):
     """
     Note: partially inplace
     """
@@ -20,7 +30,9 @@ def create_lagged_variables(df, lag_cols, id_col: Optional[str] = None, date_col
         # Save original byvars, for outputting df of same shape
         orig_index_df = df[[id_col, date_col]]
 
-        df = add_missing_group_rows(df, [id_col], [date_col], fill_method=fill_method, fill_limit=fill_limit)
+        df = add_missing_group_rows(
+            df, [id_col], [date_col], fill_method=fill_method, fill_limit=fill_limit
+        )
     else:
         lag_func = _create_lagged_variable
 
@@ -29,12 +41,12 @@ def create_lagged_variables(df, lag_cols, id_col: Optional[str] = None, date_col
 
     if id_col is not None:
         # Don't want to expand size of df
-        df = orig_index_df.merge(df, how='left', on=[id_col, date_col])
+        df = orig_index_df.merge(df, how="left", on=[id_col, date_col])
 
     return df
 
 
-def _create_lagged_variable_panel(df, col, id_col='TICKER', num_lags=1):
+def _create_lagged_variable_panel(df, col, id_col="TICKER", num_lags=1):
     """
     Note: inplace
     """
@@ -67,7 +79,7 @@ def varname_to_lagged_varname(varname: str, num_lags: int = 1) -> str:
 
 
 def _varname_to_lagged_varname(varname: str, num_lags: int = 1) -> str:
-    return varname + f'$_{{t - {num_lags}}}$'
+    return varname + f"$_{{t - {num_lags}}}$"
 
 
 def _convert_variable_names(yvar, xvars, lag_cols, num_lags=1):
@@ -88,12 +100,14 @@ def _convert_interaction_tuples(interaction_tuples, lag_cols, num_lags=1):
     out_tuples = []
     for tup in interaction_tuples:
         out_tuples.append(
-            tuple([
-                varname_to_lagged_varname(var, num_lags=num_lags)
-                if (var in lag_cols) or (var + ' Change' in lag_cols)
-                else var
-                for var in tup
-            ])
+            tuple(
+                [
+                    varname_to_lagged_varname(var, num_lags=num_lags)
+                    if (var in lag_cols) or (var + " Change" in lag_cols)
+                    else var
+                    for var in tup
+                ]
+            )
         )
     return out_tuples
 
@@ -105,12 +119,12 @@ def _set_lag_variables(lag_variables, yvar, xvars):
 
     assert isinstance(lag_variables, str)
 
-    #Single str can either be a single column, 'all', or 'xvars'
-    if lag_variables == 'xvars':
+    # Single str can either be a single column, 'all', or 'xvars'
+    if lag_variables == "xvars":
         lag_variables = xvars.copy()
-    elif lag_variables == 'all':
+    elif lag_variables == "all":
         lag_variables = [yvar] + xvars
-    else: #single column passed
+    else:  # single column passed
         return _to_list_if_str(lag_variables)
 
     return lag_variables
@@ -118,7 +132,7 @@ def _set_lag_variables(lag_variables, yvar, xvars):
 
 def _is_special_lag_keyword(lag_variables):
     if isinstance(lag_variables, (list, tuple)):
-        return False #list of columns
+        return False  # list of columns
 
-    special_keywords = ('xvars', 'all')
+    special_keywords = ("xvars", "all")
     return lag_variables in special_keywords
