@@ -5,7 +5,7 @@ from regtools.interact import _interaction_tuple_to_var_name
 from regtools.iter import _set_interaction_tuples
 from regtools.hypothesis.lincom import hypothesis_test
 
-# TODO: make lag plot module flexible to not having interaction
+# TODO [$5e2cd045a517cb000786c3fb]: make lag plot module flexible to not having interaction
 
 
 def interacted_lag_plot_from_reg_result_list(

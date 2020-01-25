@@ -53,7 +53,7 @@ def summary_col(
         not specified will be appended to the end of the list.
     """
 
-    # TODO: replace summary_col with an import from statsmodels
+    # TODO [$5e2cd045a517cb000786c3fa]: replace summary_col with an import from statsmodels
     #
     # the purpose of recreating the summary_col function is becuase of issue
     # #3767 in statsmodels:
