@@ -1,4 +1,4 @@
-from typing import Sequence, Union, Optional
+from typing import Sequence, Union, Optional, Dict
 import pandas as pd
 
 from regtools.regtypes import LinearModelsKwargs
@@ -28,7 +28,7 @@ def _linearmodels_fit_kwarg_dict_from_cluster(
             f"statsmodels backend for 3+ way clustering. got clusters {cluster}"
         )
 
-    fit_kwargs = dict(cov_type="clustered")
+    fit_kwargs: Dict[str, Union[str, bool, pd.DataFrame]] = dict(cov_type="clustered")
     entity_col, time_col = regdf.index.names
     other_cols = []
     for col in cluster:

@@ -1,5 +1,5 @@
 import pandas as pd
-from typing import Tuple
+from typing import Tuple, Optional
 
 from regtools.regtypes import InteractionTuples, StrOrListOfStrs
 from .create import (
@@ -10,7 +10,7 @@ from .create import (
 )
 
 DfYvarXvarInteractionTuplesLagvarTuple = Tuple[
-    pd.DataFrame, str, StrOrListOfStrs, InteractionTuples, StrOrListOfStrs
+    pd.DataFrame, str, StrOrListOfStrs, Optional[InteractionTuples], StrOrListOfStrs
 ]
 
 

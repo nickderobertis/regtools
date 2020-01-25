@@ -1,5 +1,5 @@
 import pandas as pd
-from typing import Tuple, Optional
+from typing import Tuple, Optional, List, Union
 
 from ..tools import _to_list_if_str
 
@@ -39,6 +39,7 @@ def _get_dummy_df(df: pd.DataFrame, fe_var: str) -> pd.DataFrame:
 
 
 def _get_dummy_calc_df(df: pd.DataFrame, fe_var: str) -> DfListTuple:
+    index_cols: Optional[List[Union[str, float, int]]]
     if fe_var in df.index.names:
         # Won't work with fe_var in index. Need to reset index for calculation
         index_cols = [col for col in df.index.names]

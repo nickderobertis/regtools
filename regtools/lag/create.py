@@ -34,7 +34,7 @@ def create_lagged_variables(
             df, [id_col], [date_col], fill_method=fill_method, fill_limit=fill_limit
         )
     else:
-        lag_func = _create_lagged_variable
+        lag_func = _create_lagged_variable  # type: ignore
 
     for col in lag_cols:
         lag_func(df, col, **lag_kwargs)

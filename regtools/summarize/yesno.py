@@ -32,7 +32,7 @@ def col_boolean_dict_from_list_of_lists_of_columns(
             all_columns.extend(column_list)
     all_columns = list(set(all_columns))
 
-    col_bool_dict = {col: [] for col in all_columns}
+    col_bool_dict: Dict[str, List[bool]] = {col: [] for col in all_columns}
     for column_list in column_list_list:
         if not column_list:
             # None, False, [] for column list. Just add False to all columns

@@ -31,7 +31,7 @@ def linearmodels_fe_kwarg_dict_from_fe(
 
     fe = _to_list_if_not(fe)
 
-    fe_kwargs = {}
+    fe_kwargs: LinearModelsKwargs = {}
     entity_col, time_col = regdf.index.names
     other_cols = []
     for col in fe:

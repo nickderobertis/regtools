@@ -72,9 +72,9 @@ def _multiway_cluster_groups(cluster_vars: List[str]) -> List[List[str]]:
             all_cluster_groups.append(valid_items)
 
     # Remove duplicates and convert tuples to lists
-    all_cluster_groups = [list(group) for group in set(all_cluster_groups)]
+    all_cluster_groups_lists = [list(group) for group in set(all_cluster_groups)]
 
-    return all_cluster_groups
+    return all_cluster_groups_lists
 
 
 def _cluster_vars_to_cluster_vector_lists(cluster_vars: List[str]) -> StrOrNoneListList:
@@ -94,11 +94,11 @@ def _cluster_vars_to_cluster_vector_lists(cluster_vars: List[str]) -> StrOrNoneL
     """
 
     num_items = len(cluster_vars)
-    all_lists = []
+    all_lists: StrOrNoneListList = []
     for i, cluster_var in enumerate(cluster_vars):
         output_list = [None] * num_items
-        output_list[i] = cluster_var
-        all_lists.append(output_list)
+        output_list[i] = cluster_var  # type: ignore
+        all_lists.append(output_list)  # type: ignore
 
     return all_lists
 
