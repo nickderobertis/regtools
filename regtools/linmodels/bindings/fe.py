@@ -51,4 +51,4 @@ def _has_attr_and_attr_is_truthy(obj: Any, attr: str) -> bool:
     if not hasattr(obj, attr):
         return False
     value = getattr(obj, attr)
-    return value is not None and value is not False and value is not 0
+    return value is not None and value is not False and value != 0
