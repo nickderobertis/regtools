@@ -7,24 +7,26 @@ from statsmodels.iolib.summary2 import summary_params
 from statsmodels.iolib.table import SimpleTable
 from statsmodels.iolib.tableformatting import fmt_params
 
-from statsmodels.iolib.summary2 import lrange, lzip, reduce, _col_params, \
-    _make_unique, _col_info, Summary
+from statsmodels.iolib.summary2 import (
+    lrange,
+    lzip,
+    reduce,
+    _col_params,
+    _make_unique,
+    _col_info,
+    Summary,
+)
 
 
-def summary_col(results, float_format='%.4f', model_names=[], stars=False,
-                info_dict=None, regressor_order=[]):
+def summary_col(
+    results,
+    float_format="%.4f",
+    model_names=[],
+    stars=False,
+    info_dict=None,
+    regressor_order=[],
+):
     """
-
-    NOTE: the purpose of recreating the summary_col function is becuase of issue
-    #3767 in statsmodels:
-    https://github.com/statsmodels/statsmodels/issues/3767
-    Which can cause coefficients to become mismatched when using regressor_order.
-    I have patched the issue by replacing np.unique with pd.unique.
-
-    TODO: Once the issue is patched, replace this function with simply a reference
-    to summary_col from statsmodels
-
-
     Summarize multiple results instances side-by-side (coefs and SEs)
 
     Parameters
@@ -51,11 +53,18 @@ def summary_col(results, float_format='%.4f', model_names=[], stars=False,
         not specified will be appended to the end of the list.
     """
 
+    # TODO: replace summary_col with an import from statsmodels
+    #
+    # the purpose of recreating the summary_col function is becuase of issue
+    # #3767 in statsmodels:
+    # https://github.com/statsmodels/statsmodels/issues/3767
+    # Which can cause coefficients to become mismatched when using regressor_order.
+    # I have patched the issue by replacing np.unique with pd.unique.
+
     if not isinstance(results, list):
         results = [results]
 
-    cols = [_col_params(x, stars=stars, float_format=float_format) for x in
-            results]
+    cols = [_col_params(x, stars=stars, float_format=float_format) for x in results]
 
     # Unique column names (pandas has problems merging otherwise)
     if model_names:
@@ -65,51 +74,51 @@ def summary_col(results, float_format='%.4f', model_names=[], stars=False,
     for i in range(len(cols)):
         cols[i].columns = [colnames[i]]
 
-    merg = lambda x, y: x.merge(y, how='outer', right_index=True,
-                                left_index=True)
+    merg = lambda x, y: x.merge(y, how="outer", right_index=True, left_index=True)
     summ = reduce(merg, cols)
 
     if regressor_order:
         varnames = summ.index.get_level_values(0).tolist()
         ordered = [x for x in regressor_order if x in varnames]
-        unordered = [x for x in varnames if x not in regressor_order + ['']]
+        unordered = [x for x in varnames if x not in regressor_order + [""]]
         order = ordered + list(np.unique(unordered))
 
-        f = lambda idx: sum([[x + 'coef', x + 'stde'] for x in idx], [])
+        f = lambda idx: sum([[x + "coef", x + "stde"] for x in idx], [])
         summ.index = f(pd.unique(varnames))
         summ = summ.reindex(f(order))
         summ.index = [x[:-4] for x in summ.index]
 
     idx = pd.Series(lrange(summ.shape[0])) % 2 == 1
-    summ.index = np.where(idx, '', summ.index.get_level_values(0))
+    summ.index = np.where(idx, "", summ.index.get_level_values(0))
 
     # add infos about the models.
     if info_dict:
-        cols = [_col_info(x, info_dict.get(x.model.__class__.__name__,
-                                           info_dict)) for x in results]
+        cols = [
+            _col_info(x, info_dict.get(x.model.__class__.__name__, info_dict))
+            for x in results
+        ]
     else:
-        cols = [_col_info(x, getattr(x, "default_model_infos", None)) for x in
-                results]
+        cols = [_col_info(x, getattr(x, "default_model_infos", None)) for x in results]
     # use unique column names, otherwise the merge will not succeed
-    for df , name in zip(cols, _make_unique([df.columns[0] for df in cols])):
+    for df, name in zip(cols, _make_unique([df.columns[0] for df in cols])):
         df.columns = [name]
-    merg = lambda x, y: x.merge(y, how='outer', right_index=True,
-                                left_index=True)
+    merg = lambda x, y: x.merge(y, how="outer", right_index=True, left_index=True)
     info = reduce(merg, cols)
     dat = pd.DataFrame(np.vstack([summ, info]))  # pd.concat better, but error
     dat.columns = summ.columns
     dat.index = pd.Index(summ.index.tolist() + info.index.tolist())
     summ = dat
 
-    summ = summ.fillna('')
+    summ = summ.fillna("")
 
     smry = Summary()
-    smry.add_df(summ, header=True, align='l')
-    smry.add_text('Standard errors in parentheses.')
+    smry.add_df(summ, header=True, align="l")
+    smry.add_text("Standard errors in parentheses.")
     if stars:
-        smry.add_text('* p<.1, ** p<.05, ***p<.01')
+        smry.add_text("* p<.1, ** p<.05, ***p<.01")
 
     return smry
+
 
 def update_statsmodel_result_with_new_cov_matrix(result, cov_matrix: pd.DataFrame):
     """
@@ -120,32 +129,32 @@ def update_statsmodel_result_with_new_cov_matrix(result, cov_matrix: pd.DataFram
 
     """
 
-
     result.cov_params = lambda: cov_matrix
-    result.bse = pd.Series(np.sqrt(np.diag(result.cov_params())), index=result.model.exog_names)
+    result.bse = pd.Series(
+        np.sqrt(np.diag(result.cov_params())), index=result.model.exog_names
+    )
     result.tvalues = result.params / result.bse
 
     if result.use_t:
-        df_resid = getattr(result, 'df_resid_inference', result.df_resid)
+        df_resid = getattr(result, "df_resid_inference", result.df_resid)
         result.pvalues = stats.t.sf(np.abs(result.tvalues), df_resid) * 2
     else:
         result.pvalues = stats.norm.sf(np.abs(result.tvalues)) * 2
 
     _update_statsmodel_result_summary_after_cov_matrix_changed(result)
 
+
 def _update_statsmodel_result_summary_after_cov_matrix_changed(result):
     """
     Note: inplace
     """
     # Create new param/stderr section of summary
-    new_param_stderr = summary_params(
-        result
-    )
+    new_param_stderr = summary_params(result)
     new_table = SimpleTable(
         new_param_stderr.values,
         headers=list(new_param_stderr.columns),
         stubs=list(new_param_stderr.index),
-        txt_fmt=fmt_params
+        txt_fmt=fmt_params,
     )
 
     # Create summary object with param/stderr table replaced
