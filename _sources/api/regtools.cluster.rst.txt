@@ -1,0 +1,19 @@
+regtools.cluster package
+========================
+
+.. automodule:: regtools.cluster
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+regtools.cluster.output module
+------------------------------
+
+.. automodule:: regtools.cluster.output
+   :members:
+   :undoc-members:
+   :show-inheritance:
+

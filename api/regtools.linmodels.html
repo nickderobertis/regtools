@@ -1,0 +1,329 @@
+
+
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>regtools.linmodels package &mdash; regtools 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+        <script type="text/javascript">var copybuttonSkipText = '>>> ';</script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="regtools.linmodels.bindings package" href="regtools.linmodels.bindings.html" />
+    <link rel="prev" title="regtools.lag package" href="regtools.lag.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> regtools
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Tutorial</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Getting started with regtools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html">This is my gallery</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">regtools</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="regtools.html">regtools package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="regtools.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="regtools.cluster.html">regtools.cluster package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="regtools.fe.html">regtools.fe package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="regtools.hypothesis.html">regtools.hypothesis package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="regtools.lag.html">regtools.lag package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">regtools.linmodels package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="regtools.summarize.html">regtools.summarize package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="regtools.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="regtools.html#module-regtools.args">regtools.args module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="regtools.html#module-regtools.chooser">regtools.chooser module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="regtools.html#module-regtools.controls">regtools.controls module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="regtools.html#module-regtools.dataprep">regtools.dataprep module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="regtools.html#module-regtools.differenced">regtools.differenced module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="regtools.html#module-regtools.ext_statsmodels">regtools.ext_statsmodels module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="regtools.html#module-regtools.interact">regtools.interact module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="regtools.html#module-regtools.iter">regtools.iter module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="regtools.html#module-regtools.models">regtools.models module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="regtools.html#module-regtools.order">regtools.order module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="regtools.html#module-regtools.quantile">regtools.quantile module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="regtools.html#module-regtools.reg">regtools.reg module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="regtools.html#module-regtools.regtypes">regtools.regtypes module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="regtools.html#module-regtools.select">regtools.select module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="regtools.html#module-regtools.tools">regtools.tools module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">regtools</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="modules.html">regtools</a> &raquo;</li>
+        
+          <li><a href="regtools.html">regtools package</a> &raquo;</li>
+        
+      <li>regtools.linmodels package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/regtools.linmodels.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-regtools.linmodels">
+<span id="regtools-linmodels-package"></span><h1>regtools.linmodels package<a class="headerlink" href="#module-regtools.linmodels" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="regtools.linmodels.bindings.html">regtools.linmodels.bindings package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="regtools.linmodels.bindings.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regtools.linmodels.bindings.html#module-regtools.linmodels.bindings.fe">regtools.linmodels.bindings.fe module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regtools.linmodels.bindings.html#module-regtools.linmodels.bindings.fit">regtools.linmodels.bindings.fit module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regtools.linmodels.bindings.html#module-regtools.linmodels.bindings.input">regtools.linmodels.bindings.input module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regtools.linmodels.bindings.html#module-regtools.linmodels.bindings.modelstr">regtools.linmodels.bindings.modelstr module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regtools.linmodels.bindings.html#module-regtools.linmodels.bindings.result">regtools.linmodels.bindings.result module</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-regtools.linmodels.reg">
+<span id="regtools-linmodels-reg-module"></span><h2>regtools.linmodels.reg module<a class="headerlink" href="#module-regtools.linmodels.reg" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="regtools.linmodels.reg.linear_reg">
+<code class="sig-prename descclassname">regtools.linmodels.reg.</code><code class="sig-name descname">linear_reg</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">yvar</em>, <em class="sig-param">xvars</em>, <em class="sig-param">entity_var=None</em>, <em class="sig-param">time_var=None</em>, <em class="sig-param">robust=True</em>, <em class="sig-param">cluster=False</em>, <em class="sig-param">cons=True</em>, <em class="sig-param">fe=None</em>, <em class="sig-param">interaction_tuples=None</em>, <em class="sig-param">num_lags=0</em>, <em class="sig-param">lag_variables='xvars'</em>, <em class="sig-param">lag_period_var='Date'</em>, <em class="sig-param">lag_id_var='TICKER'</em>, <em class="sig-param">lag_fill_method='ffill'</em>, <em class="sig-param">lag_fill_limit=None</em>, <em class="sig-param">model_type='fama macbeth'</em>, <em class="sig-param">**fit_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/linmodels/reg.html#linear_reg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.linmodels.reg.linear_reg" title="Permalink to this definition">¶</a></dt>
+<dd><dl>
+<dt>Args:</dt><dd><p>df: pandas dataframe containing regression data
+yvar: str, column name of outcome y variable
+xvars: list of strs, column names of x variables for regression
+entity_var: str, name of variable identifying groups for panel
+time_var: str, name of variable identifying time for panel
+robust: bool, set to True to use heterskedasticity-robust standard errors
+cluster: False or str, set to a column name to calculate standard errors within clusters</p>
+<blockquote>
+<div><p>given by unique values of given column name</p>
+</div></blockquote>
+<p>cons: bool, set to False to not include a constant in the regression
+fe: None or str or list of strs. If a str or list of strs is passed, uses these categorical
+variables to construct dummies for fixed effects.
+interaction_tuples: tuple or list of tuples of column names to interact and include as xvars
+num_lags: int, Number of periods to lag variables. Setting to other than 0 will activate lags
+lag_variables: ‘all’, ‘xvars’, or list of strs of names of columns to lag for regressions.
+lag_period_var: str, only used if lag_variables is not None. name of column which</p>
+<blockquote>
+<div><p>contains period variable for lagging</p>
+</div></blockquote>
+<dl class="simple">
+<dt>lag_id_var: str, only used if lag_variables is not None. name of column which</dt><dd><p>contains identifier variable for lagging</p>
+</dd>
+<dt>lag_fill_method: str, ‘ffill’ or ‘bfill’ for which method to use to fill in missing rows when</dt><dd><p>creating lag variables. See pandas.DataFrame.fillna for more details</p>
+</dd>
+</dl>
+<p>lag_fill_limit: int, maximum number of periods to go back or forward for filling
+model_type: str, ‘fama macbeth’ for type of model</p>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="regtools.linmodels.bindings.html" class="btn btn-neutral float-right" title="regtools.linmodels.bindings package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="regtools.lag.html" class="btn btn-neutral float-left" title="regtools.lag package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Nick DeRobertis
+
+    </p>
+  </div>
+    
+    
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-156982291-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>

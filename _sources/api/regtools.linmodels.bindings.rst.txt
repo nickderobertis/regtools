@@ -1,0 +1,51 @@
+regtools.linmodels.bindings package
+===================================
+
+.. automodule:: regtools.linmodels.bindings
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+regtools.linmodels.bindings.fe module
+-------------------------------------
+
+.. automodule:: regtools.linmodels.bindings.fe
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+regtools.linmodels.bindings.fit module
+--------------------------------------
+
+.. automodule:: regtools.linmodels.bindings.fit
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+regtools.linmodels.bindings.input module
+----------------------------------------
+
+.. automodule:: regtools.linmodels.bindings.input
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+regtools.linmodels.bindings.modelstr module
+-------------------------------------------
+
+.. automodule:: regtools.linmodels.bindings.modelstr
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+regtools.linmodels.bindings.result module
+-----------------------------------------
+
+.. automodule:: regtools.linmodels.bindings.result
+   :members:
+   :undoc-members:
+   :show-inheritance:
+

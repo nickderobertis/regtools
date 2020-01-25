@@ -1,0 +1,26 @@
+regtools.linmodels package
+==========================
+
+.. automodule:: regtools.linmodels
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+
+   regtools.linmodels.bindings
+
+Submodules
+----------
+
+regtools.linmodels.reg module
+-----------------------------
+
+.. automodule:: regtools.linmodels.reg
+   :members:
+   :undoc-members:
+   :show-inheritance:
+

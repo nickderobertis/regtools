@@ -1,0 +1,417 @@
+
+
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>regtools.iter &mdash; regtools 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="../../_static/copybutton.js"></script>
+        <script type="text/javascript">var copybuttonSkipText = '>>> ';</script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/sphinx_paramlinks.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> regtools
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Tutorial</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Getting started with regtools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../auto_examples/index.html">This is my gallery</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api/modules.html">regtools</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">regtools</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>regtools.iter</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for regtools.iter</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">itertools</span>
+
+<span class="kn">from</span> <span class="nn">regtools.order</span> <span class="kn">import</span> <span class="n">_set_regressor_order</span>
+<span class="kn">from</span> <span class="nn">.chooser</span> <span class="kn">import</span> <span class="n">any_reg</span>
+<span class="kn">from</span> <span class="nn">.select</span> <span class="kn">import</span> <span class="n">select_models</span>
+<span class="kn">from</span> <span class="nn">.summarize</span> <span class="kn">import</span> <span class="n">produce_summary</span>
+<span class="kn">from</span> <span class="nn">.lag</span> <span class="kn">import</span> <span class="n">remove_lag_names_from_reg_results</span>
+
+
+<div class="viewcode-block" id="reg_for_each_combo"><a class="viewcode-back" href="../../api/regtools.html#regtools.iter.reg_for_each_combo">[docs]</a><span class="k">def</span> <span class="nf">reg_for_each_combo</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">yvar</span><span class="p">,</span> <span class="n">xvars</span><span class="p">,</span> <span class="n">reg_type</span><span class="o">=</span><span class="s1">&#39;reg&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">reg_kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Takes each possible combination of xvars (starting from each var individually, then each pair</span>
+<span class="sd">    of vars, etc. all the way up to all xvars), and regresses yvar on each set of xvars. Returns</span>
+<span class="sd">    a list of fitted regressions.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">reg_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">xvars</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">combo</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">xvars</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">combo</span><span class="p">)</span>
+            <span class="n">reg_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">any_reg</span><span class="p">(</span><span class="n">reg_type</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">yvar</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">**</span><span class="n">reg_kwargs</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">reg_list</span></div>
+
+
+<div class="viewcode-block" id="reg_for_each_xvar_set"><a class="viewcode-back" href="../../api/regtools.html#regtools.iter.reg_for_each_xvar_set">[docs]</a><span class="k">def</span> <span class="nf">reg_for_each_xvar_set</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">yvar</span><span class="p">,</span> <span class="n">xvars_list</span><span class="p">,</span> <span class="n">reg_type</span><span class="o">=</span><span class="s1">&#39;reg&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">reg_kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Runs regressions on the same y variable for each set of x variables passed. xvars_list</span>
+<span class="sd">    should be a list of lists, where each individual list is one set of x variables for one model.</span>
+<span class="sd">    Returns a list of fitted regressions.</span>
+
+<span class="sd">    If fe is passed, should either pass a string to use fe in all models, or a list of strings or</span>
+<span class="sd">    None of same length as num models</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fe</span><span class="p">,</span> <span class="n">interaction_tuples</span> <span class="o">=</span> <span class="n">_pop_and_convert_kwargs_which_are_repeated_across_models</span><span class="p">(</span><span class="n">reg_kwargs</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">xvars_list</span><span class="p">))</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">any_reg</span><span class="p">(</span><span class="n">reg_type</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">yvar</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">fe</span><span class="o">=</span><span class="n">fe</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">interaction_tuples</span><span class="o">=</span><span class="n">interaction_tuples</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="o">**</span><span class="n">reg_kwargs</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">xvars_list</span><span class="p">)]</span></div>
+
+
+<div class="viewcode-block" id="reg_for_each_xvar_set_and_produce_summary"><a class="viewcode-back" href="../../api/regtools.html#regtools.iter.reg_for_each_xvar_set_and_produce_summary">[docs]</a><span class="k">def</span> <span class="nf">reg_for_each_xvar_set_and_produce_summary</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">yvar</span><span class="p">,</span> <span class="n">xvars_list</span><span class="p">,</span> <span class="n">robust</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                              <span class="n">cluster</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">t_stats</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                                              <span class="n">fe</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">float_format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%0.2f</span><span class="s1">&#39;</span><span class="p">,</span>
+                                              <span class="n">suppress_other_regressors</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                              <span class="n">regressor_order</span><span class="o">=</span><span class="p">[],</span> <span class="o">**</span><span class="n">other_reg_kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convenience function to run regressions for every set of xvars passed</span>
+<span class="sd">    and present them in a summary format. Returns a tuple of (reg_list, summary) where reg_list</span>
+<span class="sd">    is a list of fitted regression models, and summary is a single dataframe of results.</span>
+
+<span class="sd">    Required inputs:</span>
+<span class="sd">    df: pandas dataframe containing regression data</span>
+<span class="sd">    yvar: str, column name of y variable</span>
+<span class="sd">    xvars_list: list of lists of strs, each individual list has column names of x variables for that model</span>
+
+<span class="sd">    Optional inputs:</span>
+<span class="sd">    robust: bool, set to True to use heterskedasticity-robust standard errors</span>
+<span class="sd">    cluster: False or str, set to a column name to calculate standard errors within clusters</span>
+<span class="sd">             given by unique values of given column name</span>
+<span class="sd">    stderr: bool, set to True to keep rows for standard errors below coefficient estimates</span>
+<span class="sd">    t_stats: bool, set to True to keep rows for standard errors below coefficient estimates and convert them to t-stats</span>
+<span class="sd">    fe:    If fe is passed, should either pass a string to use fe in all models, or a list of strings or</span>
+<span class="sd">    None of same length as num models</span>
+
+<span class="sd">    Note: only specify at most one of robust and cluster.</span>
+<span class="sd">    Note: don&#39;t set both stderr and t_stats to True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">reg_list</span> <span class="o">=</span> <span class="n">reg_for_each_xvar_set</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">yvar</span><span class="p">,</span> <span class="n">xvars_list</span><span class="p">,</span> <span class="n">robust</span><span class="o">=</span><span class="n">robust</span><span class="p">,</span> <span class="n">cluster</span><span class="o">=</span><span class="n">cluster</span><span class="p">,</span> <span class="n">fe</span><span class="o">=</span><span class="n">fe</span><span class="p">,</span> <span class="o">**</span><span class="n">other_reg_kwargs</span><span class="p">)</span>
+    <span class="n">regressor_order</span> <span class="o">=</span> <span class="n">_set_regressor_order</span><span class="p">(</span><span class="n">regressor_order</span><span class="p">,</span> <span class="n">other_reg_kwargs</span><span class="p">)</span>
+    <span class="n">summ</span> <span class="o">=</span> <span class="n">produce_summary</span><span class="p">(</span><span class="n">reg_list</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">stderr</span><span class="p">,</span> <span class="n">t_stats</span><span class="o">=</span><span class="n">t_stats</span><span class="p">,</span> <span class="n">float_format</span><span class="o">=</span><span class="n">float_format</span><span class="p">,</span>
+                           <span class="n">regressor_order</span><span class="o">=</span><span class="n">regressor_order</span><span class="p">,</span> <span class="n">suppress_other_regressors</span><span class="o">=</span><span class="n">suppress_other_regressors</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">reg_list</span><span class="p">,</span> <span class="n">summ</span></div>
+
+<div class="viewcode-block" id="reg_for_each_yvar_and_produce_summary"><a class="viewcode-back" href="../../api/regtools.html#regtools.iter.reg_for_each_yvar_and_produce_summary">[docs]</a><span class="k">def</span> <span class="nf">reg_for_each_yvar_and_produce_summary</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">yvars</span><span class="p">,</span> <span class="n">xvars</span><span class="p">,</span> <span class="n">main_ivs</span><span class="p">,</span> <span class="n">reg_type</span><span class="o">=</span><span class="s1">&#39;reg&#39;</span><span class="p">,</span>
+                                          <span class="n">stderr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">t_stats</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">float_format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%0.2f</span><span class="s1">&#39;</span><span class="p">,</span>
+                                          <span class="o">**</span><span class="n">reg_kwargs</span><span class="p">):</span>
+    <span class="n">reg_list</span> <span class="o">=</span> <span class="n">reg_for_each_yvar</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">yvars</span><span class="p">,</span> <span class="n">xvars</span><span class="p">,</span> <span class="n">reg_type</span><span class="o">=</span><span class="n">reg_type</span><span class="p">,</span> <span class="o">**</span><span class="n">reg_kwargs</span><span class="p">)</span>
+    <span class="n">regressor_order</span> <span class="o">=</span> <span class="n">_set_regressor_order</span><span class="p">(</span><span class="n">main_ivs</span><span class="p">,</span> <span class="n">reg_kwargs</span><span class="p">)</span>
+    <span class="n">summ</span> <span class="o">=</span> <span class="n">produce_summary</span><span class="p">(</span><span class="n">reg_list</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">stderr</span><span class="p">,</span> <span class="n">t_stats</span><span class="o">=</span><span class="n">t_stats</span><span class="p">,</span> <span class="n">float_format</span><span class="o">=</span><span class="n">float_format</span><span class="p">,</span>
+                           <span class="n">regressor_order</span><span class="o">=</span><span class="n">regressor_order</span><span class="p">,</span> <span class="n">suppress_other_regressors</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Transposed is a better layout since all controls are suppressed and there may be many models</span>
+    <span class="n">summ</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">summ</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
+
+    <span class="k">return</span> <span class="n">reg_list</span><span class="p">,</span> <span class="n">summ</span></div>
+
+
+
+<div class="viewcode-block" id="reg_for_each_yvar"><a class="viewcode-back" href="../../api/regtools.html#regtools.iter.reg_for_each_yvar">[docs]</a><span class="k">def</span> <span class="nf">reg_for_each_yvar</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">yvars</span><span class="p">,</span> <span class="n">xvars</span><span class="p">,</span> <span class="n">reg_type</span><span class="o">=</span><span class="s1">&#39;reg&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">reg_kwargs</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">any_reg</span><span class="p">(</span><span class="n">reg_type</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">yvar</span><span class="p">,</span> <span class="n">xvars</span><span class="p">,</span> <span class="o">**</span><span class="n">reg_kwargs</span><span class="p">)</span> <span class="k">for</span> <span class="n">yvar</span> <span class="ow">in</span> <span class="n">yvars</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="reg_for_each_combo_select_and_produce_summary"><a class="viewcode-back" href="../../api/regtools.html#regtools.iter.reg_for_each_combo_select_and_produce_summary">[docs]</a><span class="k">def</span> <span class="nf">reg_for_each_combo_select_and_produce_summary</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">yvar</span><span class="p">,</span> <span class="n">xvars</span><span class="p">,</span> <span class="n">robust</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cluster</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                                  <span class="n">keepnum</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">t_stats</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                                                  <span class="n">float_format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%0.1f</span><span class="s1">&#39;</span><span class="p">,</span>
+                                                  <span class="n">regressor_order</span><span class="o">=</span><span class="p">[],</span>
+                                                  <span class="o">**</span><span class="n">other_reg_kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convenience function to run regressions for every combination of xvars, select the best models,</span>
+<span class="sd">    and present them in a summary format. Returns a tuple of (reg_list, summary) where reg_list</span>
+<span class="sd">    is a list of fitted regression models, and summary is a single dataframe of results</span>
+
+<span class="sd">    Required inputs:</span>
+<span class="sd">    df: pandas dataframe containing regression data</span>
+<span class="sd">    yvar: str, column name of y variable</span>
+<span class="sd">    xvars: list of strs, column names of all possible x variables</span>
+
+<span class="sd">    Optional inputs:</span>
+<span class="sd">    robust: bool, set to True to use heterskedasticity-robust standard errors</span>
+<span class="sd">    cluster: False or str, set to a column name to calculate standard errors within clusters</span>
+<span class="sd">             given by unique values of given column name</span>
+<span class="sd">    keepnum: int, number to keep for each amount of x variables. The total number of outputted</span>
+<span class="sd">             regressions will be roughly keepnum * len(xvars)</span>
+<span class="sd">    stderr: bool, set to True to keep rows for standard errors below coefficient estimates</span>
+<span class="sd">    t_stats: bool, set to True to keep rows for standard errors below coefficient estimates and convert them to t-stats</span>
+
+<span class="sd">    Note: only specify at most one of robust and cluster.</span>
+<span class="sd">    Note: don&#39;t set both stderr and t_stats to True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">reg_list</span> <span class="o">=</span> <span class="n">reg_for_each_combo</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">yvar</span><span class="p">,</span> <span class="n">xvars</span><span class="p">,</span> <span class="n">robust</span><span class="o">=</span><span class="n">robust</span><span class="p">,</span> <span class="n">cluster</span><span class="o">=</span><span class="n">cluster</span><span class="p">,</span> <span class="o">**</span><span class="n">other_reg_kwargs</span><span class="p">)</span>
+    <span class="n">regressor_order</span> <span class="o">=</span> <span class="n">_set_regressor_order</span><span class="p">(</span><span class="n">regressor_order</span><span class="p">,</span> <span class="n">other_reg_kwargs</span><span class="p">)</span>
+    <span class="n">outlist</span> <span class="o">=</span> <span class="n">select_models</span><span class="p">(</span><span class="n">reg_list</span><span class="p">,</span> <span class="n">keepnum</span><span class="p">,</span> <span class="n">xvars</span><span class="p">)</span>
+    <span class="n">summ</span> <span class="o">=</span> <span class="n">produce_summary</span><span class="p">(</span><span class="n">outlist</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">stderr</span><span class="p">,</span> <span class="n">t_stats</span><span class="o">=</span><span class="n">t_stats</span><span class="p">,</span>
+                           <span class="n">float_format</span><span class="o">=</span><span class="n">float_format</span><span class="p">,</span> <span class="n">regressor_order</span><span class="o">=</span><span class="n">regressor_order</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">outlist</span><span class="p">,</span> <span class="n">summ</span></div>
+
+<div class="viewcode-block" id="reg_for_each_lag_and_produce_summary"><a class="viewcode-back" href="../../api/regtools.html#regtools.iter.reg_for_each_lag_and_produce_summary">[docs]</a><span class="k">def</span> <span class="nf">reg_for_each_lag_and_produce_summary</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">yvar</span><span class="p">,</span> <span class="n">xvars</span><span class="p">,</span> <span class="n">main_ivs</span><span class="p">,</span> <span class="n">lag_tuple</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span> <span class="n">consolidate_lags</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                         <span class="n">reg_type</span><span class="o">=</span><span class="s1">&#39;reg&#39;</span><span class="p">,</span>
+                                          <span class="n">stderr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">t_stats</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">float_format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%0.2f</span><span class="s1">&#39;</span><span class="p">,</span>
+                                         <span class="n">suppress_other_regressors</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                          <span class="o">**</span><span class="n">reg_kwargs</span><span class="p">):</span>
+    <span class="n">reg_list</span> <span class="o">=</span> <span class="n">reg_for_each_lag</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">yvar</span><span class="p">,</span> <span class="n">xvars</span><span class="p">,</span> <span class="n">lag_tuple</span><span class="o">=</span><span class="n">lag_tuple</span><span class="p">,</span> <span class="n">reg_type</span><span class="o">=</span><span class="n">reg_type</span><span class="p">,</span> <span class="o">**</span><span class="n">reg_kwargs</span><span class="p">)</span>
+
+    <span class="c1"># If we are consolidating lag coefficients, remove the lag names from the coefficient names</span>
+    <span class="k">if</span> <span class="n">consolidate_lags</span><span class="p">:</span>
+        <span class="n">reg_list</span> <span class="o">=</span> <span class="n">remove_lag_names_from_reg_results</span><span class="p">(</span><span class="n">reg_list</span><span class="p">,</span> <span class="n">lag_tuple</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Not consolidating lag coefficients. Therefore regressor order needs to be modified to include</span>
+        <span class="c1"># renamed lag coefficients.</span>
+        <span class="c1"># Add to kwargs so regressor order can be set properly</span>
+        <span class="n">reg_kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;lag_tuple&#39;</span><span class="p">:</span> <span class="n">lag_tuple</span><span class="p">})</span>
+
+    <span class="n">regressor_order</span> <span class="o">=</span> <span class="n">_set_regressor_order</span><span class="p">(</span><span class="n">main_ivs</span><span class="p">,</span> <span class="n">reg_kwargs</span><span class="p">)</span>
+
+    <span class="n">model_names</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;(</span><span class="si">{lag}</span><span class="s1">)&#39;</span> <span class="k">for</span> <span class="n">lag</span> <span class="ow">in</span> <span class="n">lag_tuple</span><span class="p">]</span>
+
+    <span class="n">summ</span> <span class="o">=</span> <span class="n">produce_summary</span><span class="p">(</span><span class="n">reg_list</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">stderr</span><span class="p">,</span> <span class="n">t_stats</span><span class="o">=</span><span class="n">t_stats</span><span class="p">,</span> <span class="n">float_format</span><span class="o">=</span><span class="n">float_format</span><span class="p">,</span>
+                           <span class="n">regressor_order</span><span class="o">=</span><span class="n">regressor_order</span><span class="p">,</span> <span class="n">suppress_other_regressors</span><span class="o">=</span><span class="n">suppress_other_regressors</span><span class="p">,</span>
+                           <span class="n">model_names</span><span class="o">=</span><span class="n">model_names</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">reg_list</span><span class="p">,</span> <span class="n">summ</span></div>
+
+<div class="viewcode-block" id="reg_for_each_lag"><a class="viewcode-back" href="../../api/regtools.html#regtools.iter.reg_for_each_lag">[docs]</a><span class="k">def</span> <span class="nf">reg_for_each_lag</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">yvar</span><span class="p">,</span> <span class="n">xvars</span><span class="p">,</span> <span class="n">lag_tuple</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span> <span class="n">reg_type</span><span class="o">=</span><span class="s1">&#39;reg&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">reg_kwargs</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">any_reg</span><span class="p">(</span><span class="n">reg_type</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">yvar</span><span class="p">,</span> <span class="n">xvars</span><span class="p">,</span> <span class="n">num_lags</span><span class="o">=</span><span class="n">lag</span><span class="p">,</span> <span class="o">**</span><span class="n">reg_kwargs</span><span class="p">)</span> <span class="k">for</span> <span class="n">lag</span> <span class="ow">in</span> <span class="n">lag_tuple</span><span class="p">]</span></div>
+
+<span class="k">def</span> <span class="nf">_pop_and_convert_kwargs_which_are_repeated_across_models</span><span class="p">(</span><span class="n">reg_kwargs</span><span class="p">,</span> <span class="n">num_models</span><span class="p">):</span>
+    <span class="k">if</span> <span class="s1">&#39;fe&#39;</span> <span class="ow">in</span> <span class="n">reg_kwargs</span><span class="p">:</span>
+        <span class="n">fe</span> <span class="o">=</span> <span class="n">reg_kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;fe&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">fe</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="s1">&#39;interaction_tuples&#39;</span> <span class="ow">in</span> <span class="n">reg_kwargs</span><span class="p">:</span>
+        <span class="n">interaction_tuples</span> <span class="o">=</span> <span class="n">reg_kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;interaction_tuples&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">interaction_tuples</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span>
+
+    <span class="n">fe</span> <span class="o">=</span> <span class="n">_set_fe</span><span class="p">(</span><span class="n">fe</span><span class="p">,</span> <span class="n">num_models</span><span class="p">)</span>
+    <span class="n">interaction_tuples</span> <span class="o">=</span> <span class="n">_set_interaction_tuples</span><span class="p">(</span><span class="n">interaction_tuples</span><span class="p">,</span> <span class="n">num_models</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">fe</span><span class="p">,</span> <span class="n">interaction_tuples</span>
+
+
+<span class="k">def</span> <span class="nf">_set_fe</span><span class="p">(</span><span class="n">fe</span><span class="p">,</span> <span class="n">num_models</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">_set_for_multiple_models</span><span class="p">(</span><span class="n">fe</span><span class="p">,</span> <span class="n">num_models</span><span class="p">,</span> <span class="n">param_name</span><span class="o">=</span><span class="s1">&#39;fixed effects&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">_set_interaction_tuples</span><span class="p">(</span><span class="n">interaction_tuples</span><span class="p">,</span> <span class="n">num_models</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">_set_for_multiple_models</span><span class="p">(</span><span class="n">interaction_tuples</span><span class="p">,</span> <span class="n">num_models</span><span class="p">,</span> <span class="n">param_name</span><span class="o">=</span><span class="s1">&#39;interaction tuples&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">_set_for_multiple_models</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="n">num_models</span><span class="p">,</span> <span class="n">param_name</span><span class="o">=</span><span class="s1">&#39;fixed effects&#39;</span><span class="p">):</span>
+    <span class="c1"># Here we are being passed a list of strings or None matching the size of models.</span>
+    <span class="c1"># This is the correct format so just output</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="nb">list</span><span class="p">))</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">param</span><span class="p">)</span> <span class="o">==</span> <span class="n">num_models</span><span class="p">):</span>
+        <span class="n">out_param</span> <span class="o">=</span> <span class="n">param</span>
+
+    <span class="c1"># Here we are being passed a single item or a list with a single item</span>
+    <span class="c1"># Need to expand to cover all models</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
+            <span class="n">param</span> <span class="o">=</span> <span class="p">[</span><span class="n">param</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">param</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;Incorrect shape of items for </span><span class="si">{param_name}</span><span class="s1"> passed. Got {len(param)} items, was expecting </span><span class="si">{num_models}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">out_param</span> <span class="o">=</span> <span class="p">[</span><span class="n">param</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">*</span> <span class="n">num_models</span>
+
+    <span class="c1"># Final input checks</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">out_param</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">out_param</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Nick DeRobertis
+
+    </p>
+  </div>
+    
+    
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-156982291-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>

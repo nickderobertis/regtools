@@ -1,0 +1,43 @@
+regtools.lag package
+====================
+
+.. automodule:: regtools.lag
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+regtools.lag.create module
+--------------------------
+
+.. automodule:: regtools.lag.create
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+regtools.lag.main module
+------------------------
+
+.. automodule:: regtools.lag.main
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+regtools.lag.plot module
+------------------------
+
+.. automodule:: regtools.lag.plot
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+regtools.lag.remove module
+--------------------------
+
+.. automodule:: regtools.lag.remove
+   :members:
+   :undoc-members:
+   :show-inheritance:
+

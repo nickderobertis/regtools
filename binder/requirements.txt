@@ -1,0 +1,7 @@
+regtools
+statsmodels
+pd-utils
+linearmodels
+matplotlib
+scipy
+pandas

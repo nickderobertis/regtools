@@ -1,0 +1,19 @@
+regtools.hypothesis package
+===========================
+
+.. automodule:: regtools.hypothesis
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+regtools.hypothesis.lincom module
+---------------------------------
+
+.. automodule:: regtools.hypothesis.lincom
+   :members:
+   :undoc-members:
+   :show-inheritance:
+

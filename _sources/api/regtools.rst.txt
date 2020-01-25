@@ -1,0 +1,143 @@
+regtools package
+================
+
+.. automodule:: regtools
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+
+   regtools.cluster
+   regtools.fe
+   regtools.hypothesis
+   regtools.lag
+   regtools.linmodels
+   regtools.summarize
+
+Submodules
+----------
+
+regtools.args module
+--------------------
+
+.. automodule:: regtools.args
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+regtools.chooser module
+-----------------------
+
+.. automodule:: regtools.chooser
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+regtools.controls module
+------------------------
+
+.. automodule:: regtools.controls
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+regtools.dataprep module
+------------------------
+
+.. automodule:: regtools.dataprep
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+regtools.differenced module
+---------------------------
+
+.. automodule:: regtools.differenced
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+regtools.ext\_statsmodels module
+--------------------------------
+
+.. automodule:: regtools.ext_statsmodels
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+regtools.interact module
+------------------------
+
+.. automodule:: regtools.interact
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+regtools.iter module
+--------------------
+
+.. automodule:: regtools.iter
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+regtools.models module
+----------------------
+
+.. automodule:: regtools.models
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+regtools.order module
+---------------------
+
+.. automodule:: regtools.order
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+regtools.quantile module
+------------------------
+
+.. automodule:: regtools.quantile
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+regtools.reg module
+-------------------
+
+.. automodule:: regtools.reg
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+regtools.regtypes module
+------------------------
+
+.. automodule:: regtools.regtypes
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+regtools.select module
+----------------------
+
+.. automodule:: regtools.select
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+regtools.tools module
+---------------------
+
+.. automodule:: regtools.tools
+   :members:
+   :undoc-members:
+   :show-inheritance:
+

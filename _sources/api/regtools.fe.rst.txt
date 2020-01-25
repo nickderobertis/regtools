@@ -1,0 +1,35 @@
+regtools.fe package
+===================
+
+.. automodule:: regtools.fe
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+regtools.fe.dataprep module
+---------------------------
+
+.. automodule:: regtools.fe.dataprep
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+regtools.fe.output module
+-------------------------
+
+.. automodule:: regtools.fe.output
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+regtools.fe.tools module
+------------------------
+
+.. automodule:: regtools.fe.tools
+   :members:
+   :undoc-members:
+   :show-inheritance:
+

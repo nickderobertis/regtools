@@ -1,0 +1,734 @@
+
+
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>regtools package &mdash; regtools 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+        <script type="text/javascript">var copybuttonSkipText = '>>> ';</script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="regtools.cluster package" href="regtools.cluster.html" />
+    <link rel="prev" title="regtools" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> regtools
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Tutorial</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Getting started with regtools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html">This is my gallery</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">regtools</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">regtools package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="regtools.cluster.html">regtools.cluster package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="regtools.fe.html">regtools.fe package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="regtools.hypothesis.html">regtools.hypothesis package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="regtools.lag.html">regtools.lag package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="regtools.linmodels.html">regtools.linmodels package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="regtools.summarize.html">regtools.summarize package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-regtools.args">regtools.args module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-regtools.chooser">regtools.chooser module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-regtools.controls">regtools.controls module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-regtools.dataprep">regtools.dataprep module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-regtools.differenced">regtools.differenced module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-regtools.ext_statsmodels">regtools.ext_statsmodels module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-regtools.interact">regtools.interact module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-regtools.iter">regtools.iter module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-regtools.models">regtools.models module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-regtools.order">regtools.order module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-regtools.quantile">regtools.quantile module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-regtools.reg">regtools.reg module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-regtools.regtypes">regtools.regtypes module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-regtools.select">regtools.select module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-regtools.tools">regtools.tools module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">regtools</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="modules.html">regtools</a> &raquo;</li>
+        
+      <li>regtools package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/regtools.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-regtools">
+<span id="regtools-package"></span><h1>regtools package<a class="headerlink" href="#module-regtools" title="Permalink to this headline">¶</a></h1>
+<p>High-level tools for running regressions. Handles fixed effects, 2+ way clustering, hypothesis testing,
+lagged variables, differenced variables, interaction effects, iteration tools, and producing summaries for a
+variety of models including OLS, Logit, Probit, Quantile, and Fama-Macbeth.</p>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="regtools.cluster.html">regtools.cluster package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="regtools.cluster.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regtools.cluster.html#module-regtools.cluster.output">regtools.cluster.output module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="regtools.fe.html">regtools.fe package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="regtools.fe.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regtools.fe.html#module-regtools.fe.dataprep">regtools.fe.dataprep module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regtools.fe.html#module-regtools.fe.output">regtools.fe.output module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regtools.fe.html#module-regtools.fe.tools">regtools.fe.tools module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="regtools.hypothesis.html">regtools.hypothesis package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="regtools.hypothesis.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regtools.hypothesis.html#module-regtools.hypothesis.lincom">regtools.hypothesis.lincom module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="regtools.lag.html">regtools.lag package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="regtools.lag.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regtools.lag.html#module-regtools.lag.create">regtools.lag.create module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regtools.lag.html#module-regtools.lag.main">regtools.lag.main module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regtools.lag.html#module-regtools.lag.plot">regtools.lag.plot module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regtools.lag.html#module-regtools.lag.remove">regtools.lag.remove module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="regtools.linmodels.html">regtools.linmodels package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="regtools.linmodels.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="regtools.linmodels.bindings.html">regtools.linmodels.bindings package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="regtools.linmodels.bindings.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="regtools.linmodels.bindings.html#module-regtools.linmodels.bindings.fe">regtools.linmodels.bindings.fe module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="regtools.linmodels.bindings.html#module-regtools.linmodels.bindings.fit">regtools.linmodels.bindings.fit module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="regtools.linmodels.bindings.html#module-regtools.linmodels.bindings.input">regtools.linmodels.bindings.input module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="regtools.linmodels.bindings.html#module-regtools.linmodels.bindings.modelstr">regtools.linmodels.bindings.modelstr module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="regtools.linmodels.bindings.html#module-regtools.linmodels.bindings.result">regtools.linmodels.bindings.result module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="regtools.linmodels.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regtools.linmodels.html#module-regtools.linmodels.reg">regtools.linmodels.reg module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="regtools.summarize.html">regtools.summarize package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="regtools.summarize.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regtools.summarize.html#module-regtools.summarize.split">regtools.summarize.split module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regtools.summarize.html#module-regtools.summarize.tstat">regtools.summarize.tstat module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regtools.summarize.html#module-regtools.summarize.yesno">regtools.summarize.yesno module</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-regtools.args">
+<span id="regtools-args-module"></span><h2>regtools.args module<a class="headerlink" href="#module-regtools.args" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="regtools.args.RegressionSetArgs">
+<em class="property">class </em><code class="sig-prename descclassname">regtools.args.</code><code class="sig-name descname">RegressionSetArgs</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">yvar</em>, <em class="sig-param">xvars_list</em>, <em class="sig-param">fe_list=None</em>, <em class="sig-param">**reg_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/args.html#RegressionSetArgs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.args.RegressionSetArgs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="method">
+<dt id="regtools.args.RegressionSetArgs.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">yvar</em>, <em class="sig-param">xvars_list</em>, <em class="sig-param">fe_list=None</em>, <em class="sig-param">**reg_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/args.html#RegressionSetArgs.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.args.RegressionSetArgs.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="regtools.args.RegressionSetArgs.keys">
+<code class="sig-name descname">keys</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/args.html#RegressionSetArgs.keys"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.args.RegressionSetArgs.keys" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-regtools.chooser">
+<span id="regtools-chooser-module"></span><h2>regtools.chooser module<a class="headerlink" href="#module-regtools.chooser" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="regtools.chooser.any_reg">
+<code class="sig-prename descclassname">regtools.chooser.</code><code class="sig-name descname">any_reg</code><span class="sig-paren">(</span><em class="sig-param">reg_type</em>, <em class="sig-param">*reg_args</em>, <em class="sig-param">**reg_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/chooser.html#any_reg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.chooser.any_reg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-regtools.controls">
+<span id="regtools-controls-module"></span><h2>regtools.controls module<a class="headerlink" href="#module-regtools.controls" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="regtools.controls.suppress_controls_in_summary_df">
+<code class="sig-prename descclassname">regtools.controls.</code><code class="sig-name descname">suppress_controls_in_summary_df</code><span class="sig-paren">(</span><em class="sig-param">summ_df</em>, <em class="sig-param">regressor_order</em>, <em class="sig-param">dummy_col_dicts</em>, <em class="sig-param">info_dict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/controls.html#suppress_controls_in_summary_df"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.controls.suppress_controls_in_summary_df" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-regtools.dataprep">
+<span id="regtools-dataprep-module"></span><h2>regtools.dataprep module<a class="headerlink" href="#module-regtools.dataprep" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-regtools.differenced">
+<span id="regtools-differenced-module"></span><h2>regtools.differenced module<a class="headerlink" href="#module-regtools.differenced" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="regtools.differenced.create_differenced_variables">
+<code class="sig-prename descclassname">regtools.differenced.</code><code class="sig-name descname">create_differenced_variables</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">diff_cols</em>, <em class="sig-param">id_col='TICKER'</em>, <em class="sig-param">date_col='Date'</em>, <em class="sig-param">difference_lag=1</em>, <em class="sig-param">fill_method='ffill'</em>, <em class="sig-param">fill_limit=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/differenced.html#create_differenced_variables"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.differenced.create_differenced_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Note: partially inplace</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="regtools.differenced.diff_reg">
+<code class="sig-prename descclassname">regtools.differenced.</code><code class="sig-name descname">diff_reg</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">yvar</em>, <em class="sig-param">xvars</em>, <em class="sig-param">id_col</em>, <em class="sig-param">date_col</em>, <em class="sig-param">difference_lag=1</em>, <em class="sig-param">diff_cols=None</em>, <em class="sig-param">diff_fill_method='ffill'</em>, <em class="sig-param">diff_fill_limit=None</em>, <em class="sig-param">**reg_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/differenced.html#diff_reg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.differenced.diff_reg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-regtools.ext_statsmodels">
+<span id="regtools-ext-statsmodels-module"></span><h2>regtools.ext_statsmodels module<a class="headerlink" href="#module-regtools.ext_statsmodels" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="regtools.ext_statsmodels.summary_col">
+<code class="sig-prename descclassname">regtools.ext_statsmodels.</code><code class="sig-name descname">summary_col</code><span class="sig-paren">(</span><em class="sig-param">results</em>, <em class="sig-param">float_format='%.4f'</em>, <em class="sig-param">model_names=[]</em>, <em class="sig-param">stars=False</em>, <em class="sig-param">info_dict=None</em>, <em class="sig-param">regressor_order=[]</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/ext_statsmodels.html#summary_col"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.ext_statsmodels.summary_col" title="Permalink to this definition">¶</a></dt>
+<dd><p>Summarize multiple results instances side-by-side (coefs and SEs)</p>
+<p>results : statsmodels results instance or list of result instances
+float_format : string</p>
+<blockquote>
+<div><p>float format for coefficients and standard errors
+Default : ‘%.4f’</p>
+</div></blockquote>
+<dl class="simple">
+<dt>model_names<span class="classifier">list of strings of length len(results) if the names are not</span></dt><dd><p>unique, a roman number will be appended to all model names</p>
+</dd>
+<dt>stars<span class="classifier">bool</span></dt><dd><p>print significance stars</p>
+</dd>
+<dt>info_dict<span class="classifier">dict</span></dt><dd><p>dict of lambda functions to be applied to results instances to retrieve
+model info. To use specific information for different models, add a
+(nested) info_dict with model name as the key.
+Example: <cite>info_dict = {“N”:…, “R2”: …, “OLS”:{“R2”:…}}</cite> would
+only show <cite>R2</cite> for OLS regression models, but additionally <cite>N</cite> for
+all other results.
+Default : None (use the info_dict specified in
+result.default_model_infos, if this property exists)</p>
+</dd>
+<dt>regressor_order<span class="classifier">list of strings</span></dt><dd><p>list of names of the regressors in the desired order. All regressors
+not specified will be appended to the end of the list.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="regtools.ext_statsmodels.update_statsmodel_result_with_new_cov_matrix">
+<code class="sig-prename descclassname">regtools.ext_statsmodels.</code><code class="sig-name descname">update_statsmodel_result_with_new_cov_matrix</code><span class="sig-paren">(</span><em class="sig-param">result</em>, <em class="sig-param">cov_matrix</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/ext_statsmodels.html#update_statsmodel_result_with_new_cov_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.ext_statsmodels.update_statsmodel_result_with_new_cov_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Note: inplace</p>
+<p>Statsmodels results have caching going on. Need to update all the properties
+which depend on the covariance matrix</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-regtools.interact">
+<span id="regtools-interact-module"></span><h2>regtools.interact module<a class="headerlink" href="#module-regtools.interact" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="regtools.interact.create_interaction_variables">
+<code class="sig-prename descclassname">regtools.interact.</code><code class="sig-name descname">create_interaction_variables</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">interaction_tuples</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/interact.html#create_interaction_variables"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.interact.create_interaction_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Note: inplace</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="regtools.interact.delete_interaction_variables">
+<code class="sig-prename descclassname">regtools.interact.</code><code class="sig-name descname">delete_interaction_variables</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">interaction_tuples</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/interact.html#delete_interaction_variables"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.interact.delete_interaction_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Note: inplace</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-regtools.iter">
+<span id="regtools-iter-module"></span><h2>regtools.iter module<a class="headerlink" href="#module-regtools.iter" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="regtools.iter.reg_for_each_combo">
+<code class="sig-prename descclassname">regtools.iter.</code><code class="sig-name descname">reg_for_each_combo</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">yvar</em>, <em class="sig-param">xvars</em>, <em class="sig-param">reg_type='reg'</em>, <em class="sig-param">**reg_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/iter.html#reg_for_each_combo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.iter.reg_for_each_combo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes each possible combination of xvars (starting from each var individually, then each pair
+of vars, etc. all the way up to all xvars), and regresses yvar on each set of xvars. Returns
+a list of fitted regressions.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="regtools.iter.reg_for_each_combo_select_and_produce_summary">
+<code class="sig-prename descclassname">regtools.iter.</code><code class="sig-name descname">reg_for_each_combo_select_and_produce_summary</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">yvar</em>, <em class="sig-param">xvars</em>, <em class="sig-param">robust=True</em>, <em class="sig-param">cluster=False</em>, <em class="sig-param">keepnum=5</em>, <em class="sig-param">stderr=False</em>, <em class="sig-param">t_stats=True</em>, <em class="sig-param">float_format='%0.1f'</em>, <em class="sig-param">regressor_order=[]</em>, <em class="sig-param">**other_reg_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/iter.html#reg_for_each_combo_select_and_produce_summary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.iter.reg_for_each_combo_select_and_produce_summary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience function to run regressions for every combination of xvars, select the best models,
+and present them in a summary format. Returns a tuple of (reg_list, summary) where reg_list
+is a list of fitted regression models, and summary is a single dataframe of results</p>
+<p>Required inputs:
+df: pandas dataframe containing regression data
+yvar: str, column name of y variable
+xvars: list of strs, column names of all possible x variables</p>
+<p>Optional inputs:
+robust: bool, set to True to use heterskedasticity-robust standard errors
+cluster: False or str, set to a column name to calculate standard errors within clusters</p>
+<blockquote>
+<div><p>given by unique values of given column name</p>
+</div></blockquote>
+<dl class="simple">
+<dt>keepnum: int, number to keep for each amount of x variables. The total number of outputted</dt><dd><p>regressions will be roughly keepnum * len(xvars)</p>
+</dd>
+</dl>
+<p>stderr: bool, set to True to keep rows for standard errors below coefficient estimates
+t_stats: bool, set to True to keep rows for standard errors below coefficient estimates and convert them to t-stats</p>
+<p>Note: only specify at most one of robust and cluster.
+Note: don’t set both stderr and t_stats to True</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="regtools.iter.reg_for_each_lag">
+<code class="sig-prename descclassname">regtools.iter.</code><code class="sig-name descname">reg_for_each_lag</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">yvar</em>, <em class="sig-param">xvars</em>, <em class="sig-param">lag_tuple=(1</em>, <em class="sig-param">2</em>, <em class="sig-param">3</em>, <em class="sig-param">4)</em>, <em class="sig-param">reg_type='reg'</em>, <em class="sig-param">**reg_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/iter.html#reg_for_each_lag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.iter.reg_for_each_lag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="regtools.iter.reg_for_each_lag_and_produce_summary">
+<code class="sig-prename descclassname">regtools.iter.</code><code class="sig-name descname">reg_for_each_lag_and_produce_summary</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">yvar</em>, <em class="sig-param">xvars</em>, <em class="sig-param">main_ivs</em>, <em class="sig-param">lag_tuple=(1</em>, <em class="sig-param">2</em>, <em class="sig-param">3</em>, <em class="sig-param">4)</em>, <em class="sig-param">consolidate_lags=True</em>, <em class="sig-param">reg_type='reg'</em>, <em class="sig-param">stderr=False</em>, <em class="sig-param">t_stats=True</em>, <em class="sig-param">float_format='%0.2f'</em>, <em class="sig-param">suppress_other_regressors=False</em>, <em class="sig-param">**reg_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/iter.html#reg_for_each_lag_and_produce_summary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.iter.reg_for_each_lag_and_produce_summary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="regtools.iter.reg_for_each_xvar_set">
+<code class="sig-prename descclassname">regtools.iter.</code><code class="sig-name descname">reg_for_each_xvar_set</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">yvar</em>, <em class="sig-param">xvars_list</em>, <em class="sig-param">reg_type='reg'</em>, <em class="sig-param">**reg_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/iter.html#reg_for_each_xvar_set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.iter.reg_for_each_xvar_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs regressions on the same y variable for each set of x variables passed. xvars_list
+should be a list of lists, where each individual list is one set of x variables for one model.
+Returns a list of fitted regressions.</p>
+<p>If fe is passed, should either pass a string to use fe in all models, or a list of strings or
+None of same length as num models</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="regtools.iter.reg_for_each_xvar_set_and_produce_summary">
+<code class="sig-prename descclassname">regtools.iter.</code><code class="sig-name descname">reg_for_each_xvar_set_and_produce_summary</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">yvar</em>, <em class="sig-param">xvars_list</em>, <em class="sig-param">robust=True</em>, <em class="sig-param">cluster=False</em>, <em class="sig-param">stderr=False</em>, <em class="sig-param">t_stats=True</em>, <em class="sig-param">fe=None</em>, <em class="sig-param">float_format='%0.2f'</em>, <em class="sig-param">suppress_other_regressors=False</em>, <em class="sig-param">regressor_order=[]</em>, <em class="sig-param">**other_reg_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/iter.html#reg_for_each_xvar_set_and_produce_summary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.iter.reg_for_each_xvar_set_and_produce_summary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience function to run regressions for every set of xvars passed
+and present them in a summary format. Returns a tuple of (reg_list, summary) where reg_list
+is a list of fitted regression models, and summary is a single dataframe of results.</p>
+<p>Required inputs:
+df: pandas dataframe containing regression data
+yvar: str, column name of y variable
+xvars_list: list of lists of strs, each individual list has column names of x variables for that model</p>
+<p>Optional inputs:
+robust: bool, set to True to use heterskedasticity-robust standard errors
+cluster: False or str, set to a column name to calculate standard errors within clusters</p>
+<blockquote>
+<div><p>given by unique values of given column name</p>
+</div></blockquote>
+<p>stderr: bool, set to True to keep rows for standard errors below coefficient estimates
+t_stats: bool, set to True to keep rows for standard errors below coefficient estimates and convert them to t-stats
+fe:    If fe is passed, should either pass a string to use fe in all models, or a list of strings or
+None of same length as num models</p>
+<p>Note: only specify at most one of robust and cluster.
+Note: don’t set both stderr and t_stats to True</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="regtools.iter.reg_for_each_yvar">
+<code class="sig-prename descclassname">regtools.iter.</code><code class="sig-name descname">reg_for_each_yvar</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">yvars</em>, <em class="sig-param">xvars</em>, <em class="sig-param">reg_type='reg'</em>, <em class="sig-param">**reg_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/iter.html#reg_for_each_yvar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.iter.reg_for_each_yvar" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="regtools.iter.reg_for_each_yvar_and_produce_summary">
+<code class="sig-prename descclassname">regtools.iter.</code><code class="sig-name descname">reg_for_each_yvar_and_produce_summary</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">yvars</em>, <em class="sig-param">xvars</em>, <em class="sig-param">main_ivs</em>, <em class="sig-param">reg_type='reg'</em>, <em class="sig-param">stderr=False</em>, <em class="sig-param">t_stats=True</em>, <em class="sig-param">float_format='%0.2f'</em>, <em class="sig-param">**reg_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/iter.html#reg_for_each_yvar_and_produce_summary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.iter.reg_for_each_yvar_and_produce_summary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-regtools.models">
+<span id="regtools-models-module"></span><h2>regtools.models module<a class="headerlink" href="#module-regtools.models" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="regtools.models.get_model_class_by_string">
+<code class="sig-prename descclassname">regtools.models.</code><code class="sig-name descname">get_model_class_by_string</code><span class="sig-paren">(</span><em class="sig-param">model_string</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/models.html#get_model_class_by_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.models.get_model_class_by_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="regtools.models.get_model_name_by_string">
+<code class="sig-prename descclassname">regtools.models.</code><code class="sig-name descname">get_model_name_by_string</code><span class="sig-paren">(</span><em class="sig-param">model_string</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/models.html#get_model_name_by_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.models.get_model_name_by_string" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-regtools.order">
+<span id="regtools-order-module"></span><h2>regtools.order module<a class="headerlink" href="#module-regtools.order" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="regtools.order.convert_regressor_order_for_diff">
+<code class="sig-prename descclassname">regtools.order.</code><code class="sig-name descname">convert_regressor_order_for_diff</code><span class="sig-paren">(</span><em class="sig-param">regressor_order</em>, <em class="sig-param">reg_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/order.html#convert_regressor_order_for_diff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.order.convert_regressor_order_for_diff" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="regtools.order.convert_regressor_order_for_lags">
+<code class="sig-prename descclassname">regtools.order.</code><code class="sig-name descname">convert_regressor_order_for_lags</code><span class="sig-paren">(</span><em class="sig-param">regressor_order</em>, <em class="sig-param">reg_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/order.html#convert_regressor_order_for_lags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.order.convert_regressor_order_for_lags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-regtools.quantile">
+<span id="regtools-quantile-module"></span><h2>regtools.quantile module<a class="headerlink" href="#module-regtools.quantile" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="regtools.quantile.quantile_plot_from_quantile_result_df">
+<code class="sig-prename descclassname">regtools.quantile.</code><code class="sig-name descname">quantile_plot_from_quantile_result_df</code><span class="sig-paren">(</span><em class="sig-param">result_df</em>, <em class="sig-param">yvar</em>, <em class="sig-param">main_iv</em>, <em class="sig-param">outpath=None</em>, <em class="sig-param">clear_figure=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/quantile.html#quantile_plot_from_quantile_result_df"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.quantile.quantile_plot_from_quantile_result_df" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a plot of effect of main_iv on yvar at different quantiles. To be used after
+reg_for_each_quantile_produce_result_df</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="regtools.quantile.quantile_plot_from_quantile_result_df.params.result_df"></span><strong>result_df</strong><a class="paramlink headerlink reference internal" href="#regtools.quantile.quantile_plot_from_quantile_result_df.params.result_df">¶</a> – pd.DataFrame, result from reg_for_each_quantile_produce_result_df</p></li>
+<li><p><span class="target" id="regtools.quantile.quantile_plot_from_quantile_result_df.params.yvar"></span><strong>yvar</strong><a class="paramlink headerlink reference internal" href="#regtools.quantile.quantile_plot_from_quantile_result_df.params.yvar">¶</a> – str, label of dependent variable</p></li>
+<li><p><span class="target" id="regtools.quantile.quantile_plot_from_quantile_result_df.params.main_iv"></span><strong>main_iv</strong><a class="paramlink headerlink reference internal" href="#regtools.quantile.quantile_plot_from_quantile_result_df.params.main_iv">¶</a> – str, label of independent variable of interest</p></li>
+<li><p><span class="target" id="regtools.quantile.quantile_plot_from_quantile_result_df.params.outpath"></span><strong>outpath</strong><a class="paramlink headerlink reference internal" href="#regtools.quantile.quantile_plot_from_quantile_result_df.params.outpath">¶</a> – str, filepath to output figure. must include matplotlib supported extension such as .pdf or .png</p></li>
+<li><p><span class="target" id="regtools.quantile.quantile_plot_from_quantile_result_df.params.clear_figure"></span><strong>clear_figure</strong><a class="paramlink headerlink reference internal" href="#regtools.quantile.quantile_plot_from_quantile_result_df.params.clear_figure">¶</a> – bool, True wipe memory of matplotlib figure after running function</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="regtools.quantile.quantile_reg">
+<code class="sig-prename descclassname">regtools.quantile.</code><code class="sig-name descname">quantile_reg</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">yvar</em>, <em class="sig-param">xvars</em>, <em class="sig-param">q=0.5</em>, <em class="sig-param">robust=True</em>, <em class="sig-param">cluster=False</em>, <em class="sig-param">cons=True</em>, <em class="sig-param">fe=None</em>, <em class="sig-param">interaction_tuples=None</em>, <em class="sig-param">num_lags=0</em>, <em class="sig-param">lag_variables='xvars'</em>, <em class="sig-param">lag_period_var='Date'</em>, <em class="sig-param">lag_id_var='TICKER'</em>, <em class="sig-param">lag_fill_method='ffill'</em>, <em class="sig-param">lag_fill_limit=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/quantile.html#quantile_reg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.quantile.quantile_reg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a fitted quantile regression. Takes df, produces a regression df with no missing among needed
+variables, and fits a regression model. If robust is specified, uses heteroskedasticity-
+robust standard errors. If cluster is specified, calculated clustered standard errors
+by the given variable.</p>
+<p>Note: only specify at most one of robust and cluster.</p>
+<p>Required inputs:
+df: pandas dataframe containing regression data
+yvar: str, column name of outcome y variable
+xvars: list of strs, column names of x variables for regression</p>
+<p>Optional inputs:
+q: float between 0 and 1. Quantile of dependent variable to estimate coefficients for
+robust: bool, set to True to use heterskedasticity-robust standard errors
+cluster: False or str, set to a column name to calculate standard errors within clusters</p>
+<blockquote>
+<div><p>given by unique values of given column name</p>
+</div></blockquote>
+<p>cons: bool, set to False to not include a constant in the regression
+fe: None or str or list of strs. If a str or list of strs is passed, uses these categorical
+variables to construct dummies for fixed effects.
+interaction_tuples: tuple or list of tuples of column names to interact and include as xvars
+num_lags: int, Number of periods to lag variables. Setting to other than 0 will activate lags
+lag_variables: ‘all’, ‘xvars’, or list of strs of names of columns to lag for regressions.
+lag_period_var: str, only used if lag_variables is not None. name of column which</p>
+<blockquote>
+<div><p>contains period variable for lagging</p>
+</div></blockquote>
+<dl class="simple">
+<dt>lag_fill_method: str, ‘ffill’ or ‘bfill’ for which method to use to fill in missing rows when</dt><dd><p>creating lag variables. See pandas.DataFrame.fillna for more details</p>
+</dd>
+<dt>lag_id_var: str, only used if lag_variables is not None. name of column which</dt><dd><p>contains identifier variable for lagging</p>
+</dd>
+</dl>
+<p>lag_fill_limit: pandas fill limit</p>
+<p>Returns:
+If fe=None, returns statsmodels regression result
+if fe is not None, returns a tuple of (statsmodels regression result, dummy_cols_dict)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="regtools.quantile.reg_for_each_quantile_output_plot">
+<code class="sig-prename descclassname">regtools.quantile.</code><code class="sig-name descname">reg_for_each_quantile_output_plot</code><span class="sig-paren">(</span><em class="sig-param">main_iv</em>, <em class="sig-param">*reg_args</em>, <em class="sig-param">num_quantiles=8</em>, <em class="sig-param">main_iv_label=None</em>, <em class="sig-param">outpath=None</em>, <em class="sig-param">clear_figure=True</em>, <em class="sig-param">**reg_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/quantile.html#reg_for_each_quantile_output_plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.quantile.reg_for_each_quantile_output_plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a plot of effect of main_iv on yvar at different quantiles. To be used after
+reg_for_each_quantile_produce_result_df</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="regtools.quantile.reg_for_each_quantile_output_plot.params.main_iv"></span><strong>main_iv</strong><a class="paramlink headerlink reference internal" href="#regtools.quantile.reg_for_each_quantile_output_plot.params.main_iv">¶</a> – str, column name of independent variable of interest</p></li>
+<li><p><span class="target" id="regtools.quantile.reg_for_each_quantile_output_plot.params.reg_args"></span><strong>reg_args</strong><a class="paramlink headerlink reference internal" href="#regtools.quantile.reg_for_each_quantile_output_plot.params.reg_args">¶</a> – see quantile_reg for args</p></li>
+<li><p><span class="target" id="regtools.quantile.reg_for_each_quantile_output_plot.params.num_quantiles"></span><strong>num_quantiles</strong><a class="paramlink headerlink reference internal" href="#regtools.quantile.reg_for_each_quantile_output_plot.params.num_quantiles">¶</a> – number of quantile regressions to run. will be spaced evenly. higher numbers
+produce smoother graphs but take longer to run</p></li>
+<li><p><span class="target" id="regtools.quantile.reg_for_each_quantile_output_plot.params.main_iv_label"></span><strong>main_iv_label</strong><a class="paramlink headerlink reference internal" href="#regtools.quantile.reg_for_each_quantile_output_plot.params.main_iv_label">¶</a> – str, label of independent variable of interest</p></li>
+<li><p><span class="target" id="regtools.quantile.reg_for_each_quantile_output_plot.params.outpath"></span><strong>outpath</strong><a class="paramlink headerlink reference internal" href="#regtools.quantile.reg_for_each_quantile_output_plot.params.outpath">¶</a> – str, filepath to output figure. must include matplotlib supported extension such as .pdf or .png</p></li>
+<li><p><span class="target" id="regtools.quantile.reg_for_each_quantile_output_plot.params.clear_figure"></span><strong>clear_figure</strong><a class="paramlink headerlink reference internal" href="#regtools.quantile.reg_for_each_quantile_output_plot.params.clear_figure">¶</a> – bool, True wipe memory of matplotlib figure after running function</p></li>
+<li><p><span class="target" id="regtools.quantile.reg_for_each_quantile_output_plot.params.reg_kwargs"></span><strong>reg_kwargs</strong><a class="paramlink headerlink reference internal" href="#regtools.quantile.reg_for_each_quantile_output_plot.params.reg_kwargs">¶</a> – see quantile_reg for kwargs</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>result_df from reg_for_each_quantile_produce_result_df</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="regtools.quantile.reg_for_each_quantile_produce_result_df">
+<code class="sig-prename descclassname">regtools.quantile.</code><code class="sig-name descname">reg_for_each_quantile_produce_result_df</code><span class="sig-paren">(</span><em class="sig-param">main_iv</em>, <em class="sig-param">*reg_args</em>, <em class="sig-param">num_quantiles=8</em>, <em class="sig-param">**reg_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/quantile.html#reg_for_each_quantile_produce_result_df"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.quantile.reg_for_each_quantile_produce_result_df" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce result DataFrame of running multiple quantile regressions spaced out between the
+(0,1) interval</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="regtools.quantile.reg_for_each_quantile_produce_result_df.params.main_iv"></span><strong>main_iv</strong><a class="paramlink headerlink reference internal" href="#regtools.quantile.reg_for_each_quantile_produce_result_df.params.main_iv">¶</a> – str, column name of independent variable of interest</p></li>
+<li><p><span class="target" id="regtools.quantile.reg_for_each_quantile_produce_result_df.params.reg_args"></span><strong>reg_args</strong><a class="paramlink headerlink reference internal" href="#regtools.quantile.reg_for_each_quantile_produce_result_df.params.reg_args">¶</a> – see quantile_reg for args</p></li>
+<li><p><span class="target" id="regtools.quantile.reg_for_each_quantile_produce_result_df.params.num_quantiles"></span><strong>num_quantiles</strong><a class="paramlink headerlink reference internal" href="#regtools.quantile.reg_for_each_quantile_produce_result_df.params.num_quantiles">¶</a> – number of quantile regressions to run. will be spaced evenly. higher numbers
+produce smoother graphs but take longer to run</p></li>
+<li><p><span class="target" id="regtools.quantile.reg_for_each_quantile_produce_result_df.params.reg_kwargs"></span><strong>reg_kwargs</strong><a class="paramlink headerlink reference internal" href="#regtools.quantile.reg_for_each_quantile_produce_result_df.params.reg_kwargs">¶</a> – see quantile_reg for kwargs</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-regtools.reg">
+<span id="regtools-reg-module"></span><h2>regtools.reg module<a class="headerlink" href="#module-regtools.reg" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="regtools.reg.reg">
+<code class="sig-prename descclassname">regtools.reg.</code><code class="sig-name descname">reg</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">yvar</em>, <em class="sig-param">xvars</em>, <em class="sig-param">robust=True</em>, <em class="sig-param">cluster=False</em>, <em class="sig-param">cons=True</em>, <em class="sig-param">fe=None</em>, <em class="sig-param">interaction_tuples=None</em>, <em class="sig-param">num_lags=0</em>, <em class="sig-param">lag_variables='xvars'</em>, <em class="sig-param">lag_period_var='Date'</em>, <em class="sig-param">lag_id_var='TICKER'</em>, <em class="sig-param">lag_fill_method='ffill'</em>, <em class="sig-param">model_type='OLS'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/reg.html#reg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.reg.reg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a fitted regression. Takes df, produces a regression df with no missing among needed
+variables, and fits a regression model. If robust is specified, uses heteroskedasticity-
+robust standard errors. If cluster is specified, calculated clustered standard errors
+by the given variable.</p>
+<p>Note: only specify at most one of robust and cluster.</p>
+<p>Required inputs:
+df: pandas dataframe containing regression data
+yvar: str, column name of outcome y variable
+xvars: list of strs, column names of x variables for regression</p>
+<p>Optional inputs:
+robust: bool, set to True to use heterskedasticity-robust standard errors
+cluster: False or list of strs, set to a column name to calculate standard errors within clusters</p>
+<blockquote>
+<div><p>given by unique values of given column name. set to multiple column names for multiway
+clustering following Cameron, Gelbach, and Miller (2011). NOTE: will get exponentially
+slower as more cluster variables are added</p>
+</div></blockquote>
+<p>cons: bool, set to False to not include a constant in the regression
+fe: None or str or list of strs. If a str or list of strs is passed, uses these categorical
+variables to construct dummies for fixed effects.
+interaction_tuples: tuple or list of tuples of column names to interact and include as xvars
+num_lags: int, Number of periods to lag variables. Setting to other than 0 will activate lags
+lag_variables: ‘all’, ‘xvars’, or list of strs of names of columns to lag for regressions.
+lag_period_var: str, only used if lag_variables is not None. name of column which</p>
+<blockquote>
+<div><p>contains period variable for lagging</p>
+</div></blockquote>
+<dl class="simple">
+<dt>lag_id_var: str, only used if lag_variables is not None. name of column which</dt><dd><p>contains identifier variable for lagging</p>
+</dd>
+<dt>lag_fill_method: str, ‘ffill’ or ‘bfill’ for which method to use to fill in missing rows when</dt><dd><p>creating lag variables. See pandas.DataFrame.fillna for more details</p>
+</dd>
+</dl>
+<p>model_type: str, ‘OLS’, ‘probit’, or ‘logit’ for type of model</p>
+<p>Returns:
+If fe=None, returns statsmodels regression result
+if fe is not None, returns a tuple of (statsmodels regression result, dummy_cols_dict)</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-regtools.regtypes">
+<span id="regtools-regtypes-module"></span><h2>regtools.regtypes module<a class="headerlink" href="#module-regtools.regtypes" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-regtools.select">
+<span id="regtools-select-module"></span><h2>regtools.select module<a class="headerlink" href="#module-regtools.select" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="regtools.select.select_models">
+<code class="sig-prename descclassname">regtools.select.</code><code class="sig-name descname">select_models</code><span class="sig-paren">(</span><em class="sig-param">reg_list</em>, <em class="sig-param">keepnum</em>, <em class="sig-param">xvars</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/select.html#select_models"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.select.select_models" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes a list of fitted regression models and selects among them based on adjusted R-Squared. For each
+number of variables involved in the regressions, keepnum with the highest R-squareds will be kept.</p>
+<p>For example, if reg_list contains 3 regressions with two variables and 6 regressions with three variables,
+and keepnum is 2, will return a list of four regressions, 2 with two variables and 2 with three variables.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-regtools.tools">
+<span id="regtools-tools-module"></span><h2>regtools.tools module<a class="headerlink" href="#module-regtools.tools" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="regtools.cluster.html" class="btn btn-neutral float-right" title="regtools.cluster package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="modules.html" class="btn btn-neutral float-left" title="regtools" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Nick DeRobertis
+
+    </p>
+  </div>
+    
+    
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-156982291-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>

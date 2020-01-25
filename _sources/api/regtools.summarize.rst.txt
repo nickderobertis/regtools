@@ -1,0 +1,35 @@
+regtools.summarize package
+==========================
+
+.. automodule:: regtools.summarize
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+regtools.summarize.split module
+-------------------------------
+
+.. automodule:: regtools.summarize.split
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+regtools.summarize.tstat module
+-------------------------------
+
+.. automodule:: regtools.summarize.tstat
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+regtools.summarize.yesno module
+-------------------------------
+
+.. automodule:: regtools.summarize.yesno
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
