@@ -4,6 +4,8 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+black = "*"
+flake8 = "*"
 
 [packages]
 sphinx = "*"
@@ -21,6 +23,12 @@ pytest-cov = "*"
 mypy = "*"
 pypandoc = "*"
 cruft = "*"
+pandas = "*"
+statsmodels = "*"
+linearmodels = "*"
+pd-utils = "*"
+scipy = "*"
+matplotlib = "*"
 
 [requires]
 python_version = "3.7"

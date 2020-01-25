@@ -59,6 +59,12 @@ PACKAGE_INSTALL_REQUIRES = [
     # e.g.
     # 'package',
     # 'otherpackage>=1,<2'
+    'pandas',
+    'statsmodels',
+    'linearmodels',
+    'pd-utils',
+    'scipy',
+    'matplotlib'
 ]
 
 # Add any third party packages you use in requirements for optional features of your package here
