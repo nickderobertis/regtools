@@ -19,3 +19,4 @@ from regtools.differenced import diff_reg
 from regtools.quantile import quantile_reg
 from regtools.summarize import produce_summary
 from regtools.select import select_models
+from regtools.hypothesis.lincom import hypothesis_test
