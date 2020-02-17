@@ -12,6 +12,15 @@ from regtools.lag.create import _set_lag_variables
 
 
 def any_reg(reg_type, *reg_args, **reg_kwargs):
+    """
+    Runs any regression.
+
+    :param reg_type: 'diff' for difference regression, 'ols' for OLS, 'probit' for Probit, 'logit' for Logit,
+        'quantile' for Quantile, or 'fmb' for Fama-MacBeth
+    :param reg_args:
+    :param reg_kwargs:
+    :return:
+    """
 
     reg_args, reg_kwargs = _validate_inputs(reg_type, *reg_args, **reg_kwargs)
 

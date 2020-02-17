@@ -1,10 +1,16 @@
+from typing import Dict
+
 import numpy as np
 
-def hypothesis_test(result, col_coef_dict):
+
+def hypothesis_test(result, col_coef_dict: Dict[str, float]):
     """
-    result: statsmodels RegressionResult or regtools.lag.remove.SimplifiedRegressionResult
-    col_coef_dict: dict, keys are names of columns in DataFrame used for regression. Values are
-                   coefficients to apply to those columns.
+    Perform a hypothesis test with one or multiple columns
+
+    :param result: regression result
+    :param col_coef_dict: keys are names of columns in DataFrame used for regression. Values are
+        coefficients to apply to those columns.
+    :return:
     """
     r_matrix = _create_r_matrix_for_hypothesis_test(result, col_coef_dict)
     return result.t_test(r_matrix, use_t=True)

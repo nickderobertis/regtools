@@ -1,12 +1,35 @@
+from typing import Sequence, Optional
+
+import pandas as pd
+
 from .reg import reg
 from pd_utils.filldata import add_missing_group_rows
 from regtools.lag.create import _is_special_lag_keyword
 
 
-def diff_reg(df, yvar, xvars, id_col, date_col, difference_lag=1, diff_cols=None,
-             diff_fill_method: str='ffill', diff_fill_limit: int = None, **reg_kwargs):
+def diff_reg(df: pd.DataFrame, yvar: str, xvars: Sequence[str], id_col: str, date_col: str,
+             difference_lag: int = 1, diff_cols: Optional[Sequence[str]] = None,
+             diff_fill_method: str = 'ffill', diff_fill_limit: Optional[int] = None, **reg_kwargs):
+    """
+    Fits a differenced regression.
 
-    if diff_cols == None:
+    :param df:
+    :param yvar: column name of outcome y variable
+    :param xvars: column names of x variables for regression
+    :param id_col: column name of variable representing entities in the data
+    :param date_col: column name of variable representing time in the data
+    :param difference_lag: Number of lags to use for difference
+    :param diff_cols: columns to take differences on
+    :param diff_fill_method: pandas fill methods, 'ffill' or 'bfill'
+    :param diff_fill_limit: maximum number of periods to fill missing data, default no limit
+    :param reg_kwargs:
+    :return:
+    """
+
+    if not isinstance(xvars, list):
+        xvars = list(xvars)
+
+    if diff_cols is None:
         # All by default
         diff_cols = [yvar] + xvars
 
