@@ -1,4 +1,4 @@
-from typing import Optional, Any
+from typing import Optional, Any, Sequence, Union
 import pandas as pd
 from linearmodels import PanelOLS
 
@@ -15,7 +15,7 @@ def dummy_cols_dict_from_model(
         dummy_cols_dict[firm_index.name] = firm_index.unique().tolist()
     if _has_attr_and_attr_is_truthy(model, "time_effects"):
         dummy_cols_dict[time_index.name] = time_index.unique().tolist()
-    if _has_attr_and_attr_is_truthy(model, "_other_effect_cats"):
+    if _has_attr_and_attr_is_truthy(model, "_other_effect_cats") and model._other_effect_cats is not None:
         other_df = model._other_effect_cats.dataframe
         other_dict = {col: other_df[col].unique().tolist() for col in other_df.columns}
         dummy_cols_dict.update(other_dict)
@@ -24,7 +24,7 @@ def dummy_cols_dict_from_model(
 
 
 def linearmodels_fe_kwarg_dict_from_fe(
-    fe: StrOrListOfStrsOrNone, regdf: pd.DataFrame
+    fe: Optional[Union[str, Sequence[str]]], regdf: pd.DataFrame
 ) -> LinearModelsKwargs:
     if fe is None:
         return {}

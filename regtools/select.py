@@ -1,4 +1,4 @@
-from typing import Sequence
+from typing import Sequence, List, Any
 
 
 def select_models(reg_list, keepnum: int, xvars: Sequence[str]):
@@ -15,7 +15,7 @@ def select_models(reg_list, keepnum: int, xvars: Sequence[str]):
     :param xvars: column names of x variables
     :return:
     """
-    outlist = []
+    outlist: List[Any] = []
     for i in range(1, len(xvars) + 1):
         reg_list_match = [reg for reg in reg_list if reg.df_model == i] #select models with this many variables
         try:

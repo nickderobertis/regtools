@@ -26,7 +26,10 @@ def diff_reg(df: pd.DataFrame, yvar: str, xvars: Sequence[str], id_col: str, dat
     :return:
     """
 
-    if diff_cols == None:
+    if not isinstance(xvars, list):
+        xvars = list(xvars)
+
+    if diff_cols is None:
         # All by default
         diff_cols = [yvar] + xvars
 

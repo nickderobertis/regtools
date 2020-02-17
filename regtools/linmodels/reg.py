@@ -50,6 +50,8 @@ def linear_reg(df: pd.DataFrame, yvar: str, xvars: Sequence[str], entity_var: st
     if entity_var is None or time_var is None:
         raise ValueError('must pass both entity_var and time_var')
 
+    if not isinstance(xvars, list):
+        xvars = list(xvars)
 
     regdf, y, X, lag_variables = _create_reg_df_y_x_and_lag_vars(
         df, yvar, xvars, entity_var, time_var,
