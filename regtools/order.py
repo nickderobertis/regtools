@@ -4,6 +4,9 @@ from regtools.lag.create import varname_to_lagged_varname
 
 def _set_regressor_order(regressor_order, reg_kwargs):
 
+    if isinstance(regressor_order, tuple):
+        regressor_order = list(regressor_order)
+
     # processing needed for lagged regression
     if ('num_lags' in reg_kwargs) or ('lag_tuple' in reg_kwargs):
         regressor_order = convert_regressor_order_for_lags(regressor_order, reg_kwargs)

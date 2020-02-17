@@ -1,3 +1,5 @@
+from typing import Sequence, Union, Optional, Tuple
+
 from statsmodels import api as sm
 import numpy as np
 import pandas as pd
@@ -6,44 +8,47 @@ import matplotlib.pyplot as plt
 from regtools.dataprep import _create_reg_df_y_x_and_dummies, _estimate_handling_robust_and_cluster
 from regtools.order import _set_regressor_order
 
-def quantile_reg(df, yvar, xvars, q=0.5, robust=True, cluster=False, cons=True, fe=None, interaction_tuples=None,
-        num_lags=0, lag_variables='xvars', lag_period_var='Date', lag_id_var='TICKER',
-        lag_fill_method: str = 'ffill', lag_fill_limit: int = None):
+def quantile_reg(df: pd.DataFrame, yvar: str, xvars: Sequence[str], q: float = 0.5,
+                 robust: bool = True,
+                 cluster: Union[bool, str, Sequence[str]] = False, cons: bool = True,
+                 fe: Optional[Union[str, Sequence[str]]] = None,
+                 interaction_tuples: Optional[Union[Tuple[str, str], Sequence[Tuple[str, str]]]] = None,
+                 num_lags: int = 0, lag_variables: Union[str, Sequence[str]] = 'xvars', lag_period_var: str = 'Date',
+                 lag_id_var: str = 'TICKER', lag_fill_method: str = 'ffill',
+                 lag_fill_limit: int = None):
     """
     Returns a fitted quantile regression. Takes df, produces a regression df with no missing among needed
     variables, and fits a regression model. If robust is specified, uses heteroskedasticity-
     robust standard errors. If cluster is specified, calculated clustered standard errors
     by the given variable.
 
-    Note: only specify at most one of robust and cluster.
+    :Notes:
 
-    Required inputs:
-    df: pandas dataframe containing regression data
-    yvar: str, column name of outcome y variable
-    xvars: list of strs, column names of x variables for regression
+    Only specify at most one of robust and cluster.
 
-    Optional inputs:
-    q: float between 0 and 1. Quantile of dependent variable to estimate coefficients for
-    robust: bool, set to True to use heterskedasticity-robust standard errors
-    cluster: False or str, set to a column name to calculate standard errors within clusters
-             given by unique values of given column name
-    cons: bool, set to False to not include a constant in the regression
-    fe: None or str or list of strs. If a str or list of strs is passed, uses these categorical
-    variables to construct dummies for fixed effects.
-    interaction_tuples: tuple or list of tuples of column names to interact and include as xvars
-    num_lags: int, Number of periods to lag variables. Setting to other than 0 will activate lags
-    lag_variables: 'all', 'xvars', or list of strs of names of columns to lag for regressions.
-    lag_period_var: str, only used if lag_variables is not None. name of column which
-                    contains period variable for lagging
-    lag_fill_method: str, 'ffill' or 'bfill' for which method to use to fill in missing rows when
-                     creating lag variables. See pandas.DataFrame.fillna for more details
-    lag_id_var: str, only used if lag_variables is not None. name of column which
-                    contains identifier variable for lagging
-    lag_fill_limit: pandas fill limit
-
-    Returns:
-    If fe=None, returns statsmodels regression result
-    if fe is not None, returns a tuple of (statsmodels regression result, dummy_cols_dict)
+    :param df:
+    :param yvar: column name of outcome y variable
+    :param xvars: column names of x variables for regression
+    :param q: quantile to use
+    :param robust: set to True to use heterskedasticity-robust standard errors
+    :param cluster: set to a column name to calculate standard errors within clusters
+         given by unique values of given column name. set to multiple column names for multiway
+         clustering following Cameron, Gelbach, and Miller (2011). NOTE: will get exponentially
+         slower as more cluster variables are added
+    :param cons: set to False to not include a constant in the regression
+    :param fe: If a str or list of strs is passed, uses these categorical
+        variables to construct dummies for fixed effects.
+    :param interaction_tuples: tuple or list of tuples of column names to interact and include as xvars
+    :param num_lags: Number of periods to lag variables. Setting to other than 0 will activate lags
+    :param lag_variables: 'all', 'xvars', or list of strs of names of columns to lag for regressions.
+    :param lag_period_var: only used if lag_variables is not None. name of column which
+        contains period variable for lagging
+    :param lag_id_var: only used if lag_variables is not None. name of column which
+        contains identifier variable for lagging
+    :param lag_fill_method: 'ffill' or 'bfill' for which method to use to fill in missing rows when
+        creating lag variables. See pandas.DataFrame.fillna for more details
+    :param lag_fill_limit: maximum number of periods to fill with lag_fill_method
+    :return: statsmodels regression result
     """
     regdf, y, X, dummy_cols_dict, lag_variables = _create_reg_df_y_x_and_dummies(df, yvar, xvars, cluster=cluster, cons=cons, fe=fe,
                                                                   interaction_tuples=interaction_tuples, num_lags=num_lags,
@@ -57,9 +62,11 @@ def quantile_reg(df, yvar, xvars, q=0.5, robust=True, cluster=False, cons=True, 
 
     # Only return dummy_cols_dict when fe is active
     if fe is not None:
-        return result, dummy_cols_dict
-    else:
-        return result
+        result.dummy_cols_dict = dummy_cols_dict
+    if cluster is not None:
+        result.cluster = cluster
+
+    return result
 
 
 def reg_for_each_quantile_output_plot(main_iv, *reg_args, num_quantiles=8, main_iv_label=None, outpath=None,

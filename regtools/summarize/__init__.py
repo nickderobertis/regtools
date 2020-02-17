@@ -1,3 +1,5 @@
+from typing import Sequence, Optional
+
 from regtools.ext_statsmodels import summary_col
 import pandas as pd
 
@@ -11,26 +13,26 @@ from regtools.summarize.yesno import col_boolean_dict_from_list_of_lists_of_colu
 from regtools.summarize.tstat import replace_stderr_with_t_stat_in_summary_df
 
 
-def produce_summary(reg_list, stderr=False, t_stats: bool = False, float_format='%0.1f', regressor_order=[],
-                    suppress_other_regressors=False, model_names=None):
+def produce_summary(reg_list, stderr: bool = False, t_stats: bool = False, float_format: str = '%0.1f',
+                    regressor_order: Sequence[str] = tuple(),
+                    suppress_other_regressors: bool = False, model_names: Optional[Sequence[str]] = None):
     """
+    Produce a summary from a list of regression results
 
-    :param reg_list:
-    :type reg_list:
-    :param stderr:
-    :type stderr:
-    :param float_format:
-    :type float_format:
-    :param regressor_order:
-    :type regressor_order:
+    :param reg_list: list of statsmodels regression results
+    :param stderr: set to True to keep rows for standard errors below coefficient estimates
+    :param t_stats: set to True to keep rows for standard errors below coefficient estimates and convert them to t-stats
+    :param float_format: format string for how to format results in summary
+    :param regressor_order: sequence of column names to put first in the regression results
     :param suppress_other_regressors: True for when using regressor_order to suppress coefficients
         that are not in regressor_order into "Controls: Yes". False to keep coefficients
-    :type suppress_other_regressors: bool
     :param model_names: If a collection is passed, will be used as column names in summary table.
-    :type model_names: None, list, tuple
-    :return:
+    :return: a regression summary
     :rtype:
     """
+
+    if isinstance(regressor_order, tuple):
+        regressor_order = list(regressor_order)
 
     _check_produce_summary_inputs(
         regressor_order,
