@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>regtools package &mdash; regtools 0.1.0 documentation</title>
+  <title>regtools package &mdash; regtools 0.1.1 documentation</title>
   
 
   
@@ -22,13 +22,13 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
-        <script type="text/javascript" src="../_static/copybutton.js"></script>
-        <script type="text/javascript">var copybuttonSkipText = '>>> ';</script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script >var copybuttonSkipText = '>>> ';</script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.1.0
+                0.1.1
               </div>
             
           
@@ -96,7 +96,7 @@
               <p class="caption"><span class="caption-text">Tutorial</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Getting started with regtools</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html">This is my gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html">Examples</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API Documentation</span></p>
 <ul class="current">
@@ -287,7 +287,21 @@ variety of models including OLS, Logit, Probit, Quantile, and Fama-Macbeth.</p>
 <dl class="function">
 <dt id="regtools.chooser.any_reg">
 <code class="sig-prename descclassname">regtools.chooser.</code><code class="sig-name descname">any_reg</code><span class="sig-paren">(</span><em class="sig-param">reg_type</em>, <em class="sig-param">*reg_args</em>, <em class="sig-param">**reg_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/chooser.html#any_reg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.chooser.any_reg" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Runs any regression.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="regtools.chooser.any_reg.params.reg_type"></span><strong>reg_type</strong><a class="paramlink headerlink reference internal" href="#regtools.chooser.any_reg.params.reg_type">¶</a> – ‘diff’ for difference regression, ‘ols’ for OLS, ‘probit’ for Probit, ‘logit’ for Logit,
+‘quantile’ for Quantile, or ‘fmb’ for Fama-MacBeth</p></li>
+<li><p><span class="target" id="regtools.chooser.any_reg.params.reg_args"></span><strong>reg_args</strong><a class="paramlink headerlink reference internal" href="#regtools.chooser.any_reg.params.reg_args">¶</a> – </p></li>
+<li><p><span class="target" id="regtools.chooser.any_reg.params.reg_kwargs"></span><strong>reg_kwargs</strong><a class="paramlink headerlink reference internal" href="#regtools.chooser.any_reg.params.reg_kwargs">¶</a> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
 
 </div>
 <div class="section" id="module-regtools.controls">
@@ -312,7 +326,27 @@ variety of models including OLS, Logit, Probit, Quantile, and Fama-Macbeth.</p>
 <dl class="function">
 <dt id="regtools.differenced.diff_reg">
 <code class="sig-prename descclassname">regtools.differenced.</code><code class="sig-name descname">diff_reg</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">yvar</em>, <em class="sig-param">xvars</em>, <em class="sig-param">id_col</em>, <em class="sig-param">date_col</em>, <em class="sig-param">difference_lag=1</em>, <em class="sig-param">diff_cols=None</em>, <em class="sig-param">diff_fill_method='ffill'</em>, <em class="sig-param">diff_fill_limit=None</em>, <em class="sig-param">**reg_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/differenced.html#diff_reg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.differenced.diff_reg" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Fits a differenced regression.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="regtools.differenced.diff_reg.params.df"></span><strong>df</strong><a class="paramlink headerlink reference internal" href="#regtools.differenced.diff_reg.params.df">¶</a> (<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>) – </p></li>
+<li><p><span class="target" id="regtools.differenced.diff_reg.params.yvar"></span><strong>yvar</strong><a class="paramlink headerlink reference internal" href="#regtools.differenced.diff_reg.params.yvar">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – column name of outcome y variable</p></li>
+<li><p><span class="target" id="regtools.differenced.diff_reg.params.xvars"></span><strong>xvars</strong><a class="paramlink headerlink reference internal" href="#regtools.differenced.diff_reg.params.xvars">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]) – column names of x variables for regression</p></li>
+<li><p><span class="target" id="regtools.differenced.diff_reg.params.id_col"></span><strong>id_col</strong><a class="paramlink headerlink reference internal" href="#regtools.differenced.diff_reg.params.id_col">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – column name of variable representing entities in the data</p></li>
+<li><p><span class="target" id="regtools.differenced.diff_reg.params.date_col"></span><strong>date_col</strong><a class="paramlink headerlink reference internal" href="#regtools.differenced.diff_reg.params.date_col">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – column name of variable representing time in the data</p></li>
+<li><p><span class="target" id="regtools.differenced.diff_reg.params.difference_lag"></span><strong>difference_lag</strong><a class="paramlink headerlink reference internal" href="#regtools.differenced.diff_reg.params.difference_lag">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – Number of lags to use for difference</p></li>
+<li><p><span class="target" id="regtools.differenced.diff_reg.params.diff_cols"></span><strong>diff_cols</strong><a class="paramlink headerlink reference internal" href="#regtools.differenced.diff_reg.params.diff_cols">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]]) – columns to take differences on</p></li>
+<li><p><span class="target" id="regtools.differenced.diff_reg.params.diff_fill_method"></span><strong>diff_fill_method</strong><a class="paramlink headerlink reference internal" href="#regtools.differenced.diff_reg.params.diff_fill_method">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – pandas fill methods, ‘ffill’ or ‘bfill’</p></li>
+<li><p><span class="target" id="regtools.differenced.diff_reg.params.diff_fill_limit"></span><strong>diff_fill_limit</strong><a class="paramlink headerlink reference internal" href="#regtools.differenced.diff_reg.params.diff_fill_limit">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]) – maximum number of periods to fill missing data, default no limit</p></li>
+<li><p><span class="target" id="regtools.differenced.diff_reg.params.reg_kwargs"></span><strong>reg_kwargs</strong><a class="paramlink headerlink reference internal" href="#regtools.differenced.diff_reg.params.reg_kwargs">¶</a> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
 
 </div>
 <div class="section" id="module-regtools.ext_statsmodels">
@@ -377,89 +411,229 @@ which depend on the covariance matrix</p>
 <dt id="regtools.iter.reg_for_each_combo">
 <code class="sig-prename descclassname">regtools.iter.</code><code class="sig-name descname">reg_for_each_combo</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">yvar</em>, <em class="sig-param">xvars</em>, <em class="sig-param">reg_type='reg'</em>, <em class="sig-param">**reg_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/iter.html#reg_for_each_combo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.iter.reg_for_each_combo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Takes each possible combination of xvars (starting from each var individually, then each pair
-of vars, etc. all the way up to all xvars), and regresses yvar on each set of xvars. Returns
-a list of fitted regressions.</p>
+of vars, etc. all the way up to all xvars), and regresses yvar on each set of xvars.
+.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="regtools.iter.reg_for_each_combo.params.df"></span><strong>df</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_combo.params.df">¶</a> (<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>) – </p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_combo.params.yvar"></span><strong>yvar</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_combo.params.yvar">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – column name of y variable</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_combo.params.xvars"></span><strong>xvars</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_combo.params.xvars">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]) – column names of x variables</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_combo.params.reg_type"></span><strong>reg_type</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_combo.params.reg_type">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – ‘diff’ for difference regression, ‘ols’ for OLS, ‘probit’ for Probit, ‘logit’ for Logit,
+‘quantile’ for Quantile, or ‘fmb’ for Fama-MacBeth</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_combo.params.reg_kwargs"></span><strong>reg_kwargs</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_combo.params.reg_kwargs">¶</a> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a list of fitted regressions</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="regtools.iter.reg_for_each_combo_select_and_produce_summary">
-<code class="sig-prename descclassname">regtools.iter.</code><code class="sig-name descname">reg_for_each_combo_select_and_produce_summary</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">yvar</em>, <em class="sig-param">xvars</em>, <em class="sig-param">robust=True</em>, <em class="sig-param">cluster=False</em>, <em class="sig-param">keepnum=5</em>, <em class="sig-param">stderr=False</em>, <em class="sig-param">t_stats=True</em>, <em class="sig-param">float_format='%0.1f'</em>, <em class="sig-param">regressor_order=[]</em>, <em class="sig-param">**other_reg_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/iter.html#reg_for_each_combo_select_and_produce_summary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.iter.reg_for_each_combo_select_and_produce_summary" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">regtools.iter.</code><code class="sig-name descname">reg_for_each_combo_select_and_produce_summary</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">yvar</em>, <em class="sig-param">xvars</em>, <em class="sig-param">robust=True</em>, <em class="sig-param">cluster=False</em>, <em class="sig-param">keepnum=5</em>, <em class="sig-param">stderr=False</em>, <em class="sig-param">t_stats=True</em>, <em class="sig-param">float_format='%0.1f'</em>, <em class="sig-param">regressor_order=()</em>, <em class="sig-param">**other_reg_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/iter.html#reg_for_each_combo_select_and_produce_summary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.iter.reg_for_each_combo_select_and_produce_summary" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience function to run regressions for every combination of xvars, select the best models,
-and present them in a summary format. Returns a tuple of (reg_list, summary) where reg_list
-is a list of fitted regression models, and summary is a single dataframe of results</p>
-<p>Required inputs:
-df: pandas dataframe containing regression data
-yvar: str, column name of y variable
-xvars: list of strs, column names of all possible x variables</p>
-<p>Optional inputs:
-robust: bool, set to True to use heterskedasticity-robust standard errors
-cluster: False or str, set to a column name to calculate standard errors within clusters</p>
-<blockquote>
-<div><p>given by unique values of given column name</p>
-</div></blockquote>
-<dl class="simple">
-<dt>keepnum: int, number to keep for each amount of x variables. The total number of outputted</dt><dd><p>regressions will be roughly keepnum * len(xvars)</p>
+and present them in a summary format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="regtools.iter.reg_for_each_combo_select_and_produce_summary.params.df"></span><strong>df</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_combo_select_and_produce_summary.params.df">¶</a> (<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>) – </p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_combo_select_and_produce_summary.params.yvar"></span><strong>yvar</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_combo_select_and_produce_summary.params.yvar">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – column name of y variable</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_combo_select_and_produce_summary.params.xvars"></span><strong>xvars</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_combo_select_and_produce_summary.params.xvars">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]) – column names of x variables</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_combo_select_and_produce_summary.params.robust"></span><strong>robust</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_combo_select_and_produce_summary.params.robust">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – False to not use heteroskedasticity-robust standard errors</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_combo_select_and_produce_summary.params.cluster"></span><strong>cluster</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_combo_select_and_produce_summary.params.cluster">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]]) – set to a column name to calculate standard errors within clusters
+given by unique values of given column name, or multiple column names for multi-way clustering</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_combo_select_and_produce_summary.params.keepnum"></span><strong>keepnum</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_combo_select_and_produce_summary.params.keepnum">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – number to keep for each amount of x variables. The total number of outputted
+regressions will be roughly keepnum * len(xvars)</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_combo_select_and_produce_summary.params.stderr"></span><strong>stderr</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_combo_select_and_produce_summary.params.stderr">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – set to True to keep rows for standard errors below coefficient estimates</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_combo_select_and_produce_summary.params.t_stats"></span><strong>t_stats</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_combo_select_and_produce_summary.params.t_stats">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – set to True to keep rows for standard errors below coefficient estimates and convert them to t-stats</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_combo_select_and_produce_summary.params.float_format"></span><strong>float_format</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_combo_select_and_produce_summary.params.float_format">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – format string for how to format results in summary</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_combo_select_and_produce_summary.params.regressor_order"></span><strong>regressor_order</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_combo_select_and_produce_summary.params.regressor_order">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]) – sequence of column names to put first in the regression results</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_combo_select_and_produce_summary.params.reg_type"></span><strong>reg_type</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_combo_select_and_produce_summary.params.reg_type">¶</a> – ‘diff’ for difference regression, ‘ols’ for OLS, ‘probit’ for Probit, ‘logit’ for Logit,
+‘quantile’ for Quantile, or ‘fmb’ for Fama-MacBeth</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_combo_select_and_produce_summary.params.other_reg_kwargs"></span><strong>other_reg_kwargs</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_combo_select_and_produce_summary.params.other_reg_kwargs">¶</a> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a tuple of (reg_list, summary) where reg_list</p>
 </dd>
 </dl>
-<p>stderr: bool, set to True to keep rows for standard errors below coefficient estimates
-t_stats: bool, set to True to keep rows for standard errors below coefficient estimates and convert them to t-stats</p>
-<p>Note: only specify at most one of robust and cluster.
-Note: don’t set both stderr and t_stats to True</p>
+<p>is a list of fitted regression models, and summary is a single dataframe of results</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="regtools.iter.reg_for_each_lag">
 <code class="sig-prename descclassname">regtools.iter.</code><code class="sig-name descname">reg_for_each_lag</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">yvar</em>, <em class="sig-param">xvars</em>, <em class="sig-param">lag_tuple=(1</em>, <em class="sig-param">2</em>, <em class="sig-param">3</em>, <em class="sig-param">4)</em>, <em class="sig-param">reg_type='reg'</em>, <em class="sig-param">**reg_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/iter.html#reg_for_each_lag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.iter.reg_for_each_lag" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Convenience function to run regressions with the same y and x variables for every passed number of lags</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="regtools.iter.reg_for_each_lag.params.df"></span><strong>df</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_lag.params.df">¶</a> (<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>) – </p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_lag.params.yvar"></span><strong>yvar</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_lag.params.yvar">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – column name of y variable</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_lag.params.xvars"></span><strong>xvars</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_lag.params.xvars">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]) – column names of x variables</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_lag.params.lag_tuple"></span><strong>lag_tuple</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_lag.params.lag_tuple">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]) – sequence containing how many lags to create and run regressions for each variable</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_lag.params.reg_type"></span><strong>reg_type</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_lag.params.reg_type">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – ‘diff’ for difference regression, ‘ols’ for OLS, ‘probit’ for Probit, ‘logit’ for Logit,
+‘quantile’ for Quantile, or ‘fmb’ for Fama-MacBeth</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_lag.params.reg_kwargs"></span><strong>reg_kwargs</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_lag.params.reg_kwargs">¶</a> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="regtools.iter.reg_for_each_lag_and_produce_summary">
-<code class="sig-prename descclassname">regtools.iter.</code><code class="sig-name descname">reg_for_each_lag_and_produce_summary</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">yvar</em>, <em class="sig-param">xvars</em>, <em class="sig-param">main_ivs</em>, <em class="sig-param">lag_tuple=(1</em>, <em class="sig-param">2</em>, <em class="sig-param">3</em>, <em class="sig-param">4)</em>, <em class="sig-param">consolidate_lags=True</em>, <em class="sig-param">reg_type='reg'</em>, <em class="sig-param">stderr=False</em>, <em class="sig-param">t_stats=True</em>, <em class="sig-param">float_format='%0.2f'</em>, <em class="sig-param">suppress_other_regressors=False</em>, <em class="sig-param">**reg_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/iter.html#reg_for_each_lag_and_produce_summary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.iter.reg_for_each_lag_and_produce_summary" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">regtools.iter.</code><code class="sig-name descname">reg_for_each_lag_and_produce_summary</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">yvar</em>, <em class="sig-param">xvars</em>, <em class="sig-param">regressor_order=()</em>, <em class="sig-param">lag_tuple=(1</em>, <em class="sig-param">2</em>, <em class="sig-param">3</em>, <em class="sig-param">4)</em>, <em class="sig-param">consolidate_lags=True</em>, <em class="sig-param">reg_type='reg'</em>, <em class="sig-param">stderr=False</em>, <em class="sig-param">t_stats=True</em>, <em class="sig-param">float_format='%0.2f'</em>, <em class="sig-param">suppress_other_regressors=False</em>, <em class="sig-param">**reg_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/iter.html#reg_for_each_lag_and_produce_summary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.iter.reg_for_each_lag_and_produce_summary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience function to run regressions with the same y and x variables for every passed number of lags
+and produce a summary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="regtools.iter.reg_for_each_lag_and_produce_summary.params.df"></span><strong>df</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_lag_and_produce_summary.params.df">¶</a> – </p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_lag_and_produce_summary.params.yvar"></span><strong>yvar</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_lag_and_produce_summary.params.yvar">¶</a> – column name of y variable</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_lag_and_produce_summary.params.xvars"></span><strong>xvars</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_lag_and_produce_summary.params.xvars">¶</a> – column names of x variables</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_lag_and_produce_summary.params.regressor_order"></span><strong>regressor_order</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_lag_and_produce_summary.params.regressor_order">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]) – sequence of column names to put first in the regression results</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_lag_and_produce_summary.params.lag_tuple"></span><strong>lag_tuple</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_lag_and_produce_summary.params.lag_tuple">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]) – sequence containing how many lags to create and run regressions for each variable</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_lag_and_produce_summary.params.consolidate_lags"></span><strong>consolidate_lags</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_lag_and_produce_summary.params.consolidate_lags">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – True to condense lags for a single variable into a single row</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_lag_and_produce_summary.params.reg_type"></span><strong>reg_type</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_lag_and_produce_summary.params.reg_type">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – ‘diff’ for difference regression, ‘ols’ for OLS, ‘probit’ for Probit, ‘logit’ for Logit,
+‘quantile’ for Quantile, or ‘fmb’ for Fama-MacBeth</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_lag_and_produce_summary.params.stderr"></span><strong>stderr</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_lag_and_produce_summary.params.stderr">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – set to True to keep rows for standard errors below coefficient estimates</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_lag_and_produce_summary.params.t_stats"></span><strong>t_stats</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_lag_and_produce_summary.params.t_stats">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – set to True to keep rows for standard errors below coefficient estimates and convert them to t-stats</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_lag_and_produce_summary.params.float_format"></span><strong>float_format</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_lag_and_produce_summary.params.float_format">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – format string for how to format results in summary</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_lag_and_produce_summary.params.suppress_other_regressors"></span><strong>suppress_other_regressors</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_lag_and_produce_summary.params.suppress_other_regressors">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – only used if regressor_order is passed. Then pass True to hide all
+coefficient rows besides those in regressor_order</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_lag_and_produce_summary.params.reg_kwargs"></span><strong>reg_kwargs</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_lag_and_produce_summary.params.reg_kwargs">¶</a> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a tuple of (reg_list, summary) where reg_list</p>
+</dd>
+</dl>
+<p>is a list of fitted regression models, and summary is a single dataframe of results</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="regtools.iter.reg_for_each_xvar_set">
 <code class="sig-prename descclassname">regtools.iter.</code><code class="sig-name descname">reg_for_each_xvar_set</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">yvar</em>, <em class="sig-param">xvars_list</em>, <em class="sig-param">reg_type='reg'</em>, <em class="sig-param">**reg_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/iter.html#reg_for_each_xvar_set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.iter.reg_for_each_xvar_set" title="Permalink to this definition">¶</a></dt>
 <dd><p>Runs regressions on the same y variable for each set of x variables passed. xvars_list
-should be a list of lists, where each individual list is one set of x variables for one model.
-Returns a list of fitted regressions.</p>
+should be a list of lists, where each individual list is one set of x variables for one model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Notes</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
 <p>If fe is passed, should either pass a string to use fe in all models, or a list of strings or
 None of same length as num models</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="regtools.iter.reg_for_each_xvar_set.params.df"></span><strong>df</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_xvar_set.params.df">¶</a> (<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>) – </p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_xvar_set.params.yvar"></span><strong>yvar</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_xvar_set.params.yvar">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – column name of y variable</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_xvar_set.params.xvars_list"></span><strong>xvars_list</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_xvar_set.params.xvars_list">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]]) – sequence where each element is itself a sequence containing column names of x variables
+for that numbered regression</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_xvar_set.params.reg_type"></span><strong>reg_type</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_xvar_set.params.reg_type">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – ‘diff’ for difference regression, ‘ols’ for OLS, ‘probit’ for Probit, ‘logit’ for Logit,
+‘quantile’ for Quantile, or ‘fmb’ for Fama-MacBeth</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_xvar_set.params.reg_kwargs"></span><strong>reg_kwargs</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_xvar_set.params.reg_kwargs">¶</a> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a list of fitted regressions</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="regtools.iter.reg_for_each_xvar_set_and_produce_summary">
-<code class="sig-prename descclassname">regtools.iter.</code><code class="sig-name descname">reg_for_each_xvar_set_and_produce_summary</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">yvar</em>, <em class="sig-param">xvars_list</em>, <em class="sig-param">robust=True</em>, <em class="sig-param">cluster=False</em>, <em class="sig-param">stderr=False</em>, <em class="sig-param">t_stats=True</em>, <em class="sig-param">fe=None</em>, <em class="sig-param">float_format='%0.2f'</em>, <em class="sig-param">suppress_other_regressors=False</em>, <em class="sig-param">regressor_order=[]</em>, <em class="sig-param">**other_reg_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/iter.html#reg_for_each_xvar_set_and_produce_summary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.iter.reg_for_each_xvar_set_and_produce_summary" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">regtools.iter.</code><code class="sig-name descname">reg_for_each_xvar_set_and_produce_summary</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">yvar</em>, <em class="sig-param">xvars_list</em>, <em class="sig-param">robust=True</em>, <em class="sig-param">cluster=False</em>, <em class="sig-param">stderr=False</em>, <em class="sig-param">t_stats=True</em>, <em class="sig-param">fe=None</em>, <em class="sig-param">float_format='%0.2f'</em>, <em class="sig-param">suppress_other_regressors=False</em>, <em class="sig-param">regressor_order=()</em>, <em class="sig-param">**other_reg_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/iter.html#reg_for_each_xvar_set_and_produce_summary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.iter.reg_for_each_xvar_set_and_produce_summary" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience function to run regressions for every set of xvars passed
-and present them in a summary format. Returns a tuple of (reg_list, summary) where reg_list
-is a list of fitted regression models, and summary is a single dataframe of results.</p>
-<p>Required inputs:
-df: pandas dataframe containing regression data
-yvar: str, column name of y variable
-xvars_list: list of lists of strs, each individual list has column names of x variables for that model</p>
-<p>Optional inputs:
-robust: bool, set to True to use heterskedasticity-robust standard errors
-cluster: False or str, set to a column name to calculate standard errors within clusters</p>
-<blockquote>
-<div><p>given by unique values of given column name</p>
-</div></blockquote>
-<p>stderr: bool, set to True to keep rows for standard errors below coefficient estimates
-t_stats: bool, set to True to keep rows for standard errors below coefficient estimates and convert them to t-stats
-fe:    If fe is passed, should either pass a string to use fe in all models, or a list of strings or
-None of same length as num models</p>
-<p>Note: only specify at most one of robust and cluster.
-Note: don’t set both stderr and t_stats to True</p>
+and present them in a summary format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Notes</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<ul class="simple">
+<li><p>Only specify at most one of robust and cluster.</p></li>
+<li><p>Don’t set both stderr and t_stats to True</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="regtools.iter.reg_for_each_xvar_set_and_produce_summary.params.df"></span><strong>df</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_xvar_set_and_produce_summary.params.df">¶</a> (<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>) – </p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_xvar_set_and_produce_summary.params.yvar"></span><strong>yvar</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_xvar_set_and_produce_summary.params.yvar">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – column name of y variable</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_xvar_set_and_produce_summary.params.xvars_list"></span><strong>xvars_list</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_xvar_set_and_produce_summary.params.xvars_list">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]]) – sequence where each element is itself a sequence containing column names of x variables
+for that numbered regression</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_xvar_set_and_produce_summary.params.robust"></span><strong>robust</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_xvar_set_and_produce_summary.params.robust">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – False to not use heteroskedasticity-robust standard errors</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_xvar_set_and_produce_summary.params.cluster"></span><strong>cluster</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_xvar_set_and_produce_summary.params.cluster">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]]) – set to a column name to calculate standard errors within clusters
+given by unique values of given column name, or multiple column names for multi-way clustering</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_xvar_set_and_produce_summary.params.stderr"></span><strong>stderr</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_xvar_set_and_produce_summary.params.stderr">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – set to True to keep rows for standard errors below coefficient estimates</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_xvar_set_and_produce_summary.params.t_stats"></span><strong>t_stats</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_xvar_set_and_produce_summary.params.t_stats">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – set to True to keep rows for standard errors below coefficient estimates and convert them to t-stats</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_xvar_set_and_produce_summary.params.fe"></span><strong>fe</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_xvar_set_and_produce_summary.params.fe">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]], <code class="docutils literal notranslate"><span class="pre">None</span></code>]) – If fe is passed, should either pass a string to use fe in all models, or a list of strings or
+None of same length as num models</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_xvar_set_and_produce_summary.params.float_format"></span><strong>float_format</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_xvar_set_and_produce_summary.params.float_format">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – format string for how to format results in summary</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_xvar_set_and_produce_summary.params.suppress_other_regressors"></span><strong>suppress_other_regressors</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_xvar_set_and_produce_summary.params.suppress_other_regressors">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – only used if regressor_order is passed. Then pass True to hide all
+coefficient rows besides those in regressor_order</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_xvar_set_and_produce_summary.params.regressor_order"></span><strong>regressor_order</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_xvar_set_and_produce_summary.params.regressor_order">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]) – sequence of column names to put first in the regression results</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_xvar_set_and_produce_summary.params.reg_type"></span><strong>reg_type</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_xvar_set_and_produce_summary.params.reg_type">¶</a> – ‘diff’ for difference regression, ‘ols’ for OLS, ‘probit’ for Probit, ‘logit’ for Logit,
+‘quantile’ for Quantile, or ‘fmb’ for Fama-MacBeth</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_xvar_set_and_produce_summary.params.other_reg_kwargs"></span><strong>other_reg_kwargs</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_xvar_set_and_produce_summary.params.other_reg_kwargs">¶</a> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a tuple of (reg_list, summary) where reg_list</p>
+</dd>
+</dl>
+<p>is a list of fitted regression models, and summary is a single dataframe of results.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="regtools.iter.reg_for_each_yvar">
 <code class="sig-prename descclassname">regtools.iter.</code><code class="sig-name descname">reg_for_each_yvar</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">yvars</em>, <em class="sig-param">xvars</em>, <em class="sig-param">reg_type='reg'</em>, <em class="sig-param">**reg_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/iter.html#reg_for_each_yvar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.iter.reg_for_each_yvar" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Convenience function to run regressions for multiple y variables with the same x variables</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="regtools.iter.reg_for_each_yvar.params.df"></span><strong>df</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_yvar.params.df">¶</a> – </p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_yvar.params.yvars"></span><strong>yvars</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_yvar.params.yvars">¶</a> – column names of y variables</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_yvar.params.xvars"></span><strong>xvars</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_yvar.params.xvars">¶</a> – column names of x variables</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_yvar.params.reg_type"></span><strong>reg_type</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_yvar.params.reg_type">¶</a> – ‘diff’ for difference regression, ‘ols’ for OLS, ‘probit’ for Probit, ‘logit’ for Logit,
+‘quantile’ for Quantile, or ‘fmb’ for Fama-MacBeth</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_yvar.params.reg_kwargs"></span><strong>reg_kwargs</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_yvar.params.reg_kwargs">¶</a> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a list of fitted regressions</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="regtools.iter.reg_for_each_yvar_and_produce_summary">
-<code class="sig-prename descclassname">regtools.iter.</code><code class="sig-name descname">reg_for_each_yvar_and_produce_summary</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">yvars</em>, <em class="sig-param">xvars</em>, <em class="sig-param">main_ivs</em>, <em class="sig-param">reg_type='reg'</em>, <em class="sig-param">stderr=False</em>, <em class="sig-param">t_stats=True</em>, <em class="sig-param">float_format='%0.2f'</em>, <em class="sig-param">**reg_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/iter.html#reg_for_each_yvar_and_produce_summary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.iter.reg_for_each_yvar_and_produce_summary" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">regtools.iter.</code><code class="sig-name descname">reg_for_each_yvar_and_produce_summary</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">yvars</em>, <em class="sig-param">xvars</em>, <em class="sig-param">regressor_order=()</em>, <em class="sig-param">reg_type='reg'</em>, <em class="sig-param">stderr=False</em>, <em class="sig-param">t_stats=True</em>, <em class="sig-param">float_format='%0.2f'</em>, <em class="sig-param">**reg_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/iter.html#reg_for_each_yvar_and_produce_summary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.iter.reg_for_each_yvar_and_produce_summary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience function to run regressions for multiple y variables with the same x variables and
+and present them in a summary format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="regtools.iter.reg_for_each_yvar_and_produce_summary.params.df"></span><strong>df</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_yvar_and_produce_summary.params.df">¶</a> (<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>) – </p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_yvar_and_produce_summary.params.yvars"></span><strong>yvars</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_yvar_and_produce_summary.params.yvars">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]) – column names of y variables</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_yvar_and_produce_summary.params.xvars"></span><strong>xvars</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_yvar_and_produce_summary.params.xvars">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]) – column names of x variables</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_yvar_and_produce_summary.params.regressor_order"></span><strong>regressor_order</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_yvar_and_produce_summary.params.regressor_order">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]) – sequence of column names to put first in the regression results</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_yvar_and_produce_summary.params.reg_type"></span><strong>reg_type</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_yvar_and_produce_summary.params.reg_type">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – ‘diff’ for difference regression, ‘ols’ for OLS, ‘probit’ for Probit, ‘logit’ for Logit,
+‘quantile’ for Quantile, or ‘fmb’ for Fama-MacBeth</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_yvar_and_produce_summary.params.stderr"></span><strong>stderr</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_yvar_and_produce_summary.params.stderr">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – set to True to keep rows for standard errors below coefficient estimates</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_yvar_and_produce_summary.params.t_stats"></span><strong>t_stats</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_yvar_and_produce_summary.params.t_stats">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – set to True to keep rows for standard errors below coefficient estimates and convert them to t-stats</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_yvar_and_produce_summary.params.float_format"></span><strong>float_format</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_yvar_and_produce_summary.params.float_format">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – format string for how to format results in summary</p></li>
+<li><p><span class="target" id="regtools.iter.reg_for_each_yvar_and_produce_summary.params.reg_kwargs"></span><strong>reg_kwargs</strong><a class="paramlink headerlink reference internal" href="#regtools.iter.reg_for_each_yvar_and_produce_summary.params.reg_kwargs">¶</a> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a tuple of (reg_list, summary) where reg_list</p>
+</dd>
+</dl>
+<p>is a list of fitted regression models, and summary is a single dataframe of results.</p>
+</dd></dl>
 
 </div>
 <div class="section" id="module-regtools.models">
@@ -523,38 +697,42 @@ reg_for_each_quantile_produce_result_df</p>
 variables, and fits a regression model. If robust is specified, uses heteroskedasticity-
 robust standard errors. If cluster is specified, calculated clustered standard errors
 by the given variable.</p>
-<p>Note: only specify at most one of robust and cluster.</p>
-<p>Required inputs:
-df: pandas dataframe containing regression data
-yvar: str, column name of outcome y variable
-xvars: list of strs, column names of x variables for regression</p>
-<p>Optional inputs:
-q: float between 0 and 1. Quantile of dependent variable to estimate coefficients for
-robust: bool, set to True to use heterskedasticity-robust standard errors
-cluster: False or str, set to a column name to calculate standard errors within clusters</p>
-<blockquote>
-<div><p>given by unique values of given column name</p>
-</div></blockquote>
-<p>cons: bool, set to False to not include a constant in the regression
-fe: None or str or list of strs. If a str or list of strs is passed, uses these categorical
-variables to construct dummies for fixed effects.
-interaction_tuples: tuple or list of tuples of column names to interact and include as xvars
-num_lags: int, Number of periods to lag variables. Setting to other than 0 will activate lags
-lag_variables: ‘all’, ‘xvars’, or list of strs of names of columns to lag for regressions.
-lag_period_var: str, only used if lag_variables is not None. name of column which</p>
-<blockquote>
-<div><p>contains period variable for lagging</p>
-</div></blockquote>
-<dl class="simple">
-<dt>lag_fill_method: str, ‘ffill’ or ‘bfill’ for which method to use to fill in missing rows when</dt><dd><p>creating lag variables. See pandas.DataFrame.fillna for more details</p>
+<dl class="field-list simple">
+<dt class="field-odd">Notes</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<p>Only specify at most one of robust and cluster.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="regtools.quantile.quantile_reg.params.df"></span><strong>df</strong><a class="paramlink headerlink reference internal" href="#regtools.quantile.quantile_reg.params.df">¶</a> (<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>) – </p></li>
+<li><p><span class="target" id="regtools.quantile.quantile_reg.params.yvar"></span><strong>yvar</strong><a class="paramlink headerlink reference internal" href="#regtools.quantile.quantile_reg.params.yvar">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – column name of outcome y variable</p></li>
+<li><p><span class="target" id="regtools.quantile.quantile_reg.params.xvars"></span><strong>xvars</strong><a class="paramlink headerlink reference internal" href="#regtools.quantile.quantile_reg.params.xvars">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]) – column names of x variables for regression</p></li>
+<li><p><span class="target" id="regtools.quantile.quantile_reg.params.q"></span><strong>q</strong><a class="paramlink headerlink reference internal" href="#regtools.quantile.quantile_reg.params.q">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – quantile to use</p></li>
+<li><p><span class="target" id="regtools.quantile.quantile_reg.params.robust"></span><strong>robust</strong><a class="paramlink headerlink reference internal" href="#regtools.quantile.quantile_reg.params.robust">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – set to True to use heterskedasticity-robust standard errors</p></li>
+<li><p><span class="target" id="regtools.quantile.quantile_reg.params.cluster"></span><strong>cluster</strong><a class="paramlink headerlink reference internal" href="#regtools.quantile.quantile_reg.params.cluster">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]]) – set to a column name to calculate standard errors within clusters
+given by unique values of given column name. set to multiple column names for multiway
+clustering following Cameron, Gelbach, and Miller (2011). NOTE: will get exponentially
+slower as more cluster variables are added</p></li>
+<li><p><span class="target" id="regtools.quantile.quantile_reg.params.cons"></span><strong>cons</strong><a class="paramlink headerlink reference internal" href="#regtools.quantile.quantile_reg.params.cons">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – set to False to not include a constant in the regression</p></li>
+<li><p><span class="target" id="regtools.quantile.quantile_reg.params.fe"></span><strong>fe</strong><a class="paramlink headerlink reference internal" href="#regtools.quantile.quantile_reg.params.fe">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>], <code class="docutils literal notranslate"><span class="pre">None</span></code>]) – If a str or list of strs is passed, uses these categorical
+variables to construct dummies for fixed effects.</p></li>
+<li><p><span class="target" id="regtools.quantile.quantile_reg.params.interaction_tuples"></span><strong>interaction_tuples</strong><a class="paramlink headerlink reference internal" href="#regtools.quantile.quantile_reg.params.interaction_tuples">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>], <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]], <code class="docutils literal notranslate"><span class="pre">None</span></code>]) – tuple or list of tuples of column names to interact and include as xvars</p></li>
+<li><p><span class="target" id="regtools.quantile.quantile_reg.params.num_lags"></span><strong>num_lags</strong><a class="paramlink headerlink reference internal" href="#regtools.quantile.quantile_reg.params.num_lags">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – Number of periods to lag variables. Setting to other than 0 will activate lags</p></li>
+<li><p><span class="target" id="regtools.quantile.quantile_reg.params.lag_variables"></span><strong>lag_variables</strong><a class="paramlink headerlink reference internal" href="#regtools.quantile.quantile_reg.params.lag_variables">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]]) – ‘all’, ‘xvars’, or list of strs of names of columns to lag for regressions.</p></li>
+<li><p><span class="target" id="regtools.quantile.quantile_reg.params.lag_period_var"></span><strong>lag_period_var</strong><a class="paramlink headerlink reference internal" href="#regtools.quantile.quantile_reg.params.lag_period_var">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – only used if lag_variables is not None. name of column which
+contains period variable for lagging</p></li>
+<li><p><span class="target" id="regtools.quantile.quantile_reg.params.lag_id_var"></span><strong>lag_id_var</strong><a class="paramlink headerlink reference internal" href="#regtools.quantile.quantile_reg.params.lag_id_var">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – only used if lag_variables is not None. name of column which
+contains identifier variable for lagging</p></li>
+<li><p><span class="target" id="regtools.quantile.quantile_reg.params.lag_fill_method"></span><strong>lag_fill_method</strong><a class="paramlink headerlink reference internal" href="#regtools.quantile.quantile_reg.params.lag_fill_method">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – ‘ffill’ or ‘bfill’ for which method to use to fill in missing rows when
+creating lag variables. See pandas.DataFrame.fillna for more details</p></li>
+<li><p><span class="target" id="regtools.quantile.quantile_reg.params.lag_fill_limit"></span><strong>lag_fill_limit</strong><a class="paramlink headerlink reference internal" href="#regtools.quantile.quantile_reg.params.lag_fill_limit">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]) – maximum number of periods to fill with lag_fill_method</p></li>
+</ul>
 </dd>
-<dt>lag_id_var: str, only used if lag_variables is not None. name of column which</dt><dd><p>contains identifier variable for lagging</p>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>statsmodels regression result</p>
 </dd>
 </dl>
-<p>lag_fill_limit: pandas fill limit</p>
-<p>Returns:
-If fe=None, returns statsmodels regression result
-if fe is not None, returns a tuple of (statsmodels regression result, dummy_cols_dict)</p>
 </dd></dl>
 
 <dl class="function">
@@ -612,39 +790,41 @@ produce smoother graphs but take longer to run</p></li>
 variables, and fits a regression model. If robust is specified, uses heteroskedasticity-
 robust standard errors. If cluster is specified, calculated clustered standard errors
 by the given variable.</p>
-<p>Note: only specify at most one of robust and cluster.</p>
-<p>Required inputs:
-df: pandas dataframe containing regression data
-yvar: str, column name of outcome y variable
-xvars: list of strs, column names of x variables for regression</p>
-<p>Optional inputs:
-robust: bool, set to True to use heterskedasticity-robust standard errors
-cluster: False or list of strs, set to a column name to calculate standard errors within clusters</p>
-<blockquote>
-<div><p>given by unique values of given column name. set to multiple column names for multiway
+<dl class="field-list simple">
+<dt class="field-odd">Notes</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<p>Only specify at most one of robust and cluster.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="regtools.reg.reg.params.df"></span><strong>df</strong><a class="paramlink headerlink reference internal" href="#regtools.reg.reg.params.df">¶</a> (<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>) – </p></li>
+<li><p><span class="target" id="regtools.reg.reg.params.yvar"></span><strong>yvar</strong><a class="paramlink headerlink reference internal" href="#regtools.reg.reg.params.yvar">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – column name of outcome y variable</p></li>
+<li><p><span class="target" id="regtools.reg.reg.params.xvars"></span><strong>xvars</strong><a class="paramlink headerlink reference internal" href="#regtools.reg.reg.params.xvars">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]) – column names of x variables for regression</p></li>
+<li><p><span class="target" id="regtools.reg.reg.params.robust"></span><strong>robust</strong><a class="paramlink headerlink reference internal" href="#regtools.reg.reg.params.robust">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – set to True to use heterskedasticity-robust standard errors</p></li>
+<li><p><span class="target" id="regtools.reg.reg.params.cluster"></span><strong>cluster</strong><a class="paramlink headerlink reference internal" href="#regtools.reg.reg.params.cluster">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]]) – set to a column name to calculate standard errors within clusters
+given by unique values of given column name. set to multiple column names for multiway
 clustering following Cameron, Gelbach, and Miller (2011). NOTE: will get exponentially
-slower as more cluster variables are added</p>
-</div></blockquote>
-<p>cons: bool, set to False to not include a constant in the regression
-fe: None or str or list of strs. If a str or list of strs is passed, uses these categorical
-variables to construct dummies for fixed effects.
-interaction_tuples: tuple or list of tuples of column names to interact and include as xvars
-num_lags: int, Number of periods to lag variables. Setting to other than 0 will activate lags
-lag_variables: ‘all’, ‘xvars’, or list of strs of names of columns to lag for regressions.
-lag_period_var: str, only used if lag_variables is not None. name of column which</p>
-<blockquote>
-<div><p>contains period variable for lagging</p>
-</div></blockquote>
-<dl class="simple">
-<dt>lag_id_var: str, only used if lag_variables is not None. name of column which</dt><dd><p>contains identifier variable for lagging</p>
+slower as more cluster variables are added</p></li>
+<li><p><span class="target" id="regtools.reg.reg.params.cons"></span><strong>cons</strong><a class="paramlink headerlink reference internal" href="#regtools.reg.reg.params.cons">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – set to False to not include a constant in the regression</p></li>
+<li><p><span class="target" id="regtools.reg.reg.params.fe"></span><strong>fe</strong><a class="paramlink headerlink reference internal" href="#regtools.reg.reg.params.fe">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>], <code class="docutils literal notranslate"><span class="pre">None</span></code>]) – If a str or list of strs is passed, uses these categorical
+variables to construct dummies for fixed effects.</p></li>
+<li><p><span class="target" id="regtools.reg.reg.params.interaction_tuples"></span><strong>interaction_tuples</strong><a class="paramlink headerlink reference internal" href="#regtools.reg.reg.params.interaction_tuples">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>], <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]], <code class="docutils literal notranslate"><span class="pre">None</span></code>]) – tuple or list of tuples of column names to interact and include as xvars</p></li>
+<li><p><span class="target" id="regtools.reg.reg.params.num_lags"></span><strong>num_lags</strong><a class="paramlink headerlink reference internal" href="#regtools.reg.reg.params.num_lags">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – Number of periods to lag variables. Setting to other than 0 will activate lags</p></li>
+<li><p><span class="target" id="regtools.reg.reg.params.lag_variables"></span><strong>lag_variables</strong><a class="paramlink headerlink reference internal" href="#regtools.reg.reg.params.lag_variables">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]]) – ‘all’, ‘xvars’, or list of strs of names of columns to lag for regressions.</p></li>
+<li><p><span class="target" id="regtools.reg.reg.params.lag_period_var"></span><strong>lag_period_var</strong><a class="paramlink headerlink reference internal" href="#regtools.reg.reg.params.lag_period_var">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – only used if lag_variables is not None. name of column which
+contains period variable for lagging</p></li>
+<li><p><span class="target" id="regtools.reg.reg.params.lag_id_var"></span><strong>lag_id_var</strong><a class="paramlink headerlink reference internal" href="#regtools.reg.reg.params.lag_id_var">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – only used if lag_variables is not None. name of column which
+contains identifier variable for lagging</p></li>
+<li><p><span class="target" id="regtools.reg.reg.params.lag_fill_method"></span><strong>lag_fill_method</strong><a class="paramlink headerlink reference internal" href="#regtools.reg.reg.params.lag_fill_method">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – ‘ffill’ or ‘bfill’ for which method to use to fill in missing rows when
+creating lag variables. See pandas.DataFrame.fillna for more details</p></li>
+<li><p><span class="target" id="regtools.reg.reg.params.model_type"></span><strong>model_type</strong><a class="paramlink headerlink reference internal" href="#regtools.reg.reg.params.model_type">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – ‘OLS’, ‘probit’, or ‘logit’ for type of model</p></li>
+</ul>
 </dd>
-<dt>lag_fill_method: str, ‘ffill’ or ‘bfill’ for which method to use to fill in missing rows when</dt><dd><p>creating lag variables. See pandas.DataFrame.fillna for more details</p>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>statsmodels regression result.</p>
 </dd>
 </dl>
-<p>model_type: str, ‘OLS’, ‘probit’, or ‘logit’ for type of model</p>
-<p>Returns:
-If fe=None, returns statsmodels regression result
-if fe is not None, returns a tuple of (statsmodels regression result, dummy_cols_dict)</p>
 </dd></dl>
 
 </div>
@@ -660,6 +840,19 @@ if fe is not None, returns a tuple of (statsmodels regression result, dummy_cols
 number of variables involved in the regressions, keepnum with the highest R-squareds will be kept.</p>
 <p>For example, if reg_list contains 3 regressions with two variables and 6 regressions with three variables,
 and keepnum is 2, will return a list of four regressions, 2 with two variables and 2 with three variables.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="regtools.select.select_models.params.reg_list"></span><strong>reg_list</strong><a class="paramlink headerlink reference internal" href="#regtools.select.select_models.params.reg_list">¶</a> – </p></li>
+<li><p><span class="target" id="regtools.select.select_models.params.keepnum"></span><strong>keepnum</strong><a class="paramlink headerlink reference internal" href="#regtools.select.select_models.params.keepnum">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – number to keep for each amount of x variables. The total number of outputted
+regressions will be roughly keepnum * len(xvars)</p></li>
+<li><p><span class="target" id="regtools.select.select_models.params.xvars"></span><strong>xvars</strong><a class="paramlink headerlink reference internal" href="#regtools.select.select_models.params.xvars">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]) – column names of x variables</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>

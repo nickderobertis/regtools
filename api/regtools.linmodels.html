@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>regtools.linmodels package &mdash; regtools 0.1.0 documentation</title>
+  <title>regtools.linmodels package &mdash; regtools 0.1.1 documentation</title>
   
 
   
@@ -22,13 +22,13 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
-        <script type="text/javascript" src="../_static/copybutton.js"></script>
-        <script type="text/javascript">var copybuttonSkipText = '>>> ';</script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script >var copybuttonSkipText = '>>> ';</script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.1.0
+                0.1.1
               </div>
             
           
@@ -96,7 +96,7 @@
               <p class="caption"><span class="caption-text">Tutorial</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Getting started with regtools</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html">This is my gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html">Examples</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API Documentation</span></p>
 <ul class="current">
@@ -225,39 +225,42 @@
 <span id="regtools-linmodels-reg-module"></span><h2>regtools.linmodels.reg module<a class="headerlink" href="#module-regtools.linmodels.reg" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="regtools.linmodels.reg.linear_reg">
-<code class="sig-prename descclassname">regtools.linmodels.reg.</code><code class="sig-name descname">linear_reg</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">yvar</em>, <em class="sig-param">xvars</em>, <em class="sig-param">entity_var=None</em>, <em class="sig-param">time_var=None</em>, <em class="sig-param">robust=True</em>, <em class="sig-param">cluster=False</em>, <em class="sig-param">cons=True</em>, <em class="sig-param">fe=None</em>, <em class="sig-param">interaction_tuples=None</em>, <em class="sig-param">num_lags=0</em>, <em class="sig-param">lag_variables='xvars'</em>, <em class="sig-param">lag_period_var='Date'</em>, <em class="sig-param">lag_id_var='TICKER'</em>, <em class="sig-param">lag_fill_method='ffill'</em>, <em class="sig-param">lag_fill_limit=None</em>, <em class="sig-param">model_type='fama macbeth'</em>, <em class="sig-param">**fit_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/linmodels/reg.html#linear_reg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.linmodels.reg.linear_reg" title="Permalink to this definition">¶</a></dt>
-<dd><dl>
-<dt>Args:</dt><dd><p>df: pandas dataframe containing regression data
-yvar: str, column name of outcome y variable
-xvars: list of strs, column names of x variables for regression
-entity_var: str, name of variable identifying groups for panel
-time_var: str, name of variable identifying time for panel
-robust: bool, set to True to use heterskedasticity-robust standard errors
-cluster: False or str, set to a column name to calculate standard errors within clusters</p>
-<blockquote>
-<div><p>given by unique values of given column name</p>
-</div></blockquote>
-<p>cons: bool, set to False to not include a constant in the regression
-fe: None or str or list of strs. If a str or list of strs is passed, uses these categorical
-variables to construct dummies for fixed effects.
-interaction_tuples: tuple or list of tuples of column names to interact and include as xvars
-num_lags: int, Number of periods to lag variables. Setting to other than 0 will activate lags
-lag_variables: ‘all’, ‘xvars’, or list of strs of names of columns to lag for regressions.
-lag_period_var: str, only used if lag_variables is not None. name of column which</p>
-<blockquote>
-<div><p>contains period variable for lagging</p>
-</div></blockquote>
-<dl class="simple">
-<dt>lag_id_var: str, only used if lag_variables is not None. name of column which</dt><dd><p>contains identifier variable for lagging</p>
+<code class="sig-prename descclassname">regtools.linmodels.reg.</code><code class="sig-name descname">linear_reg</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">yvar</em>, <em class="sig-param">xvars</em>, <em class="sig-param">entity_var</em>, <em class="sig-param">time_var</em>, <em class="sig-param">robust=True</em>, <em class="sig-param">cluster=False</em>, <em class="sig-param">cons=True</em>, <em class="sig-param">fe=None</em>, <em class="sig-param">interaction_tuples=None</em>, <em class="sig-param">num_lags=0</em>, <em class="sig-param">lag_variables='xvars'</em>, <em class="sig-param">lag_period_var='Date'</em>, <em class="sig-param">lag_id_var='TICKER'</em>, <em class="sig-param">lag_fill_method='ffill'</em>, <em class="sig-param">lag_fill_limit=None</em>, <em class="sig-param">model_type='fama macbeth'</em>, <em class="sig-param">**fit_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/linmodels/reg.html#linear_reg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.linmodels.reg.linear_reg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs a regression from the linearmodels library, standardizing the output to that of statsmodels</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="regtools.linmodels.reg.linear_reg.params.df"></span><strong>df</strong><a class="paramlink headerlink reference internal" href="#regtools.linmodels.reg.linear_reg.params.df">¶</a> (<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>) – </p></li>
+<li><p><span class="target" id="regtools.linmodels.reg.linear_reg.params.yvar"></span><strong>yvar</strong><a class="paramlink headerlink reference internal" href="#regtools.linmodels.reg.linear_reg.params.yvar">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – column name of outcome y variable</p></li>
+<li><p><span class="target" id="regtools.linmodels.reg.linear_reg.params.xvars"></span><strong>xvars</strong><a class="paramlink headerlink reference internal" href="#regtools.linmodels.reg.linear_reg.params.xvars">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]) – column names of x variables for regression</p></li>
+<li><p><span class="target" id="regtools.linmodels.reg.linear_reg.params.entity_var"></span><strong>entity_var</strong><a class="paramlink headerlink reference internal" href="#regtools.linmodels.reg.linear_reg.params.entity_var">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – column name of variable representing entities in the data</p></li>
+<li><p><span class="target" id="regtools.linmodels.reg.linear_reg.params.time_var"></span><strong>time_var</strong><a class="paramlink headerlink reference internal" href="#regtools.linmodels.reg.linear_reg.params.time_var">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – column name of variable representing time in the data</p></li>
+<li><p><span class="target" id="regtools.linmodels.reg.linear_reg.params.robust"></span><strong>robust</strong><a class="paramlink headerlink reference internal" href="#regtools.linmodels.reg.linear_reg.params.robust">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – set to True to use heterskedasticity-robust standard errors</p></li>
+<li><p><span class="target" id="regtools.linmodels.reg.linear_reg.params.cluster"></span><strong>cluster</strong><a class="paramlink headerlink reference internal" href="#regtools.linmodels.reg.linear_reg.params.cluster">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]]) – set to a column name to calculate standard errors within clusters
+given by unique values of given column name. set to multiple column names for multiway
+clustering following Cameron, Gelbach, and Miller (2011). NOTE: will get exponentially
+slower as more cluster variables are added</p></li>
+<li><p><span class="target" id="regtools.linmodels.reg.linear_reg.params.cons"></span><strong>cons</strong><a class="paramlink headerlink reference internal" href="#regtools.linmodels.reg.linear_reg.params.cons">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – set to False to not include a constant in the regression</p></li>
+<li><p><span class="target" id="regtools.linmodels.reg.linear_reg.params.fe"></span><strong>fe</strong><a class="paramlink headerlink reference internal" href="#regtools.linmodels.reg.linear_reg.params.fe">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>], <code class="docutils literal notranslate"><span class="pre">None</span></code>]) – If a str or list of strs is passed, uses these categorical
+variables to construct dummies for fixed effects.</p></li>
+<li><p><span class="target" id="regtools.linmodels.reg.linear_reg.params.interaction_tuples"></span><strong>interaction_tuples</strong><a class="paramlink headerlink reference internal" href="#regtools.linmodels.reg.linear_reg.params.interaction_tuples">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>], <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]], <code class="docutils literal notranslate"><span class="pre">None</span></code>]) – tuple or list of tuples of column names to interact and include as xvars</p></li>
+<li><p><span class="target" id="regtools.linmodels.reg.linear_reg.params.num_lags"></span><strong>num_lags</strong><a class="paramlink headerlink reference internal" href="#regtools.linmodels.reg.linear_reg.params.num_lags">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – Number of periods to lag variables. Setting to other than 0 will activate lags</p></li>
+<li><p><span class="target" id="regtools.linmodels.reg.linear_reg.params.lag_variables"></span><strong>lag_variables</strong><a class="paramlink headerlink reference internal" href="#regtools.linmodels.reg.linear_reg.params.lag_variables">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]]) – ‘all’, ‘xvars’, or list of strs of names of columns to lag for regressions.</p></li>
+<li><p><span class="target" id="regtools.linmodels.reg.linear_reg.params.lag_period_var"></span><strong>lag_period_var</strong><a class="paramlink headerlink reference internal" href="#regtools.linmodels.reg.linear_reg.params.lag_period_var">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – only used if lag_variables is not None. name of column which
+contains period variable for lagging</p></li>
+<li><p><span class="target" id="regtools.linmodels.reg.linear_reg.params.lag_id_var"></span><strong>lag_id_var</strong><a class="paramlink headerlink reference internal" href="#regtools.linmodels.reg.linear_reg.params.lag_id_var">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – only used if lag_variables is not None. name of column which
+contains identifier variable for lagging</p></li>
+<li><p><span class="target" id="regtools.linmodels.reg.linear_reg.params.lag_fill_method"></span><strong>lag_fill_method</strong><a class="paramlink headerlink reference internal" href="#regtools.linmodels.reg.linear_reg.params.lag_fill_method">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – ‘ffill’ or ‘bfill’ for which method to use to fill in missing rows when
+creating lag variables. See pandas.DataFrame.fillna for more details</p></li>
+<li><p><span class="target" id="regtools.linmodels.reg.linear_reg.params.lag_fill_limit"></span><strong>lag_fill_limit</strong><a class="paramlink headerlink reference internal" href="#regtools.linmodels.reg.linear_reg.params.lag_fill_limit">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]) – maximum number of periods to fill with lag_fill_method</p></li>
+<li><p><span class="target" id="regtools.linmodels.reg.linear_reg.params.model_type"></span><strong>model_type</strong><a class="paramlink headerlink reference internal" href="#regtools.linmodels.reg.linear_reg.params.model_type">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – ‘fmb’ for type of model</p></li>
+<li><p><span class="target" id="regtools.linmodels.reg.linear_reg.params.fit_kwargs"></span><strong>fit_kwargs</strong><a class="paramlink headerlink reference internal" href="#regtools.linmodels.reg.linear_reg.params.fit_kwargs">¶</a> – </p></li>
+</ul>
 </dd>
-<dt>lag_fill_method: str, ‘ffill’ or ‘bfill’ for which method to use to fill in missing rows when</dt><dd><p>creating lag variables. See pandas.DataFrame.fillna for more details</p>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>statsmodels regression result.</p>
 </dd>
 </dl>
-<p>lag_fill_limit: int, maximum number of periods to go back or forward for filling
-model_type: str, ‘fama macbeth’ for type of model</p>
-</dd>
-</dl>
-<p>Returns:</p>
 </dd></dl>
 
 </div>

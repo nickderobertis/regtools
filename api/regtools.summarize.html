@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>regtools.summarize package &mdash; regtools 0.1.0 documentation</title>
+  <title>regtools.summarize package &mdash; regtools 0.1.1 documentation</title>
   
 
   
@@ -22,13 +22,13 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
-        <script type="text/javascript" src="../_static/copybutton.js"></script>
-        <script type="text/javascript">var copybuttonSkipText = '>>> ';</script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script >var copybuttonSkipText = '>>> ';</script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                0.1.0
+                0.1.1
               </div>
             
           
@@ -95,7 +95,7 @@
               <p class="caption"><span class="caption-text">Tutorial</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Getting started with regtools</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html">This is my gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html">Examples</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API Documentation</span></p>
 <ul class="current">
@@ -203,21 +203,23 @@
 <span id="regtools-summarize-package"></span><h1>regtools.summarize package<a class="headerlink" href="#module-regtools.summarize" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="regtools.summarize.produce_summary">
-<code class="sig-prename descclassname">regtools.summarize.</code><code class="sig-name descname">produce_summary</code><span class="sig-paren">(</span><em class="sig-param">reg_list</em>, <em class="sig-param">stderr=False</em>, <em class="sig-param">t_stats=False</em>, <em class="sig-param">float_format='%0.1f'</em>, <em class="sig-param">regressor_order=[]</em>, <em class="sig-param">suppress_other_regressors=False</em>, <em class="sig-param">model_names=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/summarize.html#produce_summary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.summarize.produce_summary" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
+<code class="sig-prename descclassname">regtools.summarize.</code><code class="sig-name descname">produce_summary</code><span class="sig-paren">(</span><em class="sig-param">reg_list</em>, <em class="sig-param">stderr=False</em>, <em class="sig-param">t_stats=False</em>, <em class="sig-param">float_format='%0.1f'</em>, <em class="sig-param">regressor_order=()</em>, <em class="sig-param">suppress_other_regressors=False</em>, <em class="sig-param">model_names=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/summarize.html#produce_summary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.summarize.produce_summary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a summary from a list of regression results</p>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><span class="target" id="regtools.summarize.produce_summary.params.reg_list"></span><strong>reg_list</strong><a class="paramlink headerlink reference internal" href="#regtools.summarize.produce_summary.params.reg_list">¶</a> – </p></li>
-<li><p><span class="target" id="regtools.summarize.produce_summary.params.stderr"></span><strong>stderr</strong><a class="paramlink headerlink reference internal" href="#regtools.summarize.produce_summary.params.stderr">¶</a> – </p></li>
-<li><p><span class="target" id="regtools.summarize.produce_summary.params.float_format"></span><strong>float_format</strong><a class="paramlink headerlink reference internal" href="#regtools.summarize.produce_summary.params.float_format">¶</a> – </p></li>
-<li><p><span class="target" id="regtools.summarize.produce_summary.params.regressor_order"></span><strong>regressor_order</strong><a class="paramlink headerlink reference internal" href="#regtools.summarize.produce_summary.params.regressor_order">¶</a> – </p></li>
-<li><p><span class="target" id="regtools.summarize.produce_summary.params.suppress_other_regressors"></span><strong>suppress_other_regressors</strong><a class="paramlink headerlink reference internal" href="#regtools.summarize.produce_summary.params.suppress_other_regressors">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – True for when using regressor_order to suppress coefficients
+<li><p><span class="target" id="regtools.summarize.produce_summary.params.reg_list"></span><strong>reg_list</strong><a class="paramlink headerlink reference internal" href="#regtools.summarize.produce_summary.params.reg_list">¶</a> – list of statsmodels regression results</p></li>
+<li><p><span class="target" id="regtools.summarize.produce_summary.params.stderr"></span><strong>stderr</strong><a class="paramlink headerlink reference internal" href="#regtools.summarize.produce_summary.params.stderr">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – set to True to keep rows for standard errors below coefficient estimates</p></li>
+<li><p><span class="target" id="regtools.summarize.produce_summary.params.t_stats"></span><strong>t_stats</strong><a class="paramlink headerlink reference internal" href="#regtools.summarize.produce_summary.params.t_stats">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – set to True to keep rows for standard errors below coefficient estimates and convert them to t-stats</p></li>
+<li><p><span class="target" id="regtools.summarize.produce_summary.params.float_format"></span><strong>float_format</strong><a class="paramlink headerlink reference internal" href="#regtools.summarize.produce_summary.params.float_format">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – format string for how to format results in summary</p></li>
+<li><p><span class="target" id="regtools.summarize.produce_summary.params.regressor_order"></span><strong>regressor_order</strong><a class="paramlink headerlink reference internal" href="#regtools.summarize.produce_summary.params.regressor_order">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]) – sequence of column names to put first in the regression results</p></li>
+<li><p><span class="target" id="regtools.summarize.produce_summary.params.suppress_other_regressors"></span><strong>suppress_other_regressors</strong><a class="paramlink headerlink reference internal" href="#regtools.summarize.produce_summary.params.suppress_other_regressors">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – True for when using regressor_order to suppress coefficients
 that are not in regressor_order into “Controls: Yes”. False to keep coefficients</p></li>
-<li><p><span class="target" id="regtools.summarize.produce_summary.params.model_names"></span><strong>model_names</strong><a class="paramlink headerlink reference internal" href="#regtools.summarize.produce_summary.params.model_names">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.8)"><em>tuple</em></a>) – If a collection is passed, will be used as column names in summary table.</p></li>
+<li><p><span class="target" id="regtools.summarize.produce_summary.params.model_names"></span><strong>model_names</strong><a class="paramlink headerlink reference internal" href="#regtools.summarize.produce_summary.params.model_names">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]]) – If a collection is passed, will be used as column names in summary table.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
+<dd class="field-even"><p>a regression summary</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p></p>

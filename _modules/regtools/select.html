@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>regtools.select &mdash; regtools 0.1.0 documentation</title>
+  <title>regtools.select &mdash; regtools 0.1.1 documentation</title>
   
 
   
@@ -22,13 +22,13 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../_static/language_data.js"></script>
-        <script type="text/javascript" src="../../_static/clipboard.min.js"></script>
-        <script type="text/javascript" src="../../_static/copybutton.js"></script>
-        <script type="text/javascript">var copybuttonSkipText = '>>> ';</script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script >var copybuttonSkipText = '>>> ';</script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.1.0
+                0.1.1
               </div>
             
           
@@ -94,7 +94,7 @@
               <p class="caption"><span class="caption-text">Tutorial</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Getting started with regtools</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../auto_examples/index.html">This is my gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../auto_examples/index.html">Examples</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API Documentation</span></p>
 <ul>
@@ -163,17 +163,24 @@
            <div itemprop="articleBody">
             
   <h1>Source code for regtools.select</h1><div class="highlight"><pre>
-<span></span>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Any</span>
 
-<div class="viewcode-block" id="select_models"><a class="viewcode-back" href="../../api/regtools.html#regtools.select.select_models">[docs]</a><span class="k">def</span> <span class="nf">select_models</span><span class="p">(</span><span class="n">reg_list</span><span class="p">,</span> <span class="n">keepnum</span><span class="p">,</span> <span class="n">xvars</span><span class="p">):</span>
+
+<div class="viewcode-block" id="select_models"><a class="viewcode-back" href="../../api/regtools.html#regtools.select.select_models">[docs]</a><span class="k">def</span> <span class="nf">select_models</span><span class="p">(</span><span class="n">reg_list</span><span class="p">,</span> <span class="n">keepnum</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">xvars</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Takes a list of fitted regression models and selects among them based on adjusted R-Squared. For each</span>
 <span class="sd">    number of variables involved in the regressions, keepnum with the highest R-squareds will be kept.</span>
 
 <span class="sd">    For example, if reg_list contains 3 regressions with two variables and 6 regressions with three variables,</span>
 <span class="sd">    and keepnum is 2, will return a list of four regressions, 2 with two variables and 2 with three variables.</span>
+
+<span class="sd">    :param reg_list:</span>
+<span class="sd">    :param keepnum: number to keep for each amount of x variables. The total number of outputted</span>
+<span class="sd">        regressions will be roughly keepnum * len(xvars)</span>
+<span class="sd">    :param xvars: column names of x variables</span>
+<span class="sd">    :return:</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">outlist</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">outlist</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">xvars</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
         <span class="n">reg_list_match</span> <span class="o">=</span> <span class="p">[</span><span class="n">reg</span> <span class="k">for</span> <span class="n">reg</span> <span class="ow">in</span> <span class="n">reg_list</span> <span class="k">if</span> <span class="n">reg</span><span class="o">.</span><span class="n">df_model</span> <span class="o">==</span> <span class="n">i</span><span class="p">]</span> <span class="c1">#select models with this many variables</span>
         <span class="k">try</span><span class="p">:</span>

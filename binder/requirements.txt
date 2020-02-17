@@ -1,7 +1,7 @@
-matplotlib
-regtools
+pd-utils
+statsmodels
 scipy
 linearmodels
-statsmodels
+matplotlib
+regtools
 pandas
-pd-utils

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Welcome to Regression Tools documentation! &mdash; regtools 0.1.0 documentation</title>
+  <title>Welcome to Regression Tools documentation! &mdash; regtools 0.1.1 documentation</title>
   
 
   
@@ -22,13 +22,13 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script type="text/javascript" src="_static/clipboard.min.js"></script>
-        <script type="text/javascript" src="_static/copybutton.js"></script>
-        <script type="text/javascript">var copybuttonSkipText = '>>> ';</script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+        <script >var copybuttonSkipText = '>>> ';</script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                0.1.0
+                0.1.1
               </div>
             
           
@@ -95,7 +95,7 @@
               <p class="caption"><span class="caption-text">Tutorial</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Getting started with regtools</a></li>
-<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html">This is my gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html">Examples</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API Documentation</span></p>
 <ul>
@@ -174,24 +174,124 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Getting started with regtools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="tutorial.html#install">Install</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorial.html#usage">Usage</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html">This is my gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html">Examples</a></li>
 </ul>
 </div>
-<div class="section" id="an-overview">
-<h2>An overview<a class="headerlink" href="#an-overview" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="an-overview-of-regtools">
+<h2>An overview of <code class="docutils literal notranslate"><span class="pre">regtools</span></code><a class="headerlink" href="#an-overview-of-regtools" title="Permalink to this headline">¶</a></h2>
+<p>This package makes it easier to run various kinds of regressions. Handles
+fixed effects, 2+ way clustering, hypothesis testing,
+lagged variables, differenced variables, interaction effects,
+iteration tools, and producing summaries for a
+variety of models including OLS, Logit, Probit, Quantile, and Fama-Macbeth.</p>
 <div class="section" id="quick-links">
 <h3>Quick Links<a class="headerlink" href="#quick-links" title="Permalink to this headline">¶</a></h3>
 <p>Find the source code <a class="reference external" href="https://github.com/nickderobertis/regtools">on Github</a>.</p>
 </div>
-<div class="section" id="regtools">
-<h3>regtools<a class="headerlink" href="#regtools" title="Permalink to this headline">¶</a></h3>
-<p>This is a simple example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">regtools</span>
-</pre></div>
+<div class="section" id="single-regressions">
+<h3>Single Regressions<a class="headerlink" href="#single-regressions" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/regtools.html#regtools.reg.reg" title="regtools.reg.reg"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reg</span></code></a>(df, yvar, xvars[, robust, …])</p></td>
+<td><p>Returns a fitted regression.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/regtools.linmodels.html#regtools.linmodels.reg.linear_reg" title="regtools.linmodels.reg.linear_reg"><code class="xref py py-obj docutils literal notranslate"><span class="pre">linear_reg</span></code></a>(df, yvar, …)</p></td>
+<td><p>Runs a regression from the linearmodels library, standardizing the output to that of statsmodels</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/regtools.html#regtools.differenced.diff_reg" title="regtools.differenced.diff_reg"><code class="xref py py-obj docutils literal notranslate"><span class="pre">diff_reg</span></code></a>(df, yvar, …)</p></td>
+<td><p>Fits a differenced regression.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/regtools.html#regtools.quantile.quantile_reg" title="regtools.quantile.quantile_reg"><code class="xref py py-obj docutils literal notranslate"><span class="pre">quantile_reg</span></code></a>(df, yvar, xvars)</p></td>
+<td><p>Returns a fitted quantile regression.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
+<div class="section" id="produce-summary">
+<h3>Produce Summary<a class="headerlink" href="#produce-summary" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/regtools.summarize.html#regtools.summarize.produce_summary" title="regtools.summarize.produce_summary"><code class="xref py py-obj docutils literal notranslate"><span class="pre">produce_summary</span></code></a>(reg_list)</p></td>
+<td><p>Produce a summary from a list of regression results</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="iteration-tools">
+<h3>Iteration Tools<a class="headerlink" href="#iteration-tools" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/regtools.html#regtools.iter.reg_for_each_combo" title="regtools.iter.reg_for_each_combo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reg_for_each_combo</span></code></a>(df, yvar, xvars)</p></td>
+<td><p>Takes each possible combination of xvars (starting from each var individually, then each pair of vars, etc.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/regtools.html#regtools.iter.reg_for_each_xvar_set" title="regtools.iter.reg_for_each_xvar_set"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reg_for_each_xvar_set</span></code></a>(df, …)</p></td>
+<td><p>Runs regressions on the same y variable for each set of x variables passed.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/regtools.html#regtools.iter.reg_for_each_combo_select_and_produce_summary" title="regtools.iter.reg_for_each_combo_select_and_produce_summary"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reg_for_each_combo_select_and_produce_summary</span></code></a>(df, …)</p></td>
+<td><p>Convenience function to run regressions for every combination of xvars, select the best models, and present them in a summary format.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/regtools.html#regtools.iter.reg_for_each_xvar_set_and_produce_summary" title="regtools.iter.reg_for_each_xvar_set_and_produce_summary"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reg_for_each_xvar_set_and_produce_summary</span></code></a>(df, …)</p></td>
+<td><p>Convenience function to run regressions for every set of xvars passed and present them in a summary format.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/regtools.html#regtools.iter.reg_for_each_yvar" title="regtools.iter.reg_for_each_yvar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reg_for_each_yvar</span></code></a>(df, yvars, xvars)</p></td>
+<td><p>Convenience function to run regressions for multiple y variables with the same x variables</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/regtools.html#regtools.iter.reg_for_each_yvar_and_produce_summary" title="regtools.iter.reg_for_each_yvar_and_produce_summary"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reg_for_each_yvar_and_produce_summary</span></code></a>(df, …)</p></td>
+<td><p>Convenience function to run regressions for multiple y variables with the same x variables and and present them in a summary format.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/regtools.html#regtools.iter.reg_for_each_lag" title="regtools.iter.reg_for_each_lag"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reg_for_each_lag</span></code></a>(df, yvar, xvars)</p></td>
+<td><p>Convenience function to run regressions with the same y and x variables for every passed number of lags</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/regtools.html#regtools.iter.reg_for_each_lag_and_produce_summary" title="regtools.iter.reg_for_each_lag_and_produce_summary"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reg_for_each_lag_and_produce_summary</span></code></a>(df, …)</p></td>
+<td><p>Convenience function to run regressions with the same y and x variables for every passed number of lags and produce a summary.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="hypothesis-testing">
+<h3>Hypothesis Testing<a class="headerlink" href="#hypothesis-testing" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/regtools.html#regtools.select.select_models" title="regtools.select.select_models"><code class="xref py py-obj docutils literal notranslate"><span class="pre">select_models</span></code></a>(reg_list, …)</p></td>
+<td><p>Takes a list of fitted regression models and selects among them based on adjusted R-Squared.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="selecting-models">
+<h3>Selecting Models<a class="headerlink" href="#selecting-models" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/regtools.hypothesis.html#regtools.hypothesis.lincom.hypothesis_test" title="regtools.hypothesis.lincom.hypothesis_test"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hypothesis_test</span></code></a>(…)</p></td>
+<td><p>Perform a hypothesis test with one or multiple columns</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="api-docs">
+<h3>API Docs<a class="headerlink" href="#api-docs" title="Permalink to this headline">¶</a></h3>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">API Documentation</span></p>
 <ul>

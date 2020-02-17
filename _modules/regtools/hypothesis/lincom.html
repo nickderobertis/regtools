@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>regtools.hypothesis.lincom &mdash; regtools 0.1.0 documentation</title>
+  <title>regtools.hypothesis.lincom &mdash; regtools 0.1.1 documentation</title>
   
 
   
@@ -22,13 +22,13 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../../_static/language_data.js"></script>
-        <script type="text/javascript" src="../../../_static/clipboard.min.js"></script>
-        <script type="text/javascript" src="../../../_static/copybutton.js"></script>
-        <script type="text/javascript">var copybuttonSkipText = '>>> ';</script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+        <script >var copybuttonSkipText = '>>> ';</script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.1.0
+                0.1.1
               </div>
             
           
@@ -94,7 +94,7 @@
               <p class="caption"><span class="caption-text">Tutorial</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Getting started with regtools</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../auto_examples/index.html">This is my gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auto_examples/index.html">Examples</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API Documentation</span></p>
 <ul>
@@ -163,13 +163,19 @@
            <div itemprop="articleBody">
             
   <h1>Source code for regtools.hypothesis.lincom</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
 
-<div class="viewcode-block" id="hypothesis_test"><a class="viewcode-back" href="../../../api/regtools.hypothesis.html#regtools.hypothesis.lincom.hypothesis_test">[docs]</a><span class="k">def</span> <span class="nf">hypothesis_test</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">col_coef_dict</span><span class="p">):</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<div class="viewcode-block" id="hypothesis_test"><a class="viewcode-back" href="../../../api/regtools.hypothesis.html#regtools.hypothesis.lincom.hypothesis_test">[docs]</a><span class="k">def</span> <span class="nf">hypothesis_test</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">col_coef_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    result: statsmodels RegressionResult or regtools.lag.remove.SimplifiedRegressionResult</span>
-<span class="sd">    col_coef_dict: dict, keys are names of columns in DataFrame used for regression. Values are</span>
-<span class="sd">                   coefficients to apply to those columns.</span>
+<span class="sd">    Perform a hypothesis test with one or multiple columns</span>
+
+<span class="sd">    :param result: regression result</span>
+<span class="sd">    :param col_coef_dict: keys are names of columns in DataFrame used for regression. Values are</span>
+<span class="sd">        coefficients to apply to those columns.</span>
+<span class="sd">    :return:</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">r_matrix</span> <span class="o">=</span> <span class="n">_create_r_matrix_for_hypothesis_test</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">col_coef_dict</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="n">t_test</span><span class="p">(</span><span class="n">r_matrix</span><span class="p">,</span> <span class="n">use_t</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>

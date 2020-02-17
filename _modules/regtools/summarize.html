@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>regtools.summarize &mdash; regtools 0.1.0 documentation</title>
+  <title>regtools.summarize &mdash; regtools 0.1.1 documentation</title>
   
 
   
@@ -22,13 +22,13 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../_static/language_data.js"></script>
-        <script type="text/javascript" src="../../_static/clipboard.min.js"></script>
-        <script type="text/javascript" src="../../_static/copybutton.js"></script>
-        <script type="text/javascript">var copybuttonSkipText = '>>> ';</script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script >var copybuttonSkipText = '>>> ';</script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.1.0
+                0.1.1
               </div>
             
           
@@ -94,7 +94,7 @@
               <p class="caption"><span class="caption-text">Tutorial</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Getting started with regtools</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../auto_examples/index.html">This is my gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../auto_examples/index.html">Examples</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API Documentation</span></p>
 <ul>
@@ -163,7 +163,9 @@
            <div itemprop="articleBody">
             
   <h1>Source code for regtools.summarize</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">regtools.ext_statsmodels</span> <span class="kn">import</span> <span class="n">summary_col</span>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="kn">from</span> <span class="nn">regtools.ext_statsmodels</span> <span class="kn">import</span> <span class="n">summary_col</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="kn">from</span> <span class="nn">regtools.fe.output</span> <span class="kn">import</span> <span class="n">add_fixed_effects_rows</span>
@@ -176,26 +178,26 @@
 <span class="kn">from</span> <span class="nn">regtools.summarize.tstat</span> <span class="kn">import</span> <span class="n">replace_stderr_with_t_stat_in_summary_df</span>
 
 
-<div class="viewcode-block" id="produce_summary"><a class="viewcode-back" href="../../api/regtools.summarize.html#regtools.summarize.produce_summary">[docs]</a><span class="k">def</span> <span class="nf">produce_summary</span><span class="p">(</span><span class="n">reg_list</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">t_stats</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">float_format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%0.1f</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">regressor_order</span><span class="o">=</span><span class="p">[],</span>
-                    <span class="n">suppress_other_regressors</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">model_names</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="produce_summary"><a class="viewcode-back" href="../../api/regtools.summarize.html#regtools.summarize.produce_summary">[docs]</a><span class="k">def</span> <span class="nf">produce_summary</span><span class="p">(</span><span class="n">reg_list</span><span class="p">,</span> <span class="n">stderr</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">t_stats</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">float_format</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%0.1f</span><span class="s1">&#39;</span><span class="p">,</span>
+                    <span class="n">regressor_order</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(),</span>
+                    <span class="n">suppress_other_regressors</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">model_names</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Produce a summary from a list of regression results</span>
 
-<span class="sd">    :param reg_list:</span>
-<span class="sd">    :type reg_list:</span>
-<span class="sd">    :param stderr:</span>
-<span class="sd">    :type stderr:</span>
-<span class="sd">    :param float_format:</span>
-<span class="sd">    :type float_format:</span>
-<span class="sd">    :param regressor_order:</span>
-<span class="sd">    :type regressor_order:</span>
+<span class="sd">    :param reg_list: list of statsmodels regression results</span>
+<span class="sd">    :param stderr: set to True to keep rows for standard errors below coefficient estimates</span>
+<span class="sd">    :param t_stats: set to True to keep rows for standard errors below coefficient estimates and convert them to t-stats</span>
+<span class="sd">    :param float_format: format string for how to format results in summary</span>
+<span class="sd">    :param regressor_order: sequence of column names to put first in the regression results</span>
 <span class="sd">    :param suppress_other_regressors: True for when using regressor_order to suppress coefficients</span>
 <span class="sd">        that are not in regressor_order into &quot;Controls: Yes&quot;. False to keep coefficients</span>
-<span class="sd">    :type suppress_other_regressors: bool</span>
 <span class="sd">    :param model_names: If a collection is passed, will be used as column names in summary table.</span>
-<span class="sd">    :type model_names: None, list, tuple</span>
-<span class="sd">    :return:</span>
+<span class="sd">    :return: a regression summary</span>
 <span class="sd">    :rtype:</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">regressor_order</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+        <span class="n">regressor_order</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">regressor_order</span><span class="p">)</span>
 
     <span class="n">_check_produce_summary_inputs</span><span class="p">(</span>
         <span class="n">regressor_order</span><span class="p">,</span>

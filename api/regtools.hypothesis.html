@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>regtools.hypothesis package &mdash; regtools 0.1.0 documentation</title>
+  <title>regtools.hypothesis package &mdash; regtools 0.1.1 documentation</title>
   
 
   
@@ -22,13 +22,13 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
-        <script type="text/javascript" src="../_static/copybutton.js"></script>
-        <script type="text/javascript">var copybuttonSkipText = '>>> ';</script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script >var copybuttonSkipText = '>>> ';</script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.1.0
+                0.1.1
               </div>
             
           
@@ -96,7 +96,7 @@
               <p class="caption"><span class="caption-text">Tutorial</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Getting started with regtools</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html">This is my gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html">Examples</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API Documentation</span></p>
 <ul class="current">
@@ -210,11 +210,19 @@
 <dl class="function">
 <dt id="regtools.hypothesis.lincom.hypothesis_test">
 <code class="sig-prename descclassname">regtools.hypothesis.lincom.</code><code class="sig-name descname">hypothesis_test</code><span class="sig-paren">(</span><em class="sig-param">result</em>, <em class="sig-param">col_coef_dict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/hypothesis/lincom.html#hypothesis_test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.hypothesis.lincom.hypothesis_test" title="Permalink to this definition">¶</a></dt>
-<dd><p>result: statsmodels RegressionResult or regtools.lag.remove.SimplifiedRegressionResult
-col_coef_dict: dict, keys are names of columns in DataFrame used for regression. Values are</p>
-<blockquote>
-<div><p>coefficients to apply to those columns.</p>
-</div></blockquote>
+<dd><p>Perform a hypothesis test with one or multiple columns</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="regtools.hypothesis.lincom.hypothesis_test.params.result"></span><strong>result</strong><a class="paramlink headerlink reference internal" href="#regtools.hypothesis.lincom.hypothesis_test.params.result">¶</a> – regression result</p></li>
+<li><p><span class="target" id="regtools.hypothesis.lincom.hypothesis_test.params.col_coef_dict"></span><strong>col_coef_dict</strong><a class="paramlink headerlink reference internal" href="#regtools.hypothesis.lincom.hypothesis_test.params.col_coef_dict">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]) – keys are names of columns in DataFrame used for regression. Values are
+coefficients to apply to those columns.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>

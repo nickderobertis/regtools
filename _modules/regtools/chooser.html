@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>regtools.chooser &mdash; regtools 0.1.0 documentation</title>
+  <title>regtools.chooser &mdash; regtools 0.1.1 documentation</title>
   
 
   
@@ -22,13 +22,13 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../_static/language_data.js"></script>
-        <script type="text/javascript" src="../../_static/clipboard.min.js"></script>
-        <script type="text/javascript" src="../../_static/copybutton.js"></script>
-        <script type="text/javascript">var copybuttonSkipText = '>>> ';</script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script >var copybuttonSkipText = '>>> ';</script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.1.0
+                0.1.1
               </div>
             
           
@@ -94,7 +94,7 @@
               <p class="caption"><span class="caption-text">Tutorial</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Getting started with regtools</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../auto_examples/index.html">This is my gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../auto_examples/index.html">Examples</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API Documentation</span></p>
 <ul>
@@ -177,6 +177,15 @@
 
 
 <div class="viewcode-block" id="any_reg"><a class="viewcode-back" href="../../api/regtools.html#regtools.chooser.any_reg">[docs]</a><span class="k">def</span> <span class="nf">any_reg</span><span class="p">(</span><span class="n">reg_type</span><span class="p">,</span> <span class="o">*</span><span class="n">reg_args</span><span class="p">,</span> <span class="o">**</span><span class="n">reg_kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Runs any regression.</span>
+
+<span class="sd">    :param reg_type: &#39;diff&#39; for difference regression, &#39;ols&#39; for OLS, &#39;probit&#39; for Probit, &#39;logit&#39; for Logit,</span>
+<span class="sd">        &#39;quantile&#39; for Quantile, or &#39;fmb&#39; for Fama-MacBeth</span>
+<span class="sd">    :param reg_args:</span>
+<span class="sd">    :param reg_kwargs:</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">reg_args</span><span class="p">,</span> <span class="n">reg_kwargs</span> <span class="o">=</span> <span class="n">_validate_inputs</span><span class="p">(</span><span class="n">reg_type</span><span class="p">,</span> <span class="o">*</span><span class="n">reg_args</span><span class="p">,</span> <span class="o">**</span><span class="n">reg_kwargs</span><span class="p">)</span>
 

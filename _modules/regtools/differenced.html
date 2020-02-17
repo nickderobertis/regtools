@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>regtools.differenced &mdash; regtools 0.1.0 documentation</title>
+  <title>regtools.differenced &mdash; regtools 0.1.1 documentation</title>
   
 
   
@@ -22,13 +22,13 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../_static/language_data.js"></script>
-        <script type="text/javascript" src="../../_static/clipboard.min.js"></script>
-        <script type="text/javascript" src="../../_static/copybutton.js"></script>
-        <script type="text/javascript">var copybuttonSkipText = '>>> ';</script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script >var copybuttonSkipText = '>>> ';</script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.1.0
+                0.1.1
               </div>
             
           
@@ -94,7 +94,7 @@
               <p class="caption"><span class="caption-text">Tutorial</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Getting started with regtools</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../auto_examples/index.html">This is my gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../auto_examples/index.html">Examples</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API Documentation</span></p>
 <ul>
@@ -163,15 +163,38 @@
            <div itemprop="articleBody">
             
   <h1>Source code for regtools.differenced</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">.reg</span> <span class="kn">import</span> <span class="n">reg</span>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">from</span> <span class="nn">.reg</span> <span class="kn">import</span> <span class="n">reg</span>
 <span class="kn">from</span> <span class="nn">pd_utils.filldata</span> <span class="kn">import</span> <span class="n">add_missing_group_rows</span>
 <span class="kn">from</span> <span class="nn">regtools.lag.create</span> <span class="kn">import</span> <span class="n">_is_special_lag_keyword</span>
 
 
-<div class="viewcode-block" id="diff_reg"><a class="viewcode-back" href="../../api/regtools.html#regtools.differenced.diff_reg">[docs]</a><span class="k">def</span> <span class="nf">diff_reg</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">yvar</span><span class="p">,</span> <span class="n">xvars</span><span class="p">,</span> <span class="n">id_col</span><span class="p">,</span> <span class="n">date_col</span><span class="p">,</span> <span class="n">difference_lag</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">diff_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-             <span class="n">diff_fill_method</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s1">&#39;ffill&#39;</span><span class="p">,</span> <span class="n">diff_fill_limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">reg_kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="diff_reg"><a class="viewcode-back" href="../../api/regtools.html#regtools.differenced.diff_reg">[docs]</a><span class="k">def</span> <span class="nf">diff_reg</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">yvar</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">xvars</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">id_col</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">date_col</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+             <span class="n">difference_lag</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">diff_cols</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="n">diff_fill_method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;ffill&#39;</span><span class="p">,</span> <span class="n">diff_fill_limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">reg_kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fits a differenced regression.</span>
 
-    <span class="k">if</span> <span class="n">diff_cols</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+<span class="sd">    :param df:</span>
+<span class="sd">    :param yvar: column name of outcome y variable</span>
+<span class="sd">    :param xvars: column names of x variables for regression</span>
+<span class="sd">    :param id_col: column name of variable representing entities in the data</span>
+<span class="sd">    :param date_col: column name of variable representing time in the data</span>
+<span class="sd">    :param difference_lag: Number of lags to use for difference</span>
+<span class="sd">    :param diff_cols: columns to take differences on</span>
+<span class="sd">    :param diff_fill_method: pandas fill methods, &#39;ffill&#39; or &#39;bfill&#39;</span>
+<span class="sd">    :param diff_fill_limit: maximum number of periods to fill missing data, default no limit</span>
+<span class="sd">    :param reg_kwargs:</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">xvars</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="n">xvars</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">xvars</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">diff_cols</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="c1"># All by default</span>
         <span class="n">diff_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">yvar</span><span class="p">]</span> <span class="o">+</span> <span class="n">xvars</span>
 

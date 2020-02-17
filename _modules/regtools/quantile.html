@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>regtools.quantile &mdash; regtools 0.1.0 documentation</title>
+  <title>regtools.quantile &mdash; regtools 0.1.1 documentation</title>
   
 
   
@@ -22,13 +22,13 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../_static/language_data.js"></script>
-        <script type="text/javascript" src="../../_static/clipboard.min.js"></script>
-        <script type="text/javascript" src="../../_static/copybutton.js"></script>
-        <script type="text/javascript">var copybuttonSkipText = '>>> ';</script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script >var copybuttonSkipText = '>>> ';</script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.1.0
+                0.1.1
               </div>
             
           
@@ -94,7 +94,7 @@
               <p class="caption"><span class="caption-text">Tutorial</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Getting started with regtools</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../auto_examples/index.html">This is my gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../auto_examples/index.html">Examples</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API Documentation</span></p>
 <ul>
@@ -163,7 +163,9 @@
            <div itemprop="articleBody">
             
   <h1>Source code for regtools.quantile</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">statsmodels</span> <span class="kn">import</span> <span class="n">api</span> <span class="k">as</span> <span class="n">sm</span>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">from</span> <span class="nn">statsmodels</span> <span class="kn">import</span> <span class="n">api</span> <span class="k">as</span> <span class="n">sm</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -171,44 +173,47 @@
 <span class="kn">from</span> <span class="nn">regtools.dataprep</span> <span class="kn">import</span> <span class="n">_create_reg_df_y_x_and_dummies</span><span class="p">,</span> <span class="n">_estimate_handling_robust_and_cluster</span>
 <span class="kn">from</span> <span class="nn">regtools.order</span> <span class="kn">import</span> <span class="n">_set_regressor_order</span>
 
-<div class="viewcode-block" id="quantile_reg"><a class="viewcode-back" href="../../api/regtools.html#regtools.quantile.quantile_reg">[docs]</a><span class="k">def</span> <span class="nf">quantile_reg</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">yvar</span><span class="p">,</span> <span class="n">xvars</span><span class="p">,</span> <span class="n">q</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">robust</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cluster</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">cons</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fe</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">interaction_tuples</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">num_lags</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">lag_variables</span><span class="o">=</span><span class="s1">&#39;xvars&#39;</span><span class="p">,</span> <span class="n">lag_period_var</span><span class="o">=</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="n">lag_id_var</span><span class="o">=</span><span class="s1">&#39;TICKER&#39;</span><span class="p">,</span>
-        <span class="n">lag_fill_method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;ffill&#39;</span><span class="p">,</span> <span class="n">lag_fill_limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="quantile_reg"><a class="viewcode-back" href="../../api/regtools.html#regtools.quantile.quantile_reg">[docs]</a><span class="k">def</span> <span class="nf">quantile_reg</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">yvar</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">xvars</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">q</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
+                 <span class="n">robust</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                 <span class="n">cluster</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">cons</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                 <span class="n">fe</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">interaction_tuples</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">num_lags</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">lag_variables</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="s1">&#39;xvars&#39;</span><span class="p">,</span> <span class="n">lag_period_var</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;Date&#39;</span><span class="p">,</span>
+                 <span class="n">lag_id_var</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;TICKER&#39;</span><span class="p">,</span> <span class="n">lag_fill_method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;ffill&#39;</span><span class="p">,</span>
+                 <span class="n">lag_fill_limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns a fitted quantile regression. Takes df, produces a regression df with no missing among needed</span>
 <span class="sd">    variables, and fits a regression model. If robust is specified, uses heteroskedasticity-</span>
 <span class="sd">    robust standard errors. If cluster is specified, calculated clustered standard errors</span>
 <span class="sd">    by the given variable.</span>
 
-<span class="sd">    Note: only specify at most one of robust and cluster.</span>
+<span class="sd">    :Notes:</span>
 
-<span class="sd">    Required inputs:</span>
-<span class="sd">    df: pandas dataframe containing regression data</span>
-<span class="sd">    yvar: str, column name of outcome y variable</span>
-<span class="sd">    xvars: list of strs, column names of x variables for regression</span>
+<span class="sd">    Only specify at most one of robust and cluster.</span>
 
-<span class="sd">    Optional inputs:</span>
-<span class="sd">    q: float between 0 and 1. Quantile of dependent variable to estimate coefficients for</span>
-<span class="sd">    robust: bool, set to True to use heterskedasticity-robust standard errors</span>
-<span class="sd">    cluster: False or str, set to a column name to calculate standard errors within clusters</span>
-<span class="sd">             given by unique values of given column name</span>
-<span class="sd">    cons: bool, set to False to not include a constant in the regression</span>
-<span class="sd">    fe: None or str or list of strs. If a str or list of strs is passed, uses these categorical</span>
-<span class="sd">    variables to construct dummies for fixed effects.</span>
-<span class="sd">    interaction_tuples: tuple or list of tuples of column names to interact and include as xvars</span>
-<span class="sd">    num_lags: int, Number of periods to lag variables. Setting to other than 0 will activate lags</span>
-<span class="sd">    lag_variables: &#39;all&#39;, &#39;xvars&#39;, or list of strs of names of columns to lag for regressions.</span>
-<span class="sd">    lag_period_var: str, only used if lag_variables is not None. name of column which</span>
-<span class="sd">                    contains period variable for lagging</span>
-<span class="sd">    lag_fill_method: str, &#39;ffill&#39; or &#39;bfill&#39; for which method to use to fill in missing rows when</span>
-<span class="sd">                     creating lag variables. See pandas.DataFrame.fillna for more details</span>
-<span class="sd">    lag_id_var: str, only used if lag_variables is not None. name of column which</span>
-<span class="sd">                    contains identifier variable for lagging</span>
-<span class="sd">    lag_fill_limit: pandas fill limit</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">    If fe=None, returns statsmodels regression result</span>
-<span class="sd">    if fe is not None, returns a tuple of (statsmodels regression result, dummy_cols_dict)</span>
+<span class="sd">    :param df:</span>
+<span class="sd">    :param yvar: column name of outcome y variable</span>
+<span class="sd">    :param xvars: column names of x variables for regression</span>
+<span class="sd">    :param q: quantile to use</span>
+<span class="sd">    :param robust: set to True to use heterskedasticity-robust standard errors</span>
+<span class="sd">    :param cluster: set to a column name to calculate standard errors within clusters</span>
+<span class="sd">         given by unique values of given column name. set to multiple column names for multiway</span>
+<span class="sd">         clustering following Cameron, Gelbach, and Miller (2011). NOTE: will get exponentially</span>
+<span class="sd">         slower as more cluster variables are added</span>
+<span class="sd">    :param cons: set to False to not include a constant in the regression</span>
+<span class="sd">    :param fe: If a str or list of strs is passed, uses these categorical</span>
+<span class="sd">        variables to construct dummies for fixed effects.</span>
+<span class="sd">    :param interaction_tuples: tuple or list of tuples of column names to interact and include as xvars</span>
+<span class="sd">    :param num_lags: Number of periods to lag variables. Setting to other than 0 will activate lags</span>
+<span class="sd">    :param lag_variables: &#39;all&#39;, &#39;xvars&#39;, or list of strs of names of columns to lag for regressions.</span>
+<span class="sd">    :param lag_period_var: only used if lag_variables is not None. name of column which</span>
+<span class="sd">        contains period variable for lagging</span>
+<span class="sd">    :param lag_id_var: only used if lag_variables is not None. name of column which</span>
+<span class="sd">        contains identifier variable for lagging</span>
+<span class="sd">    :param lag_fill_method: &#39;ffill&#39; or &#39;bfill&#39; for which method to use to fill in missing rows when</span>
+<span class="sd">        creating lag variables. See pandas.DataFrame.fillna for more details</span>
+<span class="sd">    :param lag_fill_limit: maximum number of periods to fill with lag_fill_method</span>
+<span class="sd">    :return: statsmodels regression result</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">regdf</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">dummy_cols_dict</span><span class="p">,</span> <span class="n">lag_variables</span> <span class="o">=</span> <span class="n">_create_reg_df_y_x_and_dummies</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">yvar</span><span class="p">,</span> <span class="n">xvars</span><span class="p">,</span> <span class="n">cluster</span><span class="o">=</span><span class="n">cluster</span><span class="p">,</span> <span class="n">cons</span><span class="o">=</span><span class="n">cons</span><span class="p">,</span> <span class="n">fe</span><span class="o">=</span><span class="n">fe</span><span class="p">,</span>
                                                                   <span class="n">interaction_tuples</span><span class="o">=</span><span class="n">interaction_tuples</span><span class="p">,</span> <span class="n">num_lags</span><span class="o">=</span><span class="n">num_lags</span><span class="p">,</span>
@@ -222,9 +227,11 @@
 
     <span class="c1"># Only return dummy_cols_dict when fe is active</span>
     <span class="k">if</span> <span class="n">fe</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">result</span><span class="p">,</span> <span class="n">dummy_cols_dict</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">result</span></div>
+        <span class="n">result</span><span class="o">.</span><span class="n">dummy_cols_dict</span> <span class="o">=</span> <span class="n">dummy_cols_dict</span>
+    <span class="k">if</span> <span class="n">cluster</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">cluster</span> <span class="o">=</span> <span class="n">cluster</span>
+
+    <span class="k">return</span> <span class="n">result</span></div>
 
 
 <div class="viewcode-block" id="reg_for_each_quantile_output_plot"><a class="viewcode-back" href="../../api/regtools.html#regtools.quantile.reg_for_each_quantile_output_plot">[docs]</a><span class="k">def</span> <span class="nf">reg_for_each_quantile_output_plot</span><span class="p">(</span><span class="n">main_iv</span><span class="p">,</span> <span class="o">*</span><span class="n">reg_args</span><span class="p">,</span> <span class="n">num_quantiles</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">main_iv_label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">outpath</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
