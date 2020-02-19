@@ -10,7 +10,7 @@ def reg(df: pd.DataFrame, yvar: str, xvars: Sequence[str], robust: bool = True,
         cluster: Union[bool, str, Sequence[str]] = False, cons: bool = True, fe: Optional[Union[str, Sequence[str]]] = None,
         interaction_tuples: Optional[Union[Tuple[str, str], Sequence[Tuple[str, str]]]] = None,
         num_lags: int = 0, lag_variables: Union[str, Sequence[str]] = 'xvars', lag_period_var: str = 'Date',
-        lag_id_var: str = 'TICKER', lag_fill_method: str = 'ffill', model_type: str = 'OLS'):
+        lag_id_var: str = 'TICKER', lag_fill_method: str = 'ffill', reg_type: str = 'OLS'):
     """
     Returns a fitted regression. Takes df, produces a regression df with no missing among needed
     variables, and fits a regression model. If robust is specified, uses heteroskedasticity-
@@ -41,7 +41,7 @@ def reg(df: pd.DataFrame, yvar: str, xvars: Sequence[str], robust: bool = True,
         contains identifier variable for lagging
     :param lag_fill_method: 'ffill' or 'bfill' for which method to use to fill in missing rows when
         creating lag variables. See pandas.DataFrame.fillna for more details
-    :param model_type: 'OLS', 'probit', or 'logit' for type of model
+    :param reg_type: 'OLS', 'probit', or 'logit' for type of model
     :return: statsmodels regression result.
     """
     regdf, y, X, dummy_cols_dict, lag_variables = _create_reg_df_y_x_and_dummies(df, yvar, xvars, cluster=cluster,
@@ -51,10 +51,10 @@ def reg(df: pd.DataFrame, yvar: str, xvars: Sequence[str], robust: bool = True,
                                                                                  lag_id_var=lag_id_var,
                                                                                  fill_method=lag_fill_method)
 
-    ModelClass = get_model_class_by_string(model_type)
+    ModelClass = get_model_class_by_string(reg_type)
     mod = ModelClass(y, X)
 
-    if _is_probit_str(model_type) or _is_logit_str(model_type):
+    if _is_probit_str(reg_type) or _is_logit_str(reg_type):
         fit_kwargs = dict(
             method='bfgs',
             maxiter=100

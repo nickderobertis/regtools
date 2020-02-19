@@ -10,12 +10,12 @@ from regtools.linmodels.bindings.fe import dummy_cols_dict_from_model, linearmod
 
 
 def linear_reg(df: pd.DataFrame, yvar: str, xvars: Sequence[str], entity_var: str, time_var: str, robust: bool = True,
-        cluster: Union[bool, str, Sequence[str]] = False, cons: bool = True, fe: Optional[Union[str, Sequence[str]]] = None,
-        interaction_tuples: Optional[Union[Tuple[str, str], Sequence[Tuple[str, str]]]] = None,
-        num_lags: int = 0, lag_variables: Union[str, Sequence[str]] = 'xvars', lag_period_var: str = 'Date',
-        lag_id_var: str = 'TICKER', lag_fill_method: str = 'ffill',
-        lag_fill_limit: int = None,
-        model_type: str = 'fama macbeth', **fit_kwargs):
+               cluster: Union[bool, str, Sequence[str]] = False, cons: bool = True, fe: Optional[Union[str, Sequence[str]]] = None,
+               interaction_tuples: Optional[Union[Tuple[str, str], Sequence[Tuple[str, str]]]] = None,
+               num_lags: int = 0, lag_variables: Union[str, Sequence[str]] = 'xvars', lag_period_var: str = 'Date',
+               lag_id_var: str = 'TICKER', lag_fill_method: str = 'ffill',
+               lag_fill_limit: int = None,
+               reg_type: str = 'fama macbeth', **fit_kwargs):
     """
     Runs a regression from the linearmodels library, standardizing the output to that of statsmodels
 
@@ -42,7 +42,7 @@ def linear_reg(df: pd.DataFrame, yvar: str, xvars: Sequence[str], entity_var: st
     :param lag_fill_method: 'ffill' or 'bfill' for which method to use to fill in missing rows when
         creating lag variables. See pandas.DataFrame.fillna for more details
     :param lag_fill_limit: maximum number of periods to fill with lag_fill_method
-    :param model_type: 'fmb' for type of model
+    :param reg_type: 'fmb' for type of model
     :param fit_kwargs:
     :return: statsmodels regression result.
     """
@@ -68,7 +68,7 @@ def linear_reg(df: pd.DataFrame, yvar: str, xvars: Sequence[str], entity_var: st
 
     fe_kwargs = linearmodels_fe_kwarg_dict_from_fe(fe, regdf)
 
-    ModelClass = get_model_class_by_string(model_type)
+    ModelClass = get_model_class_by_string(reg_type)
     mod = ModelClass(y, X, **fe_kwargs)
 
     dummy_cols_dict = dummy_cols_dict_from_model(mod, regdf)

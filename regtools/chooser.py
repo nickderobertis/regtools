@@ -80,6 +80,6 @@ def _validate_inputs(reg_type: str, *args, **kwargs):
         new_xvars.remove(yvar)
         args = args[:2] + (new_xvars,) + args[3:]
 
-    kwargs.update(dict(model_type=reg_type))
+    kwargs.update(dict(reg_type=reg_type))
 
     return args, kwargs
