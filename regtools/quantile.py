@@ -64,8 +64,12 @@ def quantile_reg(df: pd.DataFrame, yvar: str, xvars: Sequence[str], q: float = 0
     # Only return dummy_cols_dict when fe is active
     if fe is not None:
         result.dummy_cols_dict = dummy_cols_dict
+    else:
+        result.dummy_cols_dict = None
     if cluster is not None:
         result.cluster = cluster
+    else:
+        result.cluster = None
 
     return result
 

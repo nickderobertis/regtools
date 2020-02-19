@@ -214,3 +214,25 @@ class TestDiffReg(DataFrameTest):
         )
 
         compare_params_and_pvalues(expected_result, diff_result)
+
+
+class TestQuantReg(DataFrameTest):
+
+    def test_quant_reg(self):
+        result = regtools.chooser.any_reg(
+            'quantile',
+            self.df_groups_lag_reg,
+            self.yvar,
+            self.xvars,
+            q=0.9
+        )
+        # TODO: check accuracy of quant reg result in test
+
+    def test_quant_reg_iter(self):
+        result = regtools.reg_for_each_xvar_set_and_produce_summary(
+            self.df_groups_lag_reg,
+            self.yvar,
+            [self.xvars, self.xvars],
+            reg_type='quantile',
+            q=0.9
+        )
