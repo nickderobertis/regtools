@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>regtools.linmodels package &mdash; regtools 0.1.1 documentation</title>
+  <title>regtools.linmodels package &mdash; regtools 0.1.2 documentation</title>
   
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.1.1
+                0.1.2
               </div>
             
           
@@ -225,7 +225,7 @@
 <span id="regtools-linmodels-reg-module"></span><h2>regtools.linmodels.reg module<a class="headerlink" href="#module-regtools.linmodels.reg" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="regtools.linmodels.reg.linear_reg">
-<code class="sig-prename descclassname">regtools.linmodels.reg.</code><code class="sig-name descname">linear_reg</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">yvar</em>, <em class="sig-param">xvars</em>, <em class="sig-param">entity_var</em>, <em class="sig-param">time_var</em>, <em class="sig-param">robust=True</em>, <em class="sig-param">cluster=False</em>, <em class="sig-param">cons=True</em>, <em class="sig-param">fe=None</em>, <em class="sig-param">interaction_tuples=None</em>, <em class="sig-param">num_lags=0</em>, <em class="sig-param">lag_variables='xvars'</em>, <em class="sig-param">lag_period_var='Date'</em>, <em class="sig-param">lag_id_var='TICKER'</em>, <em class="sig-param">lag_fill_method='ffill'</em>, <em class="sig-param">lag_fill_limit=None</em>, <em class="sig-param">model_type='fama macbeth'</em>, <em class="sig-param">**fit_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/linmodels/reg.html#linear_reg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.linmodels.reg.linear_reg" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">regtools.linmodels.reg.</code><code class="sig-name descname">linear_reg</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">yvar</em>, <em class="sig-param">xvars</em>, <em class="sig-param">entity_var</em>, <em class="sig-param">time_var</em>, <em class="sig-param">robust=True</em>, <em class="sig-param">cluster=False</em>, <em class="sig-param">cons=True</em>, <em class="sig-param">fe=None</em>, <em class="sig-param">interaction_tuples=None</em>, <em class="sig-param">num_lags=0</em>, <em class="sig-param">lag_variables='xvars'</em>, <em class="sig-param">lag_period_var='Date'</em>, <em class="sig-param">lag_id_var='TICKER'</em>, <em class="sig-param">lag_fill_method='ffill'</em>, <em class="sig-param">lag_fill_limit=None</em>, <em class="sig-param">reg_type='fama macbeth'</em>, <em class="sig-param">**fit_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/linmodels/reg.html#linear_reg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.linmodels.reg.linear_reg" title="Permalink to this definition">¶</a></dt>
 <dd><p>Runs a regression from the linearmodels library, standardizing the output to that of statsmodels</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -253,7 +253,7 @@ contains identifier variable for lagging</p></li>
 <li><p><span class="target" id="regtools.linmodels.reg.linear_reg.params.lag_fill_method"></span><strong>lag_fill_method</strong><a class="paramlink headerlink reference internal" href="#regtools.linmodels.reg.linear_reg.params.lag_fill_method">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – ‘ffill’ or ‘bfill’ for which method to use to fill in missing rows when
 creating lag variables. See pandas.DataFrame.fillna for more details</p></li>
 <li><p><span class="target" id="regtools.linmodels.reg.linear_reg.params.lag_fill_limit"></span><strong>lag_fill_limit</strong><a class="paramlink headerlink reference internal" href="#regtools.linmodels.reg.linear_reg.params.lag_fill_limit">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]) – maximum number of periods to fill with lag_fill_method</p></li>
-<li><p><span class="target" id="regtools.linmodels.reg.linear_reg.params.model_type"></span><strong>model_type</strong><a class="paramlink headerlink reference internal" href="#regtools.linmodels.reg.linear_reg.params.model_type">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – ‘fmb’ for type of model</p></li>
+<li><p><span class="target" id="regtools.linmodels.reg.linear_reg.params.reg_type"></span><strong>reg_type</strong><a class="paramlink headerlink reference internal" href="#regtools.linmodels.reg.linear_reg.params.reg_type">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – ‘fmb’ for type of model</p></li>
 <li><p><span class="target" id="regtools.linmodels.reg.linear_reg.params.fit_kwargs"></span><strong>fit_kwargs</strong><a class="paramlink headerlink reference internal" href="#regtools.linmodels.reg.linear_reg.params.fit_kwargs">¶</a> – </p></li>
 </ul>
 </dd>

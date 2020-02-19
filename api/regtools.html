@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>regtools package &mdash; regtools 0.1.1 documentation</title>
+  <title>regtools package &mdash; regtools 0.1.2 documentation</title>
   
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.1.1
+                0.1.2
               </div>
             
           
@@ -785,7 +785,7 @@ produce smoother graphs but take longer to run</p></li>
 <span id="regtools-reg-module"></span><h2>regtools.reg module<a class="headerlink" href="#module-regtools.reg" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="regtools.reg.reg">
-<code class="sig-prename descclassname">regtools.reg.</code><code class="sig-name descname">reg</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">yvar</em>, <em class="sig-param">xvars</em>, <em class="sig-param">robust=True</em>, <em class="sig-param">cluster=False</em>, <em class="sig-param">cons=True</em>, <em class="sig-param">fe=None</em>, <em class="sig-param">interaction_tuples=None</em>, <em class="sig-param">num_lags=0</em>, <em class="sig-param">lag_variables='xvars'</em>, <em class="sig-param">lag_period_var='Date'</em>, <em class="sig-param">lag_id_var='TICKER'</em>, <em class="sig-param">lag_fill_method='ffill'</em>, <em class="sig-param">model_type='OLS'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/reg.html#reg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.reg.reg" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">regtools.reg.</code><code class="sig-name descname">reg</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">yvar</em>, <em class="sig-param">xvars</em>, <em class="sig-param">robust=True</em>, <em class="sig-param">cluster=False</em>, <em class="sig-param">cons=True</em>, <em class="sig-param">fe=None</em>, <em class="sig-param">interaction_tuples=None</em>, <em class="sig-param">num_lags=0</em>, <em class="sig-param">lag_variables='xvars'</em>, <em class="sig-param">lag_period_var='Date'</em>, <em class="sig-param">lag_id_var='TICKER'</em>, <em class="sig-param">lag_fill_method='ffill'</em>, <em class="sig-param">reg_type='OLS'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/regtools/reg.html#reg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regtools.reg.reg" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a fitted regression. Takes df, produces a regression df with no missing among needed
 variables, and fits a regression model. If robust is specified, uses heteroskedasticity-
 robust standard errors. If cluster is specified, calculated clustered standard errors
@@ -818,7 +818,7 @@ contains period variable for lagging</p></li>
 contains identifier variable for lagging</p></li>
 <li><p><span class="target" id="regtools.reg.reg.params.lag_fill_method"></span><strong>lag_fill_method</strong><a class="paramlink headerlink reference internal" href="#regtools.reg.reg.params.lag_fill_method">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – ‘ffill’ or ‘bfill’ for which method to use to fill in missing rows when
 creating lag variables. See pandas.DataFrame.fillna for more details</p></li>
-<li><p><span class="target" id="regtools.reg.reg.params.model_type"></span><strong>model_type</strong><a class="paramlink headerlink reference internal" href="#regtools.reg.reg.params.model_type">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – ‘OLS’, ‘probit’, or ‘logit’ for type of model</p></li>
+<li><p><span class="target" id="regtools.reg.reg.params.reg_type"></span><strong>reg_type</strong><a class="paramlink headerlink reference internal" href="#regtools.reg.reg.params.reg_type">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – ‘OLS’, ‘probit’, or ‘logit’ for type of model</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
