@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>regtools package &mdash; regtools 0.1.3 documentation</title>
+  <title>regtools package &mdash; regtools 0.1.4 documentation</title>
   
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.1.3
+                0.1.4
               </div>
             
           
@@ -724,8 +724,9 @@ variables to construct dummies for fixed effects.</p></li>
 contains period variable for lagging</p></li>
 <li><p><span class="target" id="regtools.quantile.quantile_reg.params.lag_id_var"></span><strong>lag_id_var</strong><a class="paramlink headerlink reference internal" href="#regtools.quantile.quantile_reg.params.lag_id_var">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – only used if lag_variables is not None. name of column which
 contains identifier variable for lagging</p></li>
-<li><p><span class="target" id="regtools.quantile.quantile_reg.params.lag_fill_method"></span><strong>lag_fill_method</strong><a class="paramlink headerlink reference internal" href="#regtools.quantile.quantile_reg.params.lag_fill_method">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – ‘ffill’ or ‘bfill’ for which method to use to fill in missing rows when
-creating lag variables. See pandas.DataFrame.fillna for more details</p></li>
+<li><p><span class="target" id="regtools.quantile.quantile_reg.params.lag_fill_method"></span><strong>lag_fill_method</strong><a class="paramlink headerlink reference internal" href="#regtools.quantile.quantile_reg.params.lag_fill_method">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]) – ‘ffill’ or ‘bfill’ for which method to use to fill in missing rows when
+creating lag variables. Set to None to not fill and have missing instead.
+See pandas.DataFrame.fillna for more details</p></li>
 <li><p><span class="target" id="regtools.quantile.quantile_reg.params.lag_fill_limit"></span><strong>lag_fill_limit</strong><a class="paramlink headerlink reference internal" href="#regtools.quantile.quantile_reg.params.lag_fill_limit">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]) – maximum number of periods to fill with lag_fill_method</p></li>
 </ul>
 </dd>
@@ -816,8 +817,9 @@ variables to construct dummies for fixed effects.</p></li>
 contains period variable for lagging</p></li>
 <li><p><span class="target" id="regtools.reg.reg.params.lag_id_var"></span><strong>lag_id_var</strong><a class="paramlink headerlink reference internal" href="#regtools.reg.reg.params.lag_id_var">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – only used if lag_variables is not None. name of column which
 contains identifier variable for lagging</p></li>
-<li><p><span class="target" id="regtools.reg.reg.params.lag_fill_method"></span><strong>lag_fill_method</strong><a class="paramlink headerlink reference internal" href="#regtools.reg.reg.params.lag_fill_method">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – ‘ffill’ or ‘bfill’ for which method to use to fill in missing rows when
-creating lag variables. See pandas.DataFrame.fillna for more details</p></li>
+<li><p><span class="target" id="regtools.reg.reg.params.lag_fill_method"></span><strong>lag_fill_method</strong><a class="paramlink headerlink reference internal" href="#regtools.reg.reg.params.lag_fill_method">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]) – ‘ffill’ or ‘bfill’ for which method to use to fill in missing rows when
+creating lag variables. Set to None to not fill and have missing instead.
+See pandas.DataFrame.fillna for more details</p></li>
 <li><p><span class="target" id="regtools.reg.reg.params.reg_type"></span><strong>reg_type</strong><a class="paramlink headerlink reference internal" href="#regtools.reg.reg.params.reg_type">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – ‘OLS’, ‘probit’, or ‘logit’ for type of model</p></li>
 </ul>
 </dd>
