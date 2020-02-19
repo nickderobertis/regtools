@@ -23,7 +23,7 @@ def create_lagged_variables_return_yvars_xvars_interaction_tuples(
     lag_variables: StrOrListOfStrs = "xvars",
     lag_period_var: str = "Date",
     lag_id_var: str = "TICKER",
-    fill_method: str = "ffill",
+    fill_method: Optional[str] = "ffill",
     fill_limit: int = None,
 ) -> DfYvarXvarInteractionTuplesLagvarTuple:
     if num_lags == 0:

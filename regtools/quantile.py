@@ -14,7 +14,7 @@ def quantile_reg(df: pd.DataFrame, yvar: str, xvars: Sequence[str], q: float = 0
                  fe: Optional[Union[str, Sequence[str]]] = None,
                  interaction_tuples: Optional[Union[Tuple[str, str], Sequence[Tuple[str, str]]]] = None,
                  num_lags: int = 0, lag_variables: Union[str, Sequence[str]] = 'xvars', lag_period_var: str = 'Date',
-                 lag_id_var: str = 'TICKER', lag_fill_method: str = 'ffill',
+                 lag_id_var: str = 'TICKER', lag_fill_method: Optional[str] = 'ffill',
                  lag_fill_limit: int = None):
     """
     Returns a fitted quantile regression. Takes df, produces a regression df with no missing among needed
@@ -46,7 +46,8 @@ def quantile_reg(df: pd.DataFrame, yvar: str, xvars: Sequence[str], q: float = 0
     :param lag_id_var: only used if lag_variables is not None. name of column which
         contains identifier variable for lagging
     :param lag_fill_method: 'ffill' or 'bfill' for which method to use to fill in missing rows when
-        creating lag variables. See pandas.DataFrame.fillna for more details
+        creating lag variables. Set to None to not fill and have missing instead.
+        See pandas.DataFrame.fillna for more details
     :param lag_fill_limit: maximum number of periods to fill with lag_fill_method
     :return: statsmodels regression result
     """

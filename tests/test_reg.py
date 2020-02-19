@@ -69,16 +69,8 @@ class RegTest(DataFrameTest):
     def _reg_test(self, df, expect_params, expect_cov, **reg_kwargs):
         reg_result = regtools.reg(df, self.yvar, self.xvars, **reg_kwargs)
 
-        # Single result
-        if (not 'fe' in reg_kwargs) or (not reg_kwargs['fe']):
-            result = reg_result
-        # Tuple of result, dummy_col_dict
-        else:
-            result = reg_result[0]
-
-
-        assert_series_equal(expect_params, result.params)
-        assert_frame_equal(expect_cov, result.cov_params())
+        assert_series_equal(expect_params, reg_result.params)
+        assert_frame_equal(expect_cov, reg_result.cov_params())
 
 def compare_params_and_pvalues(result1, result2):
     assert (result1.params.values == result2.params.values).all()
@@ -131,7 +123,7 @@ class TestReg(RegTest):
             (0.03797358324036447, -0.017814287380394575, 0.0010429705391543902),
         ], columns=self.all_xvars, index=self.all_xvars)
 
-        self._reg_test(self.df_groups, expect_params, expect_cov, robust=False, cluster=self.groupvar)
+        self._reg_test(self.df_groups, expect_params, expect_cov, robust=False, cluster=[self.groupvar])
 
     def test_reg_fe(self):
         expect_params = pd.Series(data = [
@@ -154,6 +146,7 @@ class TestReg(RegTest):
 class TestLagReg(DataFrameTest):
 
     def test_lag_reg(self):
+
         expected_result = regtools.reg(
             self.df_groups_lag_reg,
             'y',
@@ -167,7 +160,8 @@ class TestLagReg(DataFrameTest):
             lag_variables=['x1', 'x2'],
             num_lags=1,
             lag_period_var='Date',
-            lag_id_var='group'
+            lag_id_var='group',
+            lag_fill_method=None
         )
 
         compare_params_and_pvalues(expected_result, lag_result)
@@ -189,7 +183,8 @@ class TestDiffReg(DataFrameTest):
             diff_cols=['x1', 'x2'],
             difference_lag=1,
             date_col='Date',
-            id_col='group'
+            id_col='group',
+            diff_fill_method=None
         )
 
         compare_params_and_pvalues(expected_result, diff_result)
@@ -213,7 +208,9 @@ class TestDiffReg(DataFrameTest):
             lag_variables=['x1', 'x2'],
             num_lags=1,
             lag_period_var='Date',
-            lag_id_var='group'
+            lag_id_var='group',
+            diff_fill_method=None,
+            lag_fill_method=None,
         )
 
         compare_params_and_pvalues(expected_result, diff_result)
