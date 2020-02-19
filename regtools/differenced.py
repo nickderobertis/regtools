@@ -43,6 +43,8 @@ def diff_reg(df: pd.DataFrame, yvar: str, xvars: Sequence[str], id_col: str, dat
         this_reg_kwargs['interaction_tuples'] = _convert_interaction_tuples(reg_kwargs['interaction_tuples'], diff_cols)
     if 'lag_variables' in reg_kwargs:
         this_reg_kwargs['lag_variables'] = _convert_list_of_variables_to_difference_names(reg_kwargs['lag_variables'], diff_cols)
+    if 'reg_type' in reg_kwargs:
+        this_reg_kwargs['reg_type'] = 'ols'
 
 
     result = reg(df, reg_yvar, reg_xvars, **this_reg_kwargs)
@@ -61,12 +63,11 @@ def create_differenced_variables(df, diff_cols, id_col='TICKER', date_col='Date'
     """
     df.sort_values([id_col, date_col], inplace=True)
 
-    if fill_method is not None:
-        # Save original byvars, for outputting df of same shape
-        orig_index_df = df[[id_col, date_col]]
+    # Save original byvars, for outputting df of same shape
+    orig_index_df = df[[id_col, date_col]]
 
-        # Fill in missing data
-        df = add_missing_group_rows(df, [id_col], [date_col], fill_method=fill_method, fill_limit=fill_limit)
+    # Fill in missing data
+    df = add_missing_group_rows(df, [id_col], [date_col], fill_method=fill_method, fill_limit=fill_limit)
 
     for col in diff_cols:
         _create_differenced_variable(df, col, id_col=id_col, difference_lag=difference_lag)

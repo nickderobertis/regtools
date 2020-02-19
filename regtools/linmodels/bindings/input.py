@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Tuple, Optional
 import pandas as pd
 
 from regtools.regtypes import (
@@ -37,7 +37,7 @@ def _create_reg_df_y_x_and_lag_vars(
     lag_variables="xvars",
     lag_period_var="Date",
     lag_id_var="TICKER",
-    fill_method: str = "ffill",
+    fill_method: Optional[str] = "ffill",
     fill_limit: int = None,
 ) -> DfYvarXvarsLagvars:
 

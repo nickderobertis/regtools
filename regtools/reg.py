@@ -10,7 +10,7 @@ def reg(df: pd.DataFrame, yvar: str, xvars: Sequence[str], robust: bool = True,
         cluster: Union[bool, str, Sequence[str]] = False, cons: bool = True, fe: Optional[Union[str, Sequence[str]]] = None,
         interaction_tuples: Optional[Union[Tuple[str, str], Sequence[Tuple[str, str]]]] = None,
         num_lags: int = 0, lag_variables: Union[str, Sequence[str]] = 'xvars', lag_period_var: str = 'Date',
-        lag_id_var: str = 'TICKER', lag_fill_method: str = 'ffill', reg_type: str = 'OLS'):
+        lag_id_var: str = 'TICKER', lag_fill_method: Optional[str] = 'ffill', reg_type: str = 'OLS'):
     """
     Returns a fitted regression. Takes df, produces a regression df with no missing among needed
     variables, and fits a regression model. If robust is specified, uses heteroskedasticity-
@@ -40,7 +40,8 @@ def reg(df: pd.DataFrame, yvar: str, xvars: Sequence[str], robust: bool = True,
     :param lag_id_var: only used if lag_variables is not None. name of column which
         contains identifier variable for lagging
     :param lag_fill_method: 'ffill' or 'bfill' for which method to use to fill in missing rows when
-        creating lag variables. See pandas.DataFrame.fillna for more details
+        creating lag variables. Set to None to not fill and have missing instead.
+        See pandas.DataFrame.fillna for more details
     :param reg_type: 'OLS', 'probit', or 'logit' for type of model
     :return: statsmodels regression result.
     """
