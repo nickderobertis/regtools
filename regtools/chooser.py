@@ -47,6 +47,8 @@ def any_reg(reg_type, *reg_args, **reg_kwargs):
         return reg(*reg_args, **reg_kwargs)
 
     if _is_quantile_reg_str(reg_type):
+        if 'reg_type' in reg_kwargs:
+            reg_kwargs.pop('reg_type')
         return quantile_reg(*reg_args, **reg_kwargs)
 
     if _is_linearmodels_str(reg_type):
